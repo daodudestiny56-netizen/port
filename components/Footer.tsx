@@ -98,7 +98,7 @@ export default function Footer() {
           <div className="flex items-center gap-3 group">
             <button
               onClick={handleCopyEmail}
-              className="font-mono text-base md:text-lg border-b border-dashed border-current pb-0.5 hover:opacity-80 transition-opacity duration-200 flex items-center gap-2 cursor-none"
+              className="font-mono text-base md:text-lg border-b border-dashed border-current pb-0.5 hover:opacity-80 transition-opacity duration-200 flex items-center gap-2"
               data-cursor="hover"
             >
               {portfolioData.email}
@@ -152,7 +152,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               style={{ color: accentColor }}
-              className="font-mono text-base md:text-lg border-b border-solid border-current pb-0.5 hover:opacity-80 transition-opacity duration-200 flex items-center gap-2 cursor-none"
+              className="font-mono text-base md:text-lg border-b border-solid border-current pb-0.5 hover:opacity-80 transition-opacity duration-200 flex items-center gap-2"
               data-cursor="hover"
             >
               <MessageCircle className="w-4 h-4 text-current shrink-0" />
@@ -189,7 +189,7 @@ export default function Footer() {
         {isLoaded && (
           <ClipText
             text="LET'S BUILD."
-            lineClassName="font-display font-[300] text-[8vw] sm:text-[10vw] md:text-[11vw] lg:text-[12vw] leading-none tracking-tighter uppercase select-none"
+            lineClassName="font-display font-[300] text-[12vw] sm:text-[10vw] md:text-[11vw] lg:text-[12vw] leading-none tracking-tighter uppercase select-none"
           />
         )}
       </div>

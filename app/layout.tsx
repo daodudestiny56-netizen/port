@@ -1,6 +1,12 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import LayoutWrapper from "@/components/LayoutWrapper";
 import "./globals.css";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#0A0A0A",
+};
 
 export const metadata: Metadata = {
   title: "Daodu Destiny | Full-Stack Developer & Creative Engineer",

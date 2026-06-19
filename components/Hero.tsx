@@ -35,7 +35,7 @@ export default function Hero() {
     <section className="relative w-full min-h-screen flex flex-col justify-between px-6 py-8 md:px-12 md:py-12 bg-transparent select-none overflow-hidden">
       {/* Top Header Row */}
       <div className="flex justify-between items-center w-full z-10 gap-4">
-        <span className="font-display text-xs sm:text-sm md:text-base font-[300] tracking-widest text-secondaryText uppercase truncate">
+        <span className="font-display text-xs sm:text-sm md:text-base font-[300] tracking-wider md:tracking-widest text-secondaryText uppercase truncate">
           {portfolioData.name}
         </span>
 
@@ -55,7 +55,7 @@ export default function Hero() {
           <ClipText
             text={words}
             typewriterLineIndex={1}
-            lineClassName="font-display font-[300] text-[8vw] sm:text-[7vw] md:text-[5.5vw] lg:text-[6vw] leading-none text-primaryText uppercase select-none origin-bottom"
+            lineClassName="font-display font-[300] text-[12vw] sm:text-[9vw] md:text-[7vw] lg:text-[6vw] leading-none text-primaryText uppercase select-none origin-bottom"
           />
         )}
 
@@ -102,7 +102,7 @@ export default function Hero() {
           initial="hidden"
           animate={isLoaded ? "visible" : "hidden"}
           variants={fadeUpVariants}
-          className="relative flex items-center justify-center shrink-0 w-20 h-20 md:w-24 md:h-24 pointer-events-none"
+          className="relative hidden sm:flex items-center justify-center shrink-0 w-20 h-20 md:w-24 md:h-24 pointer-events-none"
         >
           <svg
             className="w-full h-full animate-spin-slow"
