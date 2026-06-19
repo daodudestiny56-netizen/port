@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #0A0A0A;
+  }
+  
+  body {
+    background-color: #0A0A0A;
+    color: #F5F5F5;
+    font-weight: 300;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Custom cursor setup: hide default cursor on desktop */
+  @media (min-width: 768px) {
+    html, body, a, button, [role="button"], input, select, textarea {
+      cursor: none !important;
+    }
+  }
+
+  ::selection {
+    background-color: #F5F5F5;
+    color: #0A0A0A;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+::-webkit-scrollbar-thumb {
+  background: #1F1F1F;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2A2A2A;
+}
+
+/* Utilities for clip masks */
+.clip-mask {
+  overflow: hidden;
+  display: inline-block;
+}
+
+/* Background transition timing override */
+.invert-transition {
+  transition: background-color 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+              color 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Bento Grid Responsive Layout System */
+.bento-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "featured"
+    "clock"
+    "stack";
+  gap: 24px;
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "featured featured"
+      "clock stack";
+  }
+}
+
+@media (min-width: 1280px) {
+  .bento-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-areas:
+      "featured featured clock"
+      "stack stack stack";
+  }
+}
+
+/* -----------------------------------------
+   ANIMATIONS & ADVANCED EFFECTS SYSTEM
+   ----------------------------------------- */
+
+/* Animation 2: Infinite Marquee keyframes */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--speed, 25s) linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Animation 9: Card Hover Shadow */
+.card-hover-shadow {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.card-hover-shadow:hover {
+  box-shadow: 0 20px 60px rgba(232, 255, 71, 0.08);
+  border-color: rgba(232, 255, 71, 0.2);
+}
+
+/* Animation 9: Edge-tracking Glow Effect */
+.project-card-glow {
+  position: relative;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.project-card-glow::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 12px;
+  padding: 1px;
+  background: radial-gradient(
+    250px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
+    rgba(232, 255, 71, 0.25),
+    transparent 60%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+.project-card-glow:hover::before {
+  opacity: 1;
+}
+
+.project-card-glow:hover {
+  box-shadow: 0 20px 60px rgba(232, 255, 71, 0.08);
+}
+
+/* will-change overrides for hardware acceleration */
+.will-change-transform {
+  will-change: transform;
+}
+
+
