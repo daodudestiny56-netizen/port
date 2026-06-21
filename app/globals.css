@@ -109,6 +109,9 @@
   width: max-content;
   animation: marquee var(--speed, 25s) linear infinite;
   will-change: transform;
+  /* Ensures no sub-pixel jitter at the loop point */
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .animate-marquee:hover {

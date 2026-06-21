@@ -99,9 +99,9 @@ export default function TechStack() {
             return (
               <div
                 key={index}
-                className="flex items-center gap-2 px-3 py-2 bg-[#1A1A1A] border border-[#2A2A2A] rounded-[12px] text-xs font-[300] text-primaryText transition-all duration-300 ease-portfolio-ease hover:-translate-y-0.5 hover:border-[#E8FF47] shrink-0 group/pill"
+                className="flex items-center gap-2.5 px-4 py-2.5 bg-[#1A1A1A] border border-[#2A2A2A] rounded-[12px] text-sm font-[300] text-primaryText transition-all duration-300 ease-portfolio-ease hover:-translate-y-0.5 hover:border-[#E8FF47] shrink-0 group/pill"
               >
-                <IconComponent className="w-3.5 h-3.5 text-secondaryText transition-colors duration-300 group-hover/pill:text-[#E8FF47]" />
+                <IconComponent className="w-[18px] h-[18px] text-secondaryText transition-colors duration-300 group-hover/pill:text-[#E8FF47]" />
                 <span>{tool.name}</span>
               </div>
             );
