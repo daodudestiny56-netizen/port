@@ -164,23 +164,19 @@ export default function Footer() {
 
       {/* Animation 2: Infinite Marquee Scrolling Rows moving in opposite directions */}
       <div className="w-full flex flex-col my-auto py-8">
-        <Marquee speed="25s" direction="left" className="py-4 border-t border-b border-current/10">
-          <div className="flex gap-16 font-display font-black text-6xl md:text-8xl tracking-tighter">
-            <span>FORGE</span>
-            <span>DEVELOP</span>
-            <span>ENGINEER</span>
-            <span>DESIGN</span>
-            <span>ANIMATE</span>
-          </div>
+        <Marquee speed="25s" direction="left" gap="4rem" className="py-4 border-t border-b border-current/10 font-display font-black text-6xl md:text-8xl tracking-tighter">
+          <span>FORGE</span>
+          <span>DEVELOP</span>
+          <span>ENGINEER</span>
+          <span>DESIGN</span>
+          <span>ANIMATE</span>
         </Marquee>
-        <Marquee speed="30s" direction="right" className="py-4 border-b border-current/10">
-          <div className="flex gap-16 font-display font-black text-6xl md:text-8xl tracking-tighter">
-            <span>FLUID</span>
-            <span>PREMIUM</span>
-            <span>INTENTIONAL</span>
-            <span>ACCESSIBLE</span>
-            <span>INTERACTIVE</span>
-          </div>
+        <Marquee speed="30s" direction="right" gap="4rem" className="py-4 border-b border-current/10 font-display font-black text-6xl md:text-8xl tracking-tighter">
+          <span>FLUID</span>
+          <span>PREMIUM</span>
+          <span>INTENTIONAL</span>
+          <span>ACCESSIBLE</span>
+          <span>INTERACTIVE</span>
         </Marquee>
       </div>
 

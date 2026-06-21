@@ -95,26 +95,40 @@
    ----------------------------------------- */
 
 /* Animation 2: Infinite Marquee keyframes */
-@keyframes marquee {
+@keyframes marquee-left {
   0% {
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(calc(-100% - var(--marquee-gap, 1rem)));
   }
 }
 
-.animate-marquee {
-  display: flex;
-  width: max-content;
-  animation: marquee var(--speed, 25s) linear infinite;
+@keyframes marquee-right {
+  0% {
+    transform: translateX(calc(-100% - var(--marquee-gap, 1rem)));
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-marquee-left {
+  animation: marquee-left var(--speed, 25s) linear infinite;
   will-change: transform;
-  /* Ensures no sub-pixel jitter at the loop point */
   backface-visibility: hidden;
   transform: translateZ(0);
 }
 
-.animate-marquee:hover {
+.animate-marquee-right {
+  animation: marquee-right var(--speed, 25s) linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.group:hover .animate-marquee-left,
+.group:hover .animate-marquee-right {
   animation-play-state: paused;
 }
 
