@@ -39,7 +39,7 @@ export default function ProjectCard() {
           ───────────────────────────────────────────────────────────────── */}
       <motion.a
         {...sharedProps}
-        className="md:hidden flex flex-col justify-between w-full min-h-[350px] h-auto bg-surface border border-border rounded-[12px] p-5 select-none group relative overflow-hidden card-hover-shadow"
+        className="md:hidden flex flex-col justify-between w-full min-h-[280px] h-auto bg-surface border border-border rounded-[12px] p-5 select-none group relative overflow-hidden card-hover-shadow"
         data-cursor="hover"
       >
         {/* Background image — same opacity-10 treatment as carousel cards */}

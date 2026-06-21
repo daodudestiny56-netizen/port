@@ -45,7 +45,7 @@ export const portfolioData: PortfolioData = {
     category: "NEXT.JS / VOICE-AUTH",
     image: "/images/proof.png",
     link: "https://github.com/daodudestiny56-netizen/proof-",
-    description: "An automated platform for educational institutions that handles attendance tracking and livestreaming of classes in one place — removing the manual overhead from remote and hybrid learning.",
+    description: "An automated platform that handles attendance tracking and class livestreaming for educational institutions — all in one place.",
   },
   projects: [
     {
