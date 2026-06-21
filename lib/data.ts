@@ -6,13 +6,6 @@ export interface Project {
   description: string;
 }
 
-export interface Role {
-  company: string;
-  title: string;
-  years: string;
-  description: string;
-}
-
 export interface Stat {
   value: number;
   label: string;
@@ -33,7 +26,6 @@ export interface PortfolioData {
   featuredProject: Project;
   projects: Project[];
   toolkit: { name: string; category: string }[];
-  experience: Role[];
   stats: Stat[];
 }
 
@@ -100,26 +92,6 @@ export const portfolioData: PortfolioData = {
     { name: "Framer Motion", category: "Animation" },
     { name: "GSAP", category: "Animation" },
     { name: "WebGL", category: "Graphics" },
-  ],
-  experience: [
-    {
-      company: "STRIPE",
-      title: "Senior Creative Engineer",
-      years: "2024 — PRESENT",
-      description: "Led design systems integration, created high-performance WebGL landing pages, and crafted interactive materials for Stripe Sessions.",
-    },
-    {
-      company: "VERCEL",
-      title: "Interactive Developer",
-      years: "2022 — 2024",
-      description: "Built immersive interfaces for Next.js conferences, optimized package load times, and worked closely with the Developer Relations team.",
-    },
-    {
-      company: "DESTRUCT STUDIO",
-      title: "Frontend Developer",
-      years: "2020 — 2022",
-      description: "Engineered smooth, accessible websites for digital design clients using React, TailwindCSS, and GSAP.",
-    },
   ],
   stats: [
     { value: 2, label: "YEARS OF EXPERIENCE" },
