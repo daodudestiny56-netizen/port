@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { Check, Copy, MessageCircle } from "lucide-react";
 import { portfolioData } from "@/lib/data";
@@ -33,6 +33,16 @@ export default function Footer() {
   const footerRef = useRef<HTMLDivElement>(null);
   const [copied, setCopied] = useState(false);
   const { isLoaded } = usePreloader();
+  const [isMobile, setIsMobile] = useState(true);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Scoped scroll tracking for the footer viewport entry
   const { scrollYProgress } = useScroll({
@@ -81,7 +91,7 @@ export default function Footer() {
     <motion.footer
       id="contact"
       ref={footerRef}
-      style={{ backgroundColor, color: primaryTextColor }}
+      style={isMobile ? { backgroundColor: "#0A0A0A", color: "#F5F5F5" } : { backgroundColor, color: primaryTextColor }}
       className="relative w-full min-h-screen flex flex-col justify-between px-6 py-12 md:px-12 md:py-16 select-none overflow-hidden"
     >
       {/* Top Section: Subtitle & CTA */}
@@ -151,7 +161,7 @@ export default function Footer() {
               href={portfolioData.socials.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: accentColor }}
+              style={isMobile ? { color: "#E8FF47" } : { color: accentColor }}
               className="font-mono text-base md:text-lg border-b border-solid border-current pb-0.5 hover:opacity-80 transition-opacity duration-200 flex items-center gap-2"
               data-cursor="hover"
             >
@@ -196,7 +206,7 @@ export default function Footer() {
 
       {/* Bottom Bar Section */}
       <motion.div
-        style={{ borderColor }}
+        style={isMobile ? { borderColor: "#1F1F1F" } : { borderColor }}
         className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 pt-8 border-t"
       >
         {/* Left: Copyright */}
@@ -205,7 +215,7 @@ export default function Footer() {
             {portfolioData.name}
           </span>
           <motion.span
-            style={{ color: secondaryTextColor }}
+            style={isMobile ? { color: "#6B6B6B" } : { color: secondaryTextColor }}
             className="text-[10px] uppercase font-[300] tracking-wide"
           >
             &copy; {new Date().getFullYear()} — ALL RIGHTS RESERVED
@@ -224,7 +234,7 @@ export default function Footer() {
             <GithubIcon className="w-3.5 h-3.5 shrink-0" />
             <span>GITHUB</span>
             <motion.span
-              style={{ backgroundColor: accentColor }}
+              style={isMobile ? { backgroundColor: "#E8FF47" } : { backgroundColor: accentColor }}
               className="absolute bottom-0 left-0 h-[1.5px] w-0 transition-all duration-500 ease-portfolio-ease group-hover:w-full"
             />
           </a>
@@ -238,7 +248,7 @@ export default function Footer() {
             <TwitterIcon className="w-3.5 h-3.5 shrink-0" />
             <span>TWITTER</span>
             <motion.span
-              style={{ backgroundColor: accentColor }}
+              style={isMobile ? { backgroundColor: "#E8FF47" } : { backgroundColor: accentColor }}
               className="absolute bottom-0 left-0 h-[1.5px] w-0 transition-all duration-500 ease-portfolio-ease group-hover:w-full"
             />
           </a>
@@ -252,7 +262,7 @@ export default function Footer() {
             <LinkedinIcon className="w-3.5 h-3.5 shrink-0" />
             <span>LINKEDIN</span>
             <motion.span
-              style={{ backgroundColor: accentColor }}
+              style={isMobile ? { backgroundColor: "#E8FF47" } : { backgroundColor: accentColor }}
               className="absolute bottom-0 left-0 h-[1.5px] w-0 transition-all duration-500 ease-portfolio-ease group-hover:w-full"
             />
           </a>
@@ -267,7 +277,7 @@ export default function Footer() {
               <MessageCircle className="w-3.5 h-3.5 shrink-0" />
               <span>WHATSAPP</span>
               <motion.span
-                style={{ backgroundColor: accentColor }}
+                style={isMobile ? { backgroundColor: "#E8FF47" } : { backgroundColor: accentColor }}
                 className="absolute bottom-0 left-0 h-[1.5px] w-0 transition-all duration-500 ease-portfolio-ease group-hover:w-full"
               />
             </a>

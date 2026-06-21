@@ -73,10 +73,7 @@ const DragCarousel = forwardRef<DragCarouselRef, DragCarouselProps>(
       <div
         ref={containerRef}
         className={cn(
-          "w-full scroll-smooth",
-          isMobile 
-            ? "overflow-x-auto touch-pan-x [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden" 
-            : "overflow-hidden md:cursor-grab md:active:cursor-grabbing",
+          "w-full scroll-smooth overflow-x-auto touch-pan-x [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden md:overflow-hidden md:cursor-grab md:active:cursor-grabbing",
           className
         )}
         style={{ WebkitOverflowScrolling: "touch" }}

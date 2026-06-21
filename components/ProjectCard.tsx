@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { useMousePosition } from "@/hooks/useMousePosition";
@@ -13,8 +13,18 @@ const MotionImage = motion(Image);
 export default function ProjectCard() {
   const cardRef = useRef<HTMLAnchorElement>(null);
   const mousePos = useMousePosition(cardRef);
+  const [isMobile, setIsMobile] = useState(true);
 
   const project = portfolioData.featuredProject;
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Animation 8: Scroll-linked image parallax
   const { scrollYProgress } = useScroll({
@@ -49,7 +59,7 @@ export default function ProjectCard() {
             src={project.image}
             alt={project.name}
             fill
-            style={{ y, scale: 1.25 }}
+            style={{ y: isMobile ? 0 : y, scale: 1.25 }}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             priority
             className="object-cover will-change-transform"
