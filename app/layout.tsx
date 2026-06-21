@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import LayoutWrapper from "@/components/LayoutWrapper";
+import { portfolioData } from "@/lib/data";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -9,18 +10,18 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Daodu Destiny | Full-Stack Developer & Creative Engineer",
-  description: "Minimalist dark-theme portfolio of Daodu Destiny, a full-stack developer crafting fast, accessible, and intentional software.",
-  authors: [{ name: "Daodu Destiny" }],
+  title: `${portfolioData.name} | Frontend Developer`,
+  description: portfolioData.role,
+  authors: [{ name: portfolioData.name }],
   openGraph: {
-    title: "Daodu Destiny | Full-Stack Developer",
-    description: "Minimalist portfolio showcasing high-performance web engineering.",
+    title: `${portfolioData.name} | Frontend Developer`,
+    description: portfolioData.role,
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Daodu Destiny | Full-Stack Developer",
-    description: "Minimalist portfolio showcasing high-performance web engineering.",
+    title: `${portfolioData.name} | Frontend Developer`,
+    description: portfolioData.role,
   },
 };
 
