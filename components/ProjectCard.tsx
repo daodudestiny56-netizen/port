@@ -69,13 +69,16 @@ export default function ProjectCard() {
           </span>
         </div>
 
-        {/* Content Bottom: Title and Arrow */}
-        <div className="relative z-20 flex justify-between items-end mt-auto pt-16">
-          <div>
+        {/* Content Bottom: Title, Description and Arrow */}
+        <div className="relative z-20 flex justify-between items-end mt-auto pt-12">
+          <div className="max-w-2xl">
             <h3 className="font-display font-[300] text-2xl text-primaryText tracking-tight">
               {project.name}
             </h3>
-            <p className="text-xs text-secondaryText mt-1 font-[300] uppercase tracking-wide">
+            <p className="text-sm text-secondaryText mt-2 font-[300] leading-relaxed max-w-[90%] normal-case">
+              {project.description}
+            </p>
+            <p className="text-xs text-secondaryText/60 mt-2.5 font-[300] uppercase tracking-wide">
               Click to view repository
             </p>
           </div>

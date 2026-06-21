@@ -95,14 +95,17 @@ export default function Home() {
                   </span>
                 </div>
 
-                {/* Bottom title and arrow */}
-                <div className="relative z-10 flex justify-between items-end mt-auto">
-                  <div>
+                {/* Bottom title, description and arrow */}
+                <div className="relative z-10 flex justify-between items-end mt-auto gap-4">
+                  <div className="flex flex-col gap-1.5 max-w-[80%]">
                     <h3 className="font-display font-[300] text-lg text-primaryText tracking-tight group-hover:text-[#E8FF47] transition-colors duration-300">
                       {project.name}
                     </h3>
+                    <p className="text-xs text-secondaryText font-[300] leading-relaxed line-clamp-3 normal-case">
+                      {project.description}
+                    </p>
                   </div>
-                  <div className="w-8 h-8 rounded-full border border-border bg-[#1A1A1A]/80 flex items-center justify-center text-primaryText group-hover:border-primaryText transition-colors duration-300 shrink-0">
+                  <div className="w-8 h-8 rounded-full border border-border bg-[#1A1A1A]/80 flex items-center justify-center text-primaryText group-hover:border-primaryText transition-colors duration-300 shrink-0 self-end">
                     <ArrowUpRight className="w-4 h-4" />
                   </div>
                 </div>
