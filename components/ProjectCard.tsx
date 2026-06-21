@@ -80,17 +80,20 @@ export default function ProjectCard() {
           </span>
         </div>
 
-        {/* Content Bottom: Title, Description and Arrow */}
-        <div className="relative z-20 flex flex-row justify-between items-end mt-auto pt-6 md:pt-12 gap-4">
-          <div className="flex-1 flex flex-col gap-1.5 md:gap-0">
-            {/* mobile: base text + accent on hover (carousel-style); desktop: xl text, no accent */}
+        {/* Content Bottom: Title, Description and Arrow
+            — mobile:  flex-col → text takes full width, arrow sits below pinned right
+            — desktop: flex-row → text on left, arrow on right (unchanged) */}
+        <div className="relative z-20 flex flex-col md:flex-row md:justify-between md:items-end mt-auto pt-6 md:pt-12 gap-3 md:gap-4">
+
+          {/* Text block — full width on mobile */}
+          <div className="w-full md:flex-1 flex flex-col gap-1.5 md:gap-0">
             <h3 className="font-display font-[300]
                            text-base group-hover:text-[#E8FF47] transition-colors duration-300
                            md:text-2xl md:group-hover:text-primaryText
                            text-primaryText tracking-tight">
               {project.name}
             </h3>
-            <p className="text-xs md:text-sm text-secondaryText mt-0 md:mt-2 font-[300] leading-relaxed normal-case">
+            <p className="text-xs md:text-sm text-secondaryText mt-1 md:mt-2 font-[300] leading-relaxed normal-case">
               {project.description}
             </p>
             {/* "Click to view repository" — hidden on mobile, visible on desktop */}
@@ -99,8 +102,8 @@ export default function ProjectCard() {
             </p>
           </div>
 
-          {/* Arrow — w-8/h-4 on mobile (carousel-style); w-10/h-5 on desktop */}
-          <div className="w-8 h-8 md:w-10 md:h-10 rounded-full border border-border bg-[#1A1A1A]/80 flex items-center justify-center text-primaryText group-hover:border-primaryText transition-colors duration-300 shrink-0 self-end">
+          {/* Arrow — right-aligned below text on mobile; beside text on desktop */}
+          <div className="self-end w-8 h-8 md:w-10 md:h-10 rounded-full border border-border bg-[#1A1A1A]/80 flex items-center justify-center text-primaryText group-hover:border-primaryText transition-colors duration-300 shrink-0">
             <ArrowUpRight className="w-4 h-4 md:w-5 md:h-5 transform transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </div>
         </div>
