@@ -109,8 +109,6 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
     if (!ctx) return;
 
     let animationFrameId: number;
-    const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-
     const render = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       stars.forEach((star) => {
@@ -129,18 +127,7 @@ export const StarsBackground: React.FC<StarBackgroundProps> = ({
       animationFrameId = requestAnimationFrame(render);
     };
 
-    if (isMobile) {
-      // Static draw on mobile to optimize performance
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      stars.forEach((star) => {
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity * 0.8})`; // slightly dimmer for static background
-        ctx.fill();
-      });
-    } else {
-      render();
-    }
+    render();
 
     return () => {
       if (animationFrameId) {

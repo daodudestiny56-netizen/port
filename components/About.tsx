@@ -37,7 +37,7 @@ export default function About() {
   const { isLoaded } = usePreloader();
 
   return (
-    <section id="about" className="w-full px-6 py-20 md:px-12 bg-transparent select-none">
+    <section id="about" className="w-full px-4 sm:px-6 md:px-12 py-20 bg-transparent select-none">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start">
 
         {/* Left Column: Biography Paragraph */}

@@ -40,7 +40,7 @@ export default function MicroClock() {
     <motion.div
       variants={staggerChildVariants}
       whileHover={{ scale: 1.02, y: -4 }}
-      className="relative flex flex-col justify-between h-full w-full bg-surface border border-border rounded-[12px] p-7 card-hover-shadow group select-none"
+      className="relative flex flex-col justify-between h-full w-full bg-surface border border-border rounded-[12px] p-5 md:p-7 card-hover-shadow group select-none"
     >
       <div>
         <h4 className="font-display text-[11px] font-[300] tracking-widest text-secondaryText uppercase mb-6">

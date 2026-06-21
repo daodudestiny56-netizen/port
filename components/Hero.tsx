@@ -32,7 +32,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative w-full min-h-screen flex flex-col justify-between px-6 py-8 md:px-12 md:py-12 bg-transparent select-none overflow-hidden">
+    <section className="relative w-full min-h-screen flex flex-col justify-between px-4 sm:px-6 md:px-12 py-8 md:py-12 bg-transparent select-none overflow-hidden">
       {/* Top Header Row */}
       <div className="flex justify-between items-center w-full z-10 gap-4">
         <span className="font-display text-xs sm:text-sm md:text-base font-[300] tracking-wider md:tracking-widest text-secondaryText uppercase truncate">
