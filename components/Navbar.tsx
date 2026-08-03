@@ -34,25 +34,25 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="relative w-full z-40 flex justify-between items-center py-2 gap-4">
+      <header className="relative w-full max-w-full overflow-hidden z-40 flex justify-between items-center py-2 gap-2 sm:gap-4">
         {/* Brand Name */}
         <a
           href="#"
-          className="font-display text-xs sm:text-sm md:text-base font-[300] tracking-wider md:tracking-widest text-secondaryText uppercase truncate hover:text-primaryText transition-colors"
+          className="font-display text-xs sm:text-sm md:text-base font-[300] tracking-wider md:tracking-widest text-secondaryText uppercase truncate max-w-[120px] xs:max-w-[170px] sm:max-w-none hover:text-primaryText transition-colors shrink min-w-0"
           data-cursor="hover"
         >
           {portfolioData.name}
         </a>
 
         {/* Center/Right Status Badge & Desktop Navigation */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-2 sm:gap-6 shrink min-w-0 max-w-[calc(100%-130px)] sm:max-w-none">
           {/* Status Badge */}
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-surface text-[10px] md:text-xs font-mono tracking-wide shrink-0">
-            <span className="relative flex h-2 w-2">
+          <div className="flex items-center gap-2 px-2.5 sm:px-3 py-1 rounded-full border border-border bg-surface text-[9px] sm:text-[10px] md:text-xs font-mono tracking-wide shrink min-w-0 max-w-[160px] xs:max-w-[220px] sm:max-w-none">
+            <span className="relative flex h-2 w-2 shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00F0FF] opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00F0FF]"></span>
             </span>
-            <span className="text-[#3FE8F5]">{portfolioData.status}</span>
+            <span className="text-[#3FE8F5] truncate">{portfolioData.status}</span>
           </div>
 
           {/* Desktop Links (Hidden below 768px) */}

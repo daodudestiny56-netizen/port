@@ -78,12 +78,20 @@
 /* Bento Grid Responsive Layout System */
 .bento-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 100%;
   grid-template-areas:
     "featured"
     "clock"
     "stack";
   gap: 24px;
+  width: 100%;
+  max-width: 100%;
+}
+
+.bento-grid > * {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 @media (min-width: 768px) and (max-width: 1279px) {

@@ -14,21 +14,13 @@ interface TypewriterProps {
 
 function Typewriter({ text, delay = 0, speed = 80, isStart = true }: TypewriterProps) {
   const [displayText, setDisplayText] = useState("");
-  const [key, setKey] = useState(0);
-
-  useEffect(() => {
-    if (!isStart) return;
-    const loopInterval = setInterval(() => {
-      setKey((prev) => prev + 1);
-    }, 7000);
-
-    return () => clearInterval(loopInterval);
-  }, [isStart]);
+  const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
     if (!isStart) return;
 
     setDisplayText("");
+    setIsDone(false);
     let timerId: NodeJS.Timeout;
 
     const startTimeout = setTimeout(() => {
@@ -38,6 +30,7 @@ function Typewriter({ text, delay = 0, speed = 80, isStart = true }: TypewriterP
           setDisplayText(text.substring(0, currentIndex + 1));
           currentIndex++;
         } else {
+          setIsDone(true);
           clearInterval(timerId);
         }
       }, speed);
@@ -47,12 +40,14 @@ function Typewriter({ text, delay = 0, speed = 80, isStart = true }: TypewriterP
       clearTimeout(startTimeout);
       if (timerId) clearInterval(timerId);
     };
-  }, [text, delay, speed, isStart, key]);
+  }, [text, delay, speed, isStart]);
 
   return (
     <span className="inline-flex items-center">
       <span>{displayText}</span>
-      <span className="inline-block w-[0.06em] h-[0.85em] bg-[#E8FF47] ml-[0.05em] animate-pulse shrink-0" />
+      {!isDone && (
+        <span className="inline-block w-[0.06em] h-[0.85em] bg-[#00F0FF] ml-[0.05em] animate-pulse shrink-0" />
+      )}
     </span>
   );
 }

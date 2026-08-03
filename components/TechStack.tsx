@@ -85,23 +85,23 @@ export default function TechStack() {
     <motion.div
       variants={staggerChildVariants}
       whileHover={{ scale: 1.02, y: -4 }}
-      className="relative flex flex-col justify-between h-full w-full bg-surface border border-border rounded-[12px] p-5 md:p-7 card-hover-shadow group select-none"
+      className="relative flex flex-col justify-between h-full w-full max-w-full bg-surface border border-border rounded-[12px] p-5 md:p-7 card-hover-shadow group select-none overflow-hidden"
     >
-      <div>
+      <div className="w-full max-w-full overflow-hidden">
         <h4 className="font-display text-[11px] font-[300] tracking-widest text-secondaryText uppercase mb-6">
           TOOLKIT
         </h4>
         
         {/* Infinite marquee of pills */}
-        <Marquee speed="20s" direction="left" className="py-1">
+        <Marquee speed="20s" direction="left" className="py-1 w-full max-w-full overflow-hidden">
           {tools.map((tool, index) => {
             const IconComponent = getIcon(tool.name);
             return (
               <div
                 key={index}
-                className="flex items-center gap-2.5 px-4 py-2.5 bg-[#1A1A1A] border border-[#2A2A2A] rounded-[12px] text-xs font-mono font-[300] text-primaryText transition-all duration-300 ease-portfolio-ease hover:-translate-y-0.5 hover:border-[#00F0FF] shrink-0 group/pill"
+                className="flex items-center gap-2.5 px-3.5 sm:px-4 py-2 sm:py-2.5 bg-[#1A1A1A] border border-[#2A2A2A] rounded-[12px] text-xs font-mono font-[300] text-primaryText transition-all duration-300 ease-portfolio-ease hover:-translate-y-0.5 hover:border-[#00F0FF] shrink-0 group/pill"
               >
-                <IconComponent className="w-[18px] h-[18px] text-secondaryText transition-colors duration-300 group-hover/pill:text-[#00F0FF]" />
+                <IconComponent className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-secondaryText transition-colors duration-300 group-hover/pill:text-[#00F0FF]" />
                 <span>{tool.name}</span>
               </div>
             );

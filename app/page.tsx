@@ -20,7 +20,7 @@ export default function Home() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   return (
-    <main className="relative min-h-screen w-full bg-transparent select-none flex flex-col">
+    <main className="relative min-h-screen w-full max-w-full overflow-x-hidden bg-transparent select-none flex flex-col">
       <Hero />
       <BentoGrid onSelectProject={(p) => setSelectedProject(p)} />
       

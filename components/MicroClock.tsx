@@ -69,23 +69,23 @@ export default function MicroClock() {
 
       <div>
         {/* Header: Title + Solar Mode Indicator */}
-        <div className="flex items-center justify-between mb-4">
-          <h4 className="font-mono text-[11px] font-[300] tracking-widest text-secondaryText uppercase flex items-center gap-1.5">
-            <Compass className="w-3.5 h-3.5 text-[#00F0FF]" />
-            <span>LAGOS SOLAR STATION</span>
+        <div className="flex items-center justify-between gap-2 flex-wrap sm:flex-nowrap mb-4">
+          <h4 className="font-mono text-[10px] sm:text-[11px] font-[300] tracking-wider sm:tracking-widest text-secondaryText uppercase flex items-center gap-1.5 shrink min-w-0">
+            <Compass className="w-3.5 h-3.5 text-[#00F0FF] shrink-0" />
+            <span className="truncate">LAGOS SOLAR STATION</span>
           </h4>
 
-          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-border bg-[#161616] text-[9px] font-mono text-[#3FE8F5]">
+          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-border bg-[#161616] text-[8px] sm:text-[9px] font-mono text-[#3FE8F5] shrink-0">
             {isDay ? <Sun className="w-3 h-3 text-[#00F0FF]" /> : <Moon className="w-3 h-3 text-[#3FE8F5]" />}
             <span>{isDay ? "DAYLIGHT" : "NIGHT CYCLE"}</span>
           </div>
         </div>
 
         {/* Live Clock Display */}
-        <div className="flex items-center font-mono text-[clamp(1.75rem,5vw,2.25rem)] font-[300] text-primaryText tracking-tighter leading-none h-[44px]">
+        <div className="flex items-center font-mono text-[clamp(1.5rem,5vw,2.25rem)] font-[300] text-primaryText tracking-tighter leading-none h-[44px]">
           <span>{hhmm}</span>
           <span className="mx-0.5 text-[#00F0FF] animate-pulse">:</span>
-          <div className="overflow-hidden relative h-[44px] w-[46px] sm:w-[50px] inline-flex items-center justify-start">
+          <div className="overflow-hidden relative h-[44px] w-[42px] sm:w-[50px] inline-flex items-center justify-start">
             <AnimatePresence mode="popLayout">
               {mounted && (
                 <motion.span
@@ -94,7 +94,7 @@ export default function MicroClock() {
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: "-80%", opacity: 0 }}
                   transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                  className="relative font-mono text-[clamp(1.75rem,5vw,2.25rem)] font-[300] text-primaryText block"
+                  className="relative font-mono text-[clamp(1.5rem,5vw,2.25rem)] font-[300] text-primaryText block"
                 >
                   {ss}
                 </motion.span>
@@ -106,13 +106,13 @@ export default function MicroClock() {
       </div>
 
       {/* Solar Dial Trajectory & Interactive Coordinates (Hover / Tap reveal) */}
-      <div className="mt-6 pt-4 border-t border-border/80 flex flex-col gap-3">
+      <div className="mt-6 pt-4 border-t border-border/80 flex flex-col gap-3 w-full max-w-full">
         {/* Solar Orbit Arc Progress Bar */}
         <div className="w-full flex flex-col gap-1.5">
-          <div className="flex justify-between items-center text-[9px] font-mono text-secondaryText uppercase">
-            <span>SUNRISE 06:00</span>
-            <span className="text-[#3FE8F5]">SOLAR POSITION</span>
-            <span>SUNSET 18:00</span>
+          <div className="flex justify-between items-center text-[8px] sm:text-[9px] font-mono text-secondaryText uppercase gap-1">
+            <span className="shrink-0">SUNRISE 06:00</span>
+            <span className="text-[#3FE8F5] truncate text-center">SOLAR POSITION</span>
+            <span className="shrink-0">SUNSET 18:00</span>
           </div>
           <div className="w-full h-1 bg-[#1A1A1A] rounded-full overflow-hidden relative">
             <motion.div 
