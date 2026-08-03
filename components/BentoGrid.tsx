@@ -12,7 +12,7 @@ export default function BentoGrid() {
   const { isLoaded } = usePreloader();
 
   return (
-    <section id="work" className="w-full px-4 sm:px-6 md:px-12 py-16 bg-transparent select-none">
+    <section id="work" className="w-full px-4 sm:px-6 md:px-12 py-[clamp(2.5rem,5vw,4.5rem)] bg-transparent select-none">
       <div className="max-w-7xl mx-auto flex flex-col gap-6">
         
         {/* Section Title */}
@@ -25,7 +25,7 @@ export default function BentoGrid() {
               />
               <ClipText
                 text="THE ARCHIVE."
-                lineClassName="font-display font-[300] text-2xl sm:text-3xl md:text-4xl text-primaryText tracking-tight"
+                lineClassName="font-display font-[300] text-[clamp(1.5rem,4vw+0.5rem,2.5rem)] text-primaryText tracking-tight"
                 delay={0.08}
               />
             </>

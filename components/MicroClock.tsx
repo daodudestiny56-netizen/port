@@ -48,10 +48,10 @@ export default function MicroClock() {
         </h4>
 
         {/* Live Clock Display */}
-        <div className="flex items-center font-mono text-[36px] font-[300] text-primaryText tracking-tighter leading-none h-[44px]">
+        <div className="flex items-center font-mono text-[clamp(1.75rem,5vw,2.25rem)] font-[300] text-primaryText tracking-tighter leading-none h-[44px]">
           <span>{hhmm}</span>
           <span className="mx-0.5 text-secondaryText animate-pulse">:</span>
-          <div className="overflow-hidden relative h-[44px] w-[50px] inline-flex items-center justify-start">
+          <div className="overflow-hidden relative h-[44px] w-[46px] sm:w-[50px] inline-flex items-center justify-start">
             <AnimatePresence mode="popLayout">
               {mounted && (
                 <motion.span
@@ -60,7 +60,7 @@ export default function MicroClock() {
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: "-80%", opacity: 0 }}
                   transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                  className="relative font-mono text-[36px] font-[300] text-primaryText block"
+                  className="relative font-mono text-[clamp(1.75rem,5vw,2.25rem)] font-[300] text-primaryText block"
                 >
                   {ss}
                 </motion.span>

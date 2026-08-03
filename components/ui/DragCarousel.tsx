@@ -73,7 +73,7 @@ const DragCarousel = forwardRef<DragCarouselRef, DragCarouselProps>(
       <div
         ref={containerRef}
         className={cn(
-          "w-full scroll-smooth overflow-x-auto touch-pan-x [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden md:overflow-hidden md:cursor-grab md:active:cursor-grabbing",
+          "w-full scroll-smooth overflow-x-auto touch-pan-x [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden md:overflow-hidden md:cursor-grab md:active:cursor-grabbing snap-x snap-mandatory",
           className
         )}
         style={{ WebkitOverflowScrolling: "touch" }}
@@ -83,7 +83,7 @@ const DragCarousel = forwardRef<DragCarouselRef, DragCarouselProps>(
           dragConstraints={{ right: 0, left: constraintsRight }}
           dragElastic={0.1}
           style={{ x }}
-          className="flex gap-6 w-max select-none will-change-transform"
+          className="flex gap-4 sm:gap-6 w-max select-none will-change-transform"
           whileTap={isMobile ? {} : { cursor: "grabbing" }}
         >
           {children}

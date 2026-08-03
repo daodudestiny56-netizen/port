@@ -23,7 +23,7 @@ export default function Home() {
       <BentoGrid />
       
       {/* Animation 7: Drag Carousel Section */}
-      <section className="w-full px-4 sm:px-6 md:px-12 py-16 bg-transparent select-none">
+      <section className="w-full px-4 sm:px-6 md:px-12 py-[clamp(2.5rem,5vw,4.5rem)] bg-transparent select-none">
         <div className="max-w-7xl mx-auto flex flex-col gap-6">
           
           {/* Section Title & Navigation */}
@@ -37,7 +37,7 @@ export default function Home() {
                   />
                   <ClipText
                     text="FEATURED PROJECTS."
-                    lineClassName="font-display font-[300] text-2xl sm:text-3xl md:text-4xl text-primaryText tracking-tight"
+                    lineClassName="font-display font-[300] text-[clamp(1.5rem,4vw+0.5rem,2.5rem)] text-primaryText tracking-tight"
                     delay={0.08}
                   />
                 </>
@@ -48,7 +48,7 @@ export default function Home() {
             <div className="flex items-center gap-3 self-end sm:self-auto shrink-0">
               <button
                 onClick={() => carouselRef.current?.scrollLeft()}
-                className="w-10 h-10 rounded-full border border-border bg-[#111111]/80 hover:border-primaryText flex items-center justify-center text-primaryText transition-colors duration-300 hover:bg-neutral-900"
+                className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full border border-border bg-[#111111]/80 hover:border-primaryText flex items-center justify-center text-primaryText transition-colors duration-300 hover:bg-neutral-900"
                 data-cursor="hover"
                 aria-label="Scroll left"
               >
@@ -56,7 +56,7 @@ export default function Home() {
               </button>
               <button
                 onClick={() => carouselRef.current?.scrollRight()}
-                className="w-10 h-10 rounded-full border border-border bg-[#111111]/80 hover:border-primaryText flex items-center justify-center text-primaryText transition-colors duration-300 hover:bg-neutral-900"
+                className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-full border border-border bg-[#111111]/80 hover:border-primaryText flex items-center justify-center text-primaryText transition-colors duration-300 hover:bg-neutral-900"
                 data-cursor="hover"
                 aria-label="Scroll right"
               >
@@ -74,7 +74,7 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 0.98 }}
-                className="flex flex-col justify-between w-[calc(100vw-32px)] sm:w-[300px] md:w-[320px] min-h-[350px] h-auto bg-surface border border-border rounded-[12px] p-5 md:p-6 select-none shrink-0 group relative overflow-hidden card-hover-shadow"
+                className="flex flex-col justify-between w-[calc(100vw-2.5rem)] max-w-[340px] sm:w-[300px] md:w-[320px] min-h-[350px] h-auto bg-surface border border-border rounded-[12px] p-5 md:p-6 select-none shrink-0 group relative overflow-hidden card-hover-shadow snap-start"
                 data-cursor="hover"
               >
                 {/* Background image overlay */}

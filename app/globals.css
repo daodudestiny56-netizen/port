@@ -27,6 +27,14 @@
     }
   }
 
+  /* Touch targets minimum size for mobile accessibility */
+  @media (max-width: 767px) {
+    a, button, [role="button"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
+  }
+
   ::selection {
     background-color: #F5F5F5;
     color: #0A0A0A;

@@ -82,10 +82,10 @@ export default function Footer() {
       id="contact"
       ref={footerRef}
       style={{ backgroundColor, color: primaryTextColor }}
-      className="relative w-full min-h-screen flex flex-col justify-between px-4 sm:px-6 md:px-12 py-12 md:py-16 select-none overflow-hidden"
+      className="relative w-full min-h-[100dvh] flex flex-col justify-between px-4 sm:px-6 md:px-12 py-10 md:py-16 select-none overflow-hidden"
     >
       {/* Top Section: Subtitle & CTA */}
-      <div className="flex flex-col gap-2 mt-8">
+      <div className="flex flex-col gap-2 mt-4 sm:mt-8">
         {isLoaded && (
           <ClipText
             text="SAY HELLO"
@@ -93,18 +93,18 @@ export default function Footer() {
           />
         )}
         
-        <div className="flex flex-col sm:flex-row sm:items-center gap-6 md:gap-10 mt-2 self-start">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 md:gap-10 mt-2 self-start w-full sm:w-auto">
           {/* Email Copy Interaction */}
           <div className="flex items-center gap-3 group">
             <button
               onClick={handleCopyEmail}
-              className="font-mono text-base md:text-lg border-b border-dashed border-current pb-0.5 hover:opacity-80 transition-opacity duration-200 flex items-center gap-2"
+              className="font-mono text-sm sm:text-base md:text-lg border-b border-dashed border-current pb-0.5 hover:opacity-80 transition-opacity duration-200 flex items-center gap-2 min-h-[44px]"
               data-cursor="hover"
             >
               {portfolioData.email}
             </button>
             
-            <div className="flex items-center justify-center w-8 h-8 rounded-full border border-current/10 bg-current/5 relative">
+            <div className="flex items-center justify-center w-9 h-9 rounded-full border border-current/10 bg-current/5 relative shrink-0">
               <AnimatePresence mode="wait">
                 {copied ? (
                   <motion.div
@@ -152,7 +152,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               style={{ color: accentColor }}
-              className="font-mono text-base md:text-lg border-b border-solid border-current pb-0.5 hover:opacity-80 transition-opacity duration-200 flex items-center gap-2"
+              className="font-mono text-sm sm:text-base md:text-lg border-b border-solid border-current pb-0.5 hover:opacity-80 transition-opacity duration-200 flex items-center gap-2 min-h-[44px]"
               data-cursor="hover"
             >
               <MessageCircle className="w-4 h-4 text-current shrink-0" />
@@ -163,15 +163,15 @@ export default function Footer() {
       </div>
 
       {/* Animation 2: Infinite Marquee Scrolling Rows moving in opposite directions */}
-      <div className="w-full flex flex-col my-auto py-8">
-        <Marquee speed="25s" direction="left" gap="4rem" className="py-4 border-t border-b border-current/10 font-display font-black text-6xl md:text-8xl tracking-tighter">
+      <div className="w-full flex flex-col my-auto py-6 sm:py-8">
+        <Marquee speed="25s" direction="left" gap="2.5rem" className="py-3 sm:py-4 border-t border-b border-current/10 font-display font-black text-[clamp(2.5rem,7vw,6rem)] tracking-tighter">
           <span>FORGE</span>
           <span>DEVELOP</span>
           <span>ENGINEER</span>
           <span>DESIGN</span>
           <span>ANIMATE</span>
         </Marquee>
-        <Marquee speed="30s" direction="right" gap="4rem" className="py-4 border-b border-current/10 font-display font-black text-6xl md:text-8xl tracking-tighter">
+        <Marquee speed="30s" direction="right" gap="2.5rem" className="py-3 sm:py-4 border-b border-current/10 font-display font-black text-[clamp(2.5rem,7vw,6rem)] tracking-tighter">
           <span>FLUID</span>
           <span>PREMIUM</span>
           <span>INTENTIONAL</span>
@@ -181,11 +181,11 @@ export default function Footer() {
       </div>
 
       {/* Middle Section: Massive Typography Headline */}
-      <div className="mb-12">
+      <div className="mb-8 sm:mb-12">
         {isLoaded && (
           <ClipText
             text="LET'S BUILD."
-            lineClassName="font-display font-[300] text-[12vw] sm:text-[10vw] md:text-[11vw] lg:text-[12vw] leading-none tracking-tighter uppercase select-none"
+            lineClassName="font-display font-[300] text-[clamp(2.5rem,9vw,7.5rem)] leading-none tracking-tighter uppercase select-none"
           />
         )}
       </div>
@@ -193,7 +193,7 @@ export default function Footer() {
       {/* Bottom Bar Section */}
       <motion.div
         style={{ borderColor }}
-        className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 pt-8 border-t"
+        className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 pt-6 sm:pt-8 border-t"
       >
         {/* Left: Copyright */}
         <div className="flex flex-col gap-1">
@@ -209,47 +209,47 @@ export default function Footer() {
         </div>
 
         {/* Right: Social Links with dynamic accent color underlines */}
-        <div className="flex items-center gap-6 md:gap-8 flex-wrap">
+        <div className="flex items-center gap-4 sm:gap-6 md:gap-8 flex-wrap">
           <a
             href={portfolioData.socials.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative py-1 text-xs md:text-sm font-[300] tracking-wider uppercase transition-colors flex items-center gap-1.5"
+            className="group relative py-1 text-xs md:text-sm font-[300] tracking-wider uppercase transition-colors flex items-center gap-1.5 min-h-[44px]"
             data-cursor="hover"
           >
             <GithubIcon className="w-3.5 h-3.5 shrink-0" />
             <span>GITHUB</span>
             <motion.span
               style={{ backgroundColor: accentColor }}
-              className="absolute bottom-0 left-0 h-[1.5px] w-0 transition-all duration-500 ease-portfolio-ease group-hover:w-full"
+              className="absolute bottom-1 left-0 h-[1.5px] w-0 transition-all duration-500 ease-portfolio-ease group-hover:w-full"
             />
           </a>
           <a
             href={portfolioData.socials.twitter}
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative py-1 text-xs md:text-sm font-[300] tracking-wider uppercase transition-colors flex items-center gap-1.5"
+            className="group relative py-1 text-xs md:text-sm font-[300] tracking-wider uppercase transition-colors flex items-center gap-1.5 min-h-[44px]"
             data-cursor="hover"
           >
             <TwitterIcon className="w-3.5 h-3.5 shrink-0" />
             <span>TWITTER</span>
             <motion.span
               style={{ backgroundColor: accentColor }}
-              className="absolute bottom-0 left-0 h-[1.5px] w-0 transition-all duration-500 ease-portfolio-ease group-hover:w-full"
+              className="absolute bottom-1 left-0 h-[1.5px] w-0 transition-all duration-500 ease-portfolio-ease group-hover:w-full"
             />
           </a>
           <a
             href={portfolioData.socials.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative py-1 text-xs md:text-sm font-[300] tracking-wider uppercase transition-colors flex items-center gap-1.5"
+            className="group relative py-1 text-xs md:text-sm font-[300] tracking-wider uppercase transition-colors flex items-center gap-1.5 min-h-[44px]"
             data-cursor="hover"
           >
             <LinkedinIcon className="w-3.5 h-3.5 shrink-0" />
             <span>LINKEDIN</span>
             <motion.span
               style={{ backgroundColor: accentColor }}
-              className="absolute bottom-0 left-0 h-[1.5px] w-0 transition-all duration-500 ease-portfolio-ease group-hover:w-full"
+              className="absolute bottom-1 left-0 h-[1.5px] w-0 transition-all duration-500 ease-portfolio-ease group-hover:w-full"
             />
           </a>
           {portfolioData.socials.whatsapp && (
@@ -257,14 +257,14 @@ export default function Footer() {
               href={portfolioData.socials.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative py-1 text-xs md:text-sm font-[300] tracking-wider uppercase transition-colors flex items-center gap-1.5"
+              className="group relative py-1 text-xs md:text-sm font-[300] tracking-wider uppercase transition-colors flex items-center gap-1.5 min-h-[44px]"
               data-cursor="hover"
             >
               <MessageCircle className="w-3.5 h-3.5 shrink-0" />
               <span>WHATSAPP</span>
               <motion.span
                 style={{ backgroundColor: accentColor }}
-                className="absolute bottom-0 left-0 h-[1.5px] w-0 transition-all duration-500 ease-portfolio-ease group-hover:w-full"
+                className="absolute bottom-1 left-0 h-[1.5px] w-0 transition-all duration-500 ease-portfolio-ease group-hover:w-full"
               />
             </a>
           )}

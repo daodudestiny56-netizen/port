@@ -5,6 +5,7 @@ import { portfolioData } from "@/lib/data";
 import { EASE_PORTFOLIO } from "@/lib/animations";
 import { usePreloader } from "@/context/PreloaderContext";
 import ClipText from "@/components/ui/ClipText";
+import Navbar from "@/components/Navbar";
 
 export default function Hero() {
   const words = ["BUILDING", "DIGITAL", "EXPERIENCES"];
@@ -32,30 +33,17 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative w-full min-h-screen flex flex-col justify-between px-4 sm:px-6 md:px-12 py-8 md:py-12 bg-transparent select-none overflow-hidden">
-      {/* Top Header Row */}
-      <div className="flex justify-between items-center w-full z-10 gap-4">
-        <span className="font-display text-xs sm:text-sm md:text-base font-[300] tracking-wider md:tracking-widest text-secondaryText uppercase truncate">
-          {portfolioData.name}
-        </span>
-
-        {/* Status Badge */}
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-surface text-[10px] md:text-xs font-[300] tracking-wide shrink-0">
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primaryText opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-primaryText"></span>
-          </span>
-          <span className="text-primaryText">{portfolioData.status}</span>
-        </div>
-      </div>
+    <section className="relative w-full min-h-[100dvh] flex flex-col justify-between px-4 sm:px-6 md:px-12 py-6 md:py-10 bg-transparent select-none overflow-hidden">
+      {/* Top Header Row (Navbar) */}
+      <Navbar />
 
       {/* Center Typography — staggered clip mask reveal heading */}
-      <div className="flex flex-col justify-center items-start my-auto w-full">
+      <div className="flex flex-col justify-center items-start my-auto py-8 sm:py-12 w-full">
         {isLoaded && (
           <ClipText
             text={words}
             typewriterLineIndex={1}
-            lineClassName="font-display font-[300] text-[12vw] sm:text-[9vw] md:text-[7vw] lg:text-[6vw] leading-none text-primaryText uppercase select-none origin-bottom"
+            lineClassName="font-display font-[300] text-[clamp(2.25rem,8vw+0.5rem,6rem)] leading-[0.95] text-primaryText uppercase select-none origin-bottom tracking-tight"
           />
         )}
 
@@ -64,36 +52,36 @@ export default function Hero() {
           initial="hidden"
           animate={isLoaded ? "visible" : "hidden"}
           variants={fadeUpVariants}
-          className="mt-6 md:mt-8 max-w-xl text-base md:text-lg text-secondaryText font-[300] leading-relaxed will-change-transform"
+          className="mt-6 md:mt-8 max-w-xl text-[clamp(0.95rem,2vw,1.125rem)] text-secondaryText font-[300] leading-relaxed will-change-transform"
         >
           {portfolioData.role}
         </motion.p>
       </div>
 
       {/* Bottom Row */}
-      <div className="flex flex-row justify-between items-end w-full mt-auto z-10 gap-4">
+      <div className="flex flex-row justify-between items-end w-full mt-auto z-10 gap-4 pt-4">
         {/* CTA links */}
         <motion.div
           initial="hidden"
           animate={isLoaded ? "visible" : "hidden"}
           variants={fadeUpVariants}
-          className="flex gap-6 md:gap-8 items-center"
+          className="flex gap-4 sm:gap-6 md:gap-8 items-center"
         >
           <a
             href="#work"
-            className="group relative py-1 text-xs md:text-sm font-[300] tracking-wider text-primaryText uppercase transition-colors"
+            className="group relative flex items-center min-h-[44px] text-xs md:text-sm font-[300] tracking-wider text-primaryText uppercase transition-colors"
             data-cursor="hover"
           >
-            View Work <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
-            <span className="absolute bottom-0 left-0 h-[1.5px] w-0 bg-accent transition-all duration-500 ease-portfolio-ease group-hover:w-full" />
+            View Work <span className="inline-block transition-transform duration-300 group-hover:translate-x-1 ml-1">&rarr;</span>
+            <span className="absolute bottom-1 left-0 h-[1.5px] w-0 bg-accent transition-all duration-500 ease-portfolio-ease group-hover:w-full" />
           </a>
           <a
             href="#contact"
-            className="group relative py-1 text-xs md:text-sm font-[300] tracking-wider text-primaryText uppercase transition-colors"
+            className="group relative flex items-center min-h-[44px] text-xs md:text-sm font-[300] tracking-wider text-primaryText uppercase transition-colors"
             data-cursor="hover"
           >
-            Contact <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">&rarr;</span>
-            <span className="absolute bottom-0 left-0 h-[1.5px] w-0 bg-accent transition-all duration-500 ease-portfolio-ease group-hover:w-full" />
+            Contact <span className="inline-block transition-transform duration-300 group-hover:translate-x-1 ml-1">&rarr;</span>
+            <span className="absolute bottom-1 left-0 h-[1.5px] w-0 bg-accent transition-all duration-500 ease-portfolio-ease group-hover:w-full" />
           </a>
         </motion.div>
 
