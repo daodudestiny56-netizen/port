@@ -68,7 +68,7 @@ export default function Footer() {
   const accentColor = useTransform(
     scrollYProgress,
     [0, 0.3, 0.65, 1],
-    ["#E8FF47", "#E8FF47", "#3E4A00", "#1A0A00"]
+    ["#00F0FF", "#00F0FF", "#008B99", "#005F66"]
   );
 
   const handleCopyEmail = () => {
@@ -165,18 +165,18 @@ export default function Footer() {
       {/* Animation 2: Infinite Marquee Scrolling Rows moving in opposite directions */}
       <div className="w-full flex flex-col my-auto py-6 sm:py-8">
         <Marquee speed="25s" direction="left" gap="2.5rem" className="py-3 sm:py-4 border-t border-b border-current/10 font-display font-black text-[clamp(2.5rem,7vw,6rem)] tracking-tighter">
-          <span>FORGE</span>
-          <span>DEVELOP</span>
+          <span>ARCHITECT</span>
+          <span>BUILD</span>
           <span>ENGINEER</span>
-          <span>DESIGN</span>
-          <span>ANIMATE</span>
+          <span>SCALE</span>
+          <span>DEPLOY</span>
         </Marquee>
         <Marquee speed="30s" direction="right" gap="2.5rem" className="py-3 sm:py-4 border-b border-current/10 font-display font-black text-[clamp(2.5rem,7vw,6rem)] tracking-tighter">
-          <span>FLUID</span>
-          <span>PREMIUM</span>
-          <span>INTENTIONAL</span>
+          <span>PERFORMANT</span>
           <span>ACCESSIBLE</span>
-          <span>INTERACTIVE</span>
+          <span>TYPE-SAFE</span>
+          <span>REUSABLE</span>
+          <span>RELIABLE</span>
         </Marquee>
       </div>
 

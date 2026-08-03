@@ -47,12 +47,12 @@ export default function Navbar() {
         {/* Center/Right Status Badge & Desktop Navigation */}
         <div className="flex items-center gap-6">
           {/* Status Badge */}
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-surface text-[10px] md:text-xs font-[300] tracking-wide shrink-0">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-surface text-[10px] md:text-xs font-mono tracking-wide shrink-0">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primaryText opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-primaryText"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00F0FF] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00F0FF]"></span>
             </span>
-            <span className="text-primaryText">{portfolioData.status}</span>
+            <span className="text-[#3FE8F5]">{portfolioData.status}</span>
           </div>
 
           {/* Desktop Links (Hidden below 768px) */}
@@ -61,11 +61,11 @@ export default function Navbar() {
               <a
                 key={link.name}
                 href={link.href}
-                className="group relative py-1 text-xs font-[300] tracking-widest text-primaryText uppercase transition-colors"
+                className="group relative py-1 text-xs font-mono tracking-widest text-primaryText uppercase transition-colors"
                 data-cursor="hover"
               >
                 {link.name}
-                <span className="absolute bottom-0 left-0 h-[1.5px] w-0 bg-[#E8FF47] transition-all duration-500 ease-portfolio-ease group-hover:w-full" />
+                <span className="absolute bottom-0 left-0 h-[1.5px] w-0 bg-[#00F0FF] transition-all duration-500 ease-portfolio-ease group-hover:w-full" />
               </a>
             ))}
           </nav>
@@ -139,7 +139,7 @@ export default function Navbar() {
               {/* Drawer Footer / Social Quick Links */}
               <div className="flex flex-col gap-4 pt-6 border-t border-border">
                 <div className="flex items-center gap-2 text-xs font-mono text-secondaryText">
-                  <span className="w-2 h-2 rounded-full bg-[#E8FF47]" />
+                  <span className="w-2 h-2 rounded-full bg-[#00F0FF]" />
                   <span>{portfolioData.email}</span>
                 </div>
                 {portfolioData.socials.whatsapp && (
@@ -148,7 +148,7 @@ export default function Navbar() {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-2 text-xs font-mono text-[#E8FF47] min-h-[44px]"
+                    className="flex items-center gap-2 text-xs font-mono text-[#00F0FF] min-h-[44px]"
                   >
                     <MessageCircle className="w-4 h-4" />
                     <span>WhatsApp Chat</span>

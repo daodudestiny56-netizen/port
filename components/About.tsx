@@ -60,14 +60,7 @@ export default function About() {
 
           <FadeUp delay={0.15}>
             <p className="font-sans text-[clamp(0.95rem,2vw,1.125rem)] text-secondaryText leading-[1.8] font-[300]">
-              I believe that every pixel of spacing, every line of layout logic, and every animation frame must earn its place.
-              No visual noise, no generic templates, and no unnecessary bloat. Just pure typographic hierarchy, hardware-accelerated interactions, and deliberate motion.
-            </p>
-          </FadeUp>
-          
-          <FadeUp delay={0.25}>
-            <p className="font-sans text-xs sm:text-sm md:text-base text-secondaryText/80 leading-[1.8] font-[300]">
-              As a frontend engineer working at the intersection of design systems and high-performance web architecture, I bridge the gap between complex data states and flawless user interfaces. I specialize in crafting interactive applications, fluid motion pipelines, and deeply localized, accessible user systems that perform seamlessly on any device.
+              I focus on core frontend engineering: clean component architecture, predictable state management, and optimized asset delivery. By combining strict TypeScript typing with hardware-accelerated motion, I build web applications that load fast, scale cleanly, and deliver reliable user experiences.
             </p>
           </FadeUp>
         </div>

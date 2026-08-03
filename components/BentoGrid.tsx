@@ -7,8 +7,13 @@ import MicroClock from "./MicroClock";
 import ClipText from "@/components/ui/ClipText";
 import { usePreloader } from "@/context/PreloaderContext";
 import { staggerContainerVariants } from "@/lib/animations";
+import { Project } from "@/lib/data";
 
-export default function BentoGrid() {
+interface BentoGridProps {
+  onSelectProject?: (project: Project) => void;
+}
+
+export default function BentoGrid({ onSelectProject }: BentoGridProps) {
   const { isLoaded } = usePreloader();
 
   return (
@@ -21,7 +26,7 @@ export default function BentoGrid() {
             <>
               <ClipText
                 text="SELECTED WORK & INDEX"
-                lineClassName="font-display text-xs font-[300] tracking-widest text-primaryText uppercase"
+                lineClassName="font-mono text-xs font-[300] tracking-widest text-[#3FE8F5] uppercase"
               />
               <ClipText
                 text="THE ARCHIVE."
@@ -41,7 +46,7 @@ export default function BentoGrid() {
           className="bento-grid w-full"
         >
           <div style={{ gridArea: "featured" }} className="w-full h-full">
-            <ProjectCard />
+            <ProjectCard onSelectProject={onSelectProject} />
           </div>
           
           <div style={{ gridArea: "clock" }} className="w-full h-full">

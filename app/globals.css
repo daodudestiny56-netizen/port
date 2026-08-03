@@ -1,10 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=JetBrains+Mono:ital,wght@0,300..700;1,300..700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --accent: #00F0FF;
+    --accent-refined: #3FE8F5;
+    --accent-glow: rgba(0, 240, 255, 0.18);
+  }
+
   html {
     scroll-behavior: smooth;
     background-color: #0A0A0A;

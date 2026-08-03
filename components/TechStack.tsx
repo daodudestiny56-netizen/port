@@ -99,9 +99,9 @@ export default function TechStack() {
             return (
               <div
                 key={index}
-                className="flex items-center gap-2.5 px-4 py-2.5 bg-[#1A1A1A] border border-[#2A2A2A] rounded-[12px] text-sm font-[300] text-primaryText transition-all duration-300 ease-portfolio-ease hover:-translate-y-0.5 hover:border-[#E8FF47] shrink-0 group/pill"
+                className="flex items-center gap-2.5 px-4 py-2.5 bg-[#1A1A1A] border border-[#2A2A2A] rounded-[12px] text-xs font-mono font-[300] text-primaryText transition-all duration-300 ease-portfolio-ease hover:-translate-y-0.5 hover:border-[#00F0FF] shrink-0 group/pill"
               >
-                <IconComponent className="w-[18px] h-[18px] text-secondaryText transition-colors duration-300 group-hover/pill:text-[#E8FF47]" />
+                <IconComponent className="w-[18px] h-[18px] text-secondaryText transition-colors duration-300 group-hover/pill:text-[#00F0FF]" />
                 <span>{tool.name}</span>
               </div>
             );
@@ -110,7 +110,7 @@ export default function TechStack() {
       </div>
       
       <p className="text-[11px] text-secondaryText font-[300] uppercase tracking-wider mt-8">
-        Always extending the tech matrix
+        Constantly expanding core technical capabilities
       </p>
     </motion.div>
   );

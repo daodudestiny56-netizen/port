@@ -92,13 +92,13 @@ export default function CustomCursor() {
       {/* 10px filled dot */}
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 w-2.5 h-2.5 rounded-full bg-[#E8FF47] pointer-events-none z-[9999] will-change-transform"
+        className="fixed top-0 left-0 w-2.5 h-2.5 rounded-full bg-[#00F0FF] pointer-events-none z-[9999] will-change-transform"
         style={{
           transform: "translate3d(-100px, -100px, 0)",
         }}
       >
         <div
-          className="w-full h-full rounded-full bg-[#E8FF47] transition-transform duration-300 ease-out"
+          className="w-full h-full rounded-full bg-[#00F0FF] transition-transform duration-300 ease-out"
           style={{
             transform: isHovered ? "scale(0)" : "scale(1)",
           }}
@@ -114,7 +114,7 @@ export default function CustomCursor() {
         }}
       >
         <div
-          className="w-full h-full rounded-full border border-[#E8FF47] transition-transform duration-300 ease-out"
+          className="w-full h-full rounded-full border border-[#00F0FF] transition-transform duration-300 ease-out"
           style={{
             transform: isHovered ? "scale(2.5)" : "scale(1)",
           }}

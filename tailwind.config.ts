@@ -14,12 +14,14 @@ const config: Config = {
         border: "#1F1F1F",
         primaryText: "#F5F5F5",
         secondaryText: "#6B6B6B",
-        accent: "#F5F5F5",
+        accent: "#00F0FF",
+        accentRefined: "#3FE8F5",
+        accentGlow: "rgba(0, 240, 255, 0.18)",
       },
       fontFamily: {
         sans: ["'Bricolage Grotesque'", "sans-serif"],
         display: ["'Bricolage Grotesque'", "sans-serif"],
-        mono: ["'Bricolage Grotesque'", "monospace"],
+        mono: ["'JetBrains Mono'", "'Fira Code'", "monospace"],
       },
       transitionTimingFunction: {
         "portfolio-ease": "cubic-bezier(0.16, 1, 0.3, 1)",
