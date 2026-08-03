@@ -27,9 +27,9 @@ export default function Navbar() {
   }, [isOpen]);
 
   const navLinks = [
-    { name: "WORK", href: "#work" },
-    { name: "ABOUT", href: "#about" },
-    { name: "CONTACT", href: "#contact" },
+    { name: "Work", href: "#work" },
+    { name: "About", href: "#about" },
+    { name: "Contact", href: "#contact" },
   ];
 
   return (
@@ -38,7 +38,7 @@ export default function Navbar() {
         {/* Brand Name */}
         <a
           href="#"
-          className="font-display text-xs sm:text-sm md:text-base font-[300] tracking-wider md:tracking-widest text-secondaryText uppercase truncate max-w-[120px] xs:max-w-[170px] sm:max-w-none hover:text-primaryText transition-colors shrink min-w-0"
+          className="font-display text-xs sm:text-sm md:text-base font-[300] tracking-wider md:tracking-widest text-secondaryText truncate max-w-[140px] xs:max-w-[190px] sm:max-w-none hover:text-primaryText transition-colors shrink min-w-0"
           data-cursor="hover"
         >
           {portfolioData.name}
@@ -61,7 +61,7 @@ export default function Navbar() {
               <a
                 key={link.name}
                 href={link.href}
-                className="group relative py-1 text-xs font-mono tracking-widest text-primaryText uppercase transition-colors"
+                className="group relative py-1 text-xs font-mono tracking-wider text-primaryText transition-colors"
                 data-cursor="hover"
               >
                 {link.name}
@@ -106,8 +106,8 @@ export default function Navbar() {
             >
               {/* Top Header inside Drawer */}
               <div className="flex justify-between items-center pb-6 border-b border-border">
-                <span className="font-display text-xs font-[300] tracking-widest text-secondaryText uppercase">
-                  NAVIGATION
+                <span className="font-display text-xs font-[300] tracking-widest text-secondaryText">
+                  Navigation
                 </span>
                 <button
                   onClick={() => setIsOpen(false)}

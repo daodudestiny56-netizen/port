@@ -21,15 +21,15 @@ export default function BentoGrid({ onSelectProject }: BentoGridProps) {
       <div className="max-w-7xl mx-auto flex flex-col gap-6">
         
         {/* Section Title */}
-        <div className="flex flex-col gap-1 mb-2">
+        <div className="flex flex-col gap-1 mb-8 sm:mb-12">
           {isLoaded && (
             <>
               <ClipText
-                text="SELECTED WORK & INDEX"
-                lineClassName="font-mono text-xs font-[300] tracking-widest text-[#3FE8F5] uppercase"
+                text="Selected work & index"
+                lineClassName="font-mono text-xs font-[300] tracking-widest text-[#3FE8F5]"
               />
               <ClipText
-                text="THE ARCHIVE."
+                text="The archive."
                 lineClassName="font-display font-[300] text-[clamp(1.5rem,4vw+0.5rem,2.5rem)] text-primaryText tracking-tight"
                 delay={0.08}
               />

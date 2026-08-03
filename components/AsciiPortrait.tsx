@@ -214,8 +214,8 @@ export default function AsciiPortrait({
       />
 
       {/* Top Monospace Label Badge */}
-      <div className="absolute top-4 left-4 z-20 px-2.5 py-1 rounded-full bg-[#161616]/90 border border-border text-[9px] font-mono text-[#3FE8F5] tracking-wider uppercase backdrop-blur-md">
-        HALFTONE MATRIX · 130 COLS
+      <div className="absolute top-4 left-4 z-20 px-2.5 py-1 rounded-full bg-[#161616]/90 border border-border text-[9px] font-mono text-[#3FE8F5] tracking-wider backdrop-blur-md">
+        Halftone matrix · 130 cols
       </div>
     </div>
   );

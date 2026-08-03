@@ -70,14 +70,14 @@ export default function MicroClock() {
       <div>
         {/* Header: Title + Solar Mode Indicator */}
         <div className="flex items-center justify-between gap-2 flex-wrap sm:flex-nowrap mb-4">
-          <h4 className="font-mono text-[10px] sm:text-[11px] font-[300] tracking-wider sm:tracking-widest text-secondaryText uppercase flex items-center gap-1.5 shrink min-w-0">
+          <h4 className="font-mono text-[10px] sm:text-[11px] font-[300] tracking-wider sm:tracking-widest text-secondaryText flex items-center gap-1.5 shrink min-w-0">
             <Compass className="w-3.5 h-3.5 text-[#00F0FF] shrink-0" />
-            <span className="truncate">LAGOS SOLAR STATION</span>
+            <span className="truncate">Lagos Solar Station</span>
           </h4>
 
           <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-border bg-[#161616] text-[8px] sm:text-[9px] font-mono text-[#3FE8F5] shrink-0">
             {isDay ? <Sun className="w-3 h-3 text-[#00F0FF]" /> : <Moon className="w-3 h-3 text-[#3FE8F5]" />}
-            <span>{isDay ? "DAYLIGHT" : "NIGHT CYCLE"}</span>
+            <span>{isDay ? "Daylight" : "Night cycle"}</span>
           </div>
         </div>
 
@@ -109,10 +109,10 @@ export default function MicroClock() {
       <div className="mt-6 pt-4 border-t border-border/80 flex flex-col gap-3 w-full max-w-full">
         {/* Solar Orbit Arc Progress Bar */}
         <div className="w-full flex flex-col gap-1.5">
-          <div className="flex justify-between items-center text-[8px] sm:text-[9px] font-mono text-secondaryText uppercase gap-1">
-            <span className="shrink-0">SUNRISE 06:00</span>
-            <span className="text-[#3FE8F5] truncate text-center">SOLAR POSITION</span>
-            <span className="shrink-0">SUNSET 18:00</span>
+          <div className="flex justify-between items-center text-[8px] sm:text-[9px] font-mono text-secondaryText gap-1">
+            <span className="shrink-0">Sunrise 06:00</span>
+            <span className="text-[#3FE8F5] truncate text-center">Solar position</span>
+            <span className="shrink-0">Sunset 18:00</span>
           </div>
           <div className="w-full h-1 bg-[#1A1A1A] rounded-full overflow-hidden relative">
             <motion.div 

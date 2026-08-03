@@ -30,15 +30,15 @@ export default function Home() {
           
           {/* Section Title & Navigation */}
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4 mb-2 w-full">
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 mb-8 sm:mb-12">
               {isLoaded && (
                 <>
                   <ClipText
-                    text="CASE STUDIES & SANDBOX"
-                    lineClassName="font-mono text-xs font-[300] tracking-widest text-[#3FE8F5] uppercase"
+                    text="Case studies & sandbox"
+                    lineClassName="font-mono text-xs font-[300] tracking-widest text-[#3FE8F5]"
                   />
                   <ClipText
-                    text="FEATURED PROJECTS."
+                    text="Featured projects."
                     lineClassName="font-display font-[300] text-[clamp(1.5rem,4vw+0.5rem,2.5rem)] text-primaryText tracking-tight"
                     delay={0.08}
                   />

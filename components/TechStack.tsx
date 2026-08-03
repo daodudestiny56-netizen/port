@@ -88,8 +88,8 @@ export default function TechStack() {
       className="relative flex flex-col justify-between h-full w-full max-w-full bg-surface border border-border rounded-[12px] p-5 md:p-7 card-hover-shadow group select-none overflow-hidden"
     >
       <div className="w-full max-w-full overflow-hidden">
-        <h4 className="font-display text-[11px] font-[300] tracking-widest text-secondaryText uppercase mb-6">
-          TOOLKIT
+        <h4 className="font-display text-[11px] font-[300] tracking-widest text-secondaryText mb-6">
+          Toolkit
         </h4>
         
         {/* Infinite marquee of pills */}

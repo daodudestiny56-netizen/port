@@ -6,9 +6,10 @@ import { EASE_PORTFOLIO } from "@/lib/animations";
 import { usePreloader } from "@/context/PreloaderContext";
 import ClipText from "@/components/ui/ClipText";
 import Navbar from "@/components/Navbar";
+import AsciiPortrait from "@/components/AsciiPortrait";
 
 export default function Hero() {
-  const words = ["BUILDING", "DIGITAL", "EXPERIENCES"];
+  const words = ["Building", "Digital", "Experiences"];
   const { isLoaded } = usePreloader();
 
   // Mobile duration reducer helper (30% reduction => factor of 0.7)
@@ -37,25 +38,38 @@ export default function Hero() {
       {/* Top Header Row (Navbar) */}
       <Navbar />
 
-      {/* Center Typography — staggered clip mask reveal heading */}
-      <div className="flex flex-col justify-center items-start my-auto py-8 sm:py-12 w-full">
-        {isLoaded && (
-          <ClipText
-            text={words}
-            typewriterLineIndex={1}
-            lineClassName="font-display font-[300] text-[clamp(2.25rem,8vw+0.5rem,6rem)] leading-[0.95] text-primaryText uppercase select-none origin-bottom tracking-tight"
-          />
-        )}
+      {/* Center 2-Column Layout: Typography + ASCII Portrait */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10 items-center my-auto py-6 sm:py-10 w-full">
+        {/* Left Column: Heading & Role Bio */}
+        <div className="lg:col-span-7 flex flex-col justify-center items-start w-full">
+          {isLoaded && (
+            <ClipText
+              text={words}
+              typewriterLineIndex={1}
+              lineClassName="font-display font-[300] text-[clamp(2.25rem,6.5vw,5.5rem)] leading-[0.98] text-primaryText select-none origin-bottom tracking-tight"
+            />
+          )}
 
-        {/* Hero description */}
-        <motion.p
+          {/* Hero description */}
+          <motion.p
+            initial="hidden"
+            animate={isLoaded ? "visible" : "hidden"}
+            variants={fadeUpVariants}
+            className="mt-6 md:mt-8 max-w-xl text-[clamp(0.95rem,2vw,1.125rem)] text-secondaryText font-[300] leading-relaxed will-change-transform"
+          >
+            {portfolioData.role}
+          </motion.p>
+        </div>
+
+        {/* Right Column: ASCII Halftone Portrait at top of page */}
+        <motion.div
           initial="hidden"
           animate={isLoaded ? "visible" : "hidden"}
           variants={fadeUpVariants}
-          className="mt-6 md:mt-8 max-w-xl text-[clamp(0.95rem,2vw,1.125rem)] text-secondaryText font-[300] leading-relaxed will-change-transform"
+          className="lg:col-span-5 w-full flex items-center justify-center"
         >
-          {portfolioData.role}
-        </motion.p>
+          <AsciiPortrait imageSrc="/images/portrait.jpg" />
+        </motion.div>
       </div>
 
       {/* Bottom Row */}
@@ -69,15 +83,15 @@ export default function Hero() {
         >
           <a
             href="#work"
-            className="group relative flex items-center min-h-[44px] text-xs md:text-sm font-[300] tracking-wider text-primaryText uppercase transition-colors"
+            className="group relative flex items-center min-h-[44px] text-xs md:text-sm font-[300] tracking-wider text-primaryText transition-colors"
             data-cursor="hover"
           >
-            View Work <span className="inline-block transition-transform duration-300 group-hover:translate-x-1 ml-1">&rarr;</span>
+            View work <span className="inline-block transition-transform duration-300 group-hover:translate-x-1 ml-1">&rarr;</span>
             <span className="absolute bottom-1 left-0 h-[1.5px] w-0 bg-accent transition-all duration-500 ease-portfolio-ease group-hover:w-full" />
           </a>
           <a
             href="#contact"
-            className="group relative flex items-center min-h-[44px] text-xs md:text-sm font-[300] tracking-wider text-primaryText uppercase transition-colors"
+            className="group relative flex items-center min-h-[44px] text-xs md:text-sm font-[300] tracking-wider text-primaryText transition-colors"
             data-cursor="hover"
           >
             Contact <span className="inline-block transition-transform duration-300 group-hover:translate-x-1 ml-1">&rarr;</span>
@@ -85,7 +99,7 @@ export default function Hero() {
           </a>
         </motion.div>
 
-        {/* Scroll Indicator (Slowly Rotating text) */}
+        {/* Scroll Indicator */}
         <motion.div
           initial="hidden"
           animate={isLoaded ? "visible" : "hidden"}
@@ -101,9 +115,9 @@ export default function Hero() {
               d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0"
               fill="none"
             />
-            <text className="text-[7.5px] fill-secondaryText font-display tracking-[0.18em] font-[300] uppercase">
+            <text className="text-[7.5px] fill-secondaryText font-display tracking-[0.18em] font-[300]">
               <textPath href="#circlePath" startOffset="0%">
-                SCROLL TO EXPLORE · SCROLL TO EXPLORE ·
+                Scroll to explore · Scroll to explore ·
               </textPath>
             </text>
           </svg>
