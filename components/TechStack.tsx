@@ -7,27 +7,27 @@ interface SpecItem {
   category: string;
   spec: string;
   status: string;
-  accent: "yellow" | "indigo" | "bone";
+  isBlackBg: boolean;
 }
 
 const SPEC_SHEET: SpecItem[] = [
-  { name: "NEXT.JS 14", category: "FRAMEWORK", spec: "App Router / SSR / Edge Middleware", status: "VERIFIED 100%", accent: "yellow" },
-  { name: "REACT 18", category: "LIBRARY", spec: "Concurrent Mode / Server Components", status: "VERIFIED 100%", accent: "indigo" },
-  { name: "TYPESCRIPT", category: "LANGUAGE", spec: "Strict Null Checks / Generics / AST", status: "STRICT MODE", accent: "bone" },
-  { name: "TAILWIND CSS", category: "STYLING", spec: "Custom Tokens / JIT Engine / Directives", status: "ZERO CONFLICT", accent: "yellow" },
-  { name: "FRAMER MOTION", category: "ANIMATION", spec: "Physics Springs / Layout Animations", status: "60 FPS GUARANTEE", accent: "indigo" },
-  { name: "GSAP 3", category: "ANIMATION", spec: "ScrollTrigger / Timeline Offload", status: "GPU ACCEL", accent: "bone" },
-  { name: "WEBGL / CANVAS", category: "GRAPHICS", spec: "Custom Shaders / Halftone Matrix", status: "SUB-16MS FRAME", accent: "yellow" },
-  { name: "WEBSOCKETS", category: "NETWORK", spec: "Real-time PCM Audio / Ring Buffers", status: "SUB-85MS LATENCY", accent: "indigo" },
+  { name: "NEXT.JS 14", category: "FRAMEWORK", spec: "App Router / SSR / Edge Middleware", status: "VERIFIED 100%", isBlackBg: false },
+  { name: "REACT 18", category: "LIBRARY", spec: "Concurrent Mode / Server Components", status: "VERIFIED 100%", isBlackBg: true },
+  { name: "TYPESCRIPT", category: "LANGUAGE", spec: "Strict Null Checks / Generics / AST", status: "STRICT MODE", isBlackBg: false },
+  { name: "TAILWIND CSS", category: "STYLING", spec: "Custom Tokens / JIT Engine / Directives", status: "ZERO CONFLICT", isBlackBg: true },
+  { name: "FRAMER MOTION", category: "ANIMATION", spec: "Physics Springs / Layout Animations", status: "60 FPS GUARANTEE", isBlackBg: false },
+  { name: "GSAP 3", category: "ANIMATION", spec: "ScrollTrigger / Timeline Offload", status: "GPU ACCEL", isBlackBg: true },
+  { name: "WEBGL / CANVAS", category: "GRAPHICS", spec: "Custom Shaders / Halftone Matrix", status: "SUB-16MS FRAME", isBlackBg: false },
+  { name: "WEBSOCKETS", category: "NETWORK", spec: "Real-time PCM Audio / Ring Buffers", status: "SUB-85MS LATENCY", isBlackBg: true },
 ];
 
 export default function TechStack() {
   return (
-    <section id="toolkit" className="w-full px-4 sm:px-6 md:px-10 py-16 grid-border-bottom">
+    <section id="toolkit" className="w-full px-4 sm:px-6 md:px-10 py-16 grid-border-bottom bg-[#FFFFFF] text-[#0D0D0D]">
       {/* Section Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-12 pb-4 border-b-4 border-[#0D0D0D]">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#3D5AFE] text-[#F5F3EE] border-3 border-[#0D0D0D] text-xs font-mono font-bold uppercase shadow-brutalist-sm mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] text-xs font-mono font-bold uppercase shadow-brutalist-sm mb-3">
             <Cpu className="w-3.5 h-3.5" />
             <span>TECHNICAL SPECIFICATIONS // PUNCH CARD</span>
           </div>
@@ -36,7 +36,7 @@ export default function TechStack() {
           </h2>
         </div>
 
-        <span className="font-mono text-xs font-bold text-[#0D0D0D] uppercase bg-[#FFDE59] px-3 py-1 border-2 border-[#0D0D0D]">
+        <span className="font-mono text-xs font-bold text-[#FFFFFF] uppercase bg-[#0D0D0D] px-3 py-1 border-2 border-[#0D0D0D]">
           SPECIFICATION INDEX v2.4
         </span>
       </div>
@@ -44,17 +44,14 @@ export default function TechStack() {
       {/* Punch Card Spec Sheet Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
         {SPEC_SHEET.map((item, idx) => {
-          const bgClass =
-            item.accent === "yellow"
-              ? "bg-[#FFDE59] text-[#0D0D0D]"
-              : item.accent === "indigo"
-              ? "bg-[#3D5AFE] text-[#F5F3EE]"
-              : "bg-[#F5F3EE] text-[#0D0D0D]";
+          const cardClass = item.isBlackBg
+            ? "bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] shadow-brutalist"
+            : "bg-[#FFFFFF] text-[#0D0D0D] border-3 border-[#0D0D0D] shadow-brutalist";
 
           return (
             <div
               key={item.name}
-              className={`border-3 border-[#0D0D0D] p-5 shadow-brutalist flex flex-col justify-between h-full select-none ${bgClass}`}
+              className={`p-5 flex flex-col justify-between h-full select-none ${cardClass}`}
             >
               {/* Top Punch Hole & Category */}
               <div className="flex justify-between items-center pb-3 border-b-2 border-current">

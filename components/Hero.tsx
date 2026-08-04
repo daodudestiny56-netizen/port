@@ -12,7 +12,7 @@ interface HeroProps {
 
 export default function Hero({ currentTheme = "bone" }: HeroProps) {
   return (
-    <section className="relative w-full min-h-[100dvh] flex flex-col justify-between p-3 sm:p-6 md:p-10 select-none grid-border-bottom overflow-hidden">
+    <section className="relative w-full min-h-[100dvh] flex flex-col justify-between p-3 sm:p-6 md:p-10 select-none grid-border-bottom overflow-hidden bg-[#FFFFFF] text-[#0D0D0D]">
       {/* Sticker Navigation Header */}
       <Navbar currentTheme={currentTheme} />
 
@@ -21,7 +21,7 @@ export default function Hero({ currentTheme = "bone" }: HeroProps) {
         {/* Left Column: Big Headline & Concrete Positioning */}
         <div className="lg:col-span-7 flex flex-col items-start gap-4 sm:gap-6 w-full max-w-full">
           {/* Tagline Badges */}
-          <div className="flex flex-wrap items-center gap-2 px-3 py-1.5 bg-[#3D5AFE] text-[#F5F3EE] border-3 border-[#0D0D0D] text-[10px] sm:text-xs font-mono font-bold uppercase shadow-brutalist-sm max-w-full">
+          <div className="flex flex-wrap items-center gap-2 px-3 py-1.5 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] text-[10px] sm:text-xs font-mono font-bold uppercase shadow-brutalist-sm max-w-full">
             <span>FRONTEND ARCHITECTURE</span>
             <span className="hidden xs:inline">{"//"}</span>
             <span>WCAG 2.1 AAA</span>
@@ -33,7 +33,7 @@ export default function Hero({ currentTheme = "bone" }: HeroProps) {
           </h1>
 
           {/* One-line Real Positioning Statement in Mono Type */}
-          <p className="font-mono text-xs sm:text-sm md:text-base font-bold text-[#0D0D0D] leading-relaxed w-full max-w-2xl bg-[#FFDE59] p-3 sm:p-4 border-3 border-[#0D0D0D] shadow-brutalist">
+          <p className="font-mono text-xs sm:text-sm md:text-base font-bold text-[#FFFFFF] leading-relaxed w-full max-w-2xl bg-[#0D0D0D] p-3 sm:p-4 border-3 border-[#0D0D0D] shadow-brutalist">
             DAODU DESTINY — Frontend engineer specializing in Next.js, React, and TypeScript. Building sub-second web applications, 60fps interaction physics, and resilient state architectures.
           </p>
 
@@ -44,7 +44,7 @@ export default function Hero({ currentTheme = "bone" }: HeroProps) {
               href="#work"
               whileHover={{ x: -2, y: -2 }}
               transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              className="w-full sm:w-auto min-h-[44px] px-5 sm:px-6 py-3 bg-[#FFDE59] text-[#0D0D0D] font-mono text-xs sm:text-sm font-extrabold uppercase border-3 border-[#0D0D0D] shadow-brutalist-lg flex items-center justify-center gap-2.5"
+              className="w-full sm:w-auto min-h-[44px] px-5 sm:px-6 py-3 bg-[#0D0D0D] text-[#FFFFFF] font-mono text-xs sm:text-sm font-extrabold uppercase border-3 border-[#0D0D0D] shadow-brutalist-lg flex items-center justify-center gap-2.5"
               data-cursor="hover"
             >
               <span>EXPLORE CASE STUDIES</span>
@@ -58,7 +58,7 @@ export default function Hero({ currentTheme = "bone" }: HeroProps) {
               rel="noopener noreferrer"
               whileHover={{ x: -2, y: -2 }}
               transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              className="w-full sm:w-auto min-h-[44px] px-5 sm:px-6 py-3 bg-[#3D5AFE] text-[#F5F3EE] font-mono text-xs sm:text-sm font-extrabold uppercase border-3 border-[#0D0D0D] shadow-brutalist-lg flex items-center justify-center gap-2.5"
+              className="w-full sm:w-auto min-h-[44px] px-5 sm:px-6 py-3 bg-[#FFFFFF] text-[#0D0D0D] font-mono text-xs sm:text-sm font-extrabold uppercase border-3 border-[#0D0D0D] shadow-brutalist-lg flex items-center justify-center gap-2.5"
               data-cursor="hover"
             >
               <span>GITHUB REPOSITORY</span>
@@ -75,10 +75,10 @@ export default function Hero({ currentTheme = "bone" }: HeroProps) {
 
       {/* Footer Spec Bar */}
       <div className="w-full flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2 pt-4 border-t-3 border-[#0D0D0D] font-mono text-[10px] sm:text-xs font-bold uppercase">
-        <span className="bg-[#F5F3EE] px-2.5 py-1 border-2 border-[#0D0D0D] text-center sm:text-left">
+        <span className="bg-[#FFFFFF] text-[#0D0D0D] px-2.5 py-1 border-2 border-[#0D0D0D] text-center sm:text-left">
           LOCATION: LAGOS, NIGERIA (UTC+1) // REMOTE AVAILABLE
         </span>
-        <span className="bg-[#FFDE59] px-2.5 py-1 border-2 border-[#0D0D0D] text-center sm:text-right">
+        <span className="bg-[#0D0D0D] text-[#FFFFFF] px-2.5 py-1 border-2 border-[#0D0D0D] text-center sm:text-right">
           STATUS: OPEN TO FRONTEND ROLES
         </span>
       </div>

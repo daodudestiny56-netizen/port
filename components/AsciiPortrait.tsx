@@ -84,7 +84,7 @@ export default function AsciiPortrait({
       offCtx.drawImage(img, 0, 0, cols, rows);
       const imgData = offCtx.getImageData(0, 0, cols, rows).data;
 
-      // Solid neobrutalist ink background
+      // Solid stark ink background
       ctx.fillStyle = "#0D0D0D";
       ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
@@ -122,9 +122,9 @@ export default function AsciiPortrait({
 
           if (char !== " ") {
             if (highlight > 0.15) {
-              ctx.fillStyle = "#FFDE59";
+              ctx.fillStyle = "#FFFFFF";
             } else {
-              ctx.fillStyle = `rgba(245, 243, 238, ${Math.max(0.2, brightness)})`;
+              ctx.fillStyle = `rgba(255, 255, 255, ${Math.max(0.25, brightness)})`;
             }
             ctx.fillText(char, posX, posY);
           }
@@ -175,7 +175,7 @@ export default function AsciiPortrait({
         ref={canvasRef}
         className="relative z-10 block"
       />
-      <div className="absolute top-3 left-3 z-20 px-2 py-0.5 bg-[#FFDE59] border-2 border-[#0D0D0D] text-[9px] font-mono font-bold text-[#0D0D0D] uppercase shadow-brutalist-sm">
+      <div className="absolute top-3 left-3 z-20 px-2.5 py-1 bg-[#FFFFFF] border-2 border-[#0D0D0D] text-[9px] font-mono font-bold text-[#0D0D0D] uppercase shadow-brutalist-sm">
         MATRIX_HALFTONE // LIVE
       </div>
     </div>

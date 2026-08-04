@@ -40,7 +40,6 @@ export default function CustomCursor() {
       const targetX = mousePos.current.x;
       const targetY = mousePos.current.y;
 
-      // Tight 0.28 lerp tracking for responsive feel
       cursorPos.current.x += (targetX - cursorPos.current.x) * 0.28;
       cursorPos.current.y += (targetY - cursorPos.current.y) * 0.28;
 
@@ -88,10 +87,10 @@ export default function CustomCursor() {
         transform: "translate3d(-100px, -100px, 0)",
       }}
     >
-      {/* High-Contrast Dual-Layer Brutalist Square */}
-      <div className="relative w-full h-full bg-[#3D5AFE] border-3 border-[#0D0D0D] ring-2 ring-[#F5F3EE] shadow-[3px_3px_0px_#0D0D0D] flex items-center justify-center transition-colors duration-200">
-        {/* Inner High-Visibility Yellow Core Dot */}
-        <div className="w-1.5 h-1.5 bg-[#FFDE59] border border-[#0D0D0D]" />
+      {/* Stark Black & White Dual-Layer Brutalist Square */}
+      <div className="relative w-full h-full bg-[#0D0D0D] border-3 border-[#0D0D0D] outline outline-2 outline-[#FFFFFF] shadow-[3px_3px_0px_#0D0D0D] flex items-center justify-center transition-colors duration-200">
+        {/* Inner High-Visibility White Core Point */}
+        <div className="w-1.5 h-1.5 bg-[#FFFFFF] border border-[#0D0D0D]" />
       </div>
     </div>
   );

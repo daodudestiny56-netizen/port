@@ -29,10 +29,10 @@ export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
   }, [isOpen]);
 
   const stickerLinks = [
-    { name: "WORK", href: "#work", bg: "bg-[#FFDE59]", text: "text-[#0D0D0D]", rotate: "-2deg" },
-    { name: "TOOLKIT", href: "#toolkit", bg: "bg-[#3D5AFE]", text: "text-[#F5F3EE]", rotate: "1.5deg" },
-    { name: "ABOUT", href: "#about", bg: "bg-[#F5F3EE]", text: "text-[#0D0D0D]", rotate: "-1.5deg" },
-    { name: "CONTACT", href: "#contact", bg: "bg-[#FFDE59]", text: "text-[#0D0D0D]", rotate: "2deg" },
+    { name: "WORK", href: "#work", bg: "bg-[#0D0D0D]", text: "text-[#FFFFFF]", rotate: "-2deg" },
+    { name: "TOOLKIT", href: "#toolkit", bg: "bg-[#FFFFFF]", text: "text-[#0D0D0D]", rotate: "1.5deg" },
+    { name: "ABOUT", href: "#about", bg: "bg-[#0D0D0D]", text: "text-[#FFFFFF]", rotate: "-1.5deg" },
+    { name: "CONTACT", href: "#contact", bg: "bg-[#FFFFFF]", text: "text-[#0D0D0D]", rotate: "2deg" },
   ];
 
   const isInkTheme = currentTheme === "ink";
@@ -47,7 +47,7 @@ export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
           transition={{ type: "spring", stiffness: 400, damping: 25 }}
           style={{ transform: "rotate(-1deg)" }}
           className={`font-display text-xs sm:text-sm md:text-base font-extrabold px-2.5 sm:px-3 py-1 sm:py-1.5 uppercase tracking-wider border-3 border-[#0D0D0D] shadow-brutalist-sm transition-colors truncate max-w-[170px] xs:max-w-[220px] sm:max-w-none ${
-            isInkTheme ? "bg-[#F5F3EE] text-[#0D0D0D]" : "bg-[#FFDE59] text-[#0D0D0D]"
+            isInkTheme ? "bg-[#FFFFFF] text-[#0D0D0D]" : "bg-[#0D0D0D] text-[#FFFFFF]"
           }`}
           data-cursor="hover"
         >
@@ -59,10 +59,10 @@ export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
           {/* Status Chip */}
           <div
             className={`hidden xl:flex items-center gap-2 px-3 py-1 border-3 border-[#0D0D0D] text-xs font-mono font-bold uppercase shadow-brutalist-sm ${
-              isInkTheme ? "bg-[#0D0D0D] text-[#F5F3EE] border-[#F5F3EE]" : "bg-[#F5F3EE] text-[#0D0D0D]"
+              isInkTheme ? "bg-[#0D0D0D] text-[#FFFFFF] border-[#FFFFFF]" : "bg-[#FFFFFF] text-[#0D0D0D]"
             }`}
           >
-            <span className="w-2.5 h-2.5 bg-[#3D5AFE] border border-[#0D0D0D]" />
+            <span className="w-2.5 h-2.5 bg-[#0D0D0D] border border-[#FFFFFF]" />
             <span className="truncate">{portfolioData.status}</span>
           </div>
 
@@ -86,7 +86,7 @@ export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] border-3 border-[#0D0D0D] bg-[#FFDE59] text-[#0D0D0D] shadow-brutalist-sm focus:outline-none z-50 shrink-0"
+            className="md:hidden flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] border-3 border-[#0D0D0D] bg-[#0D0D0D] text-[#FFFFFF] shadow-brutalist-sm focus:outline-none z-50 shrink-0"
             aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
             data-cursor="hover"
           >
@@ -104,7 +104,7 @@ export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-[#0D0D0D]/80 backdrop-blur-sm z-40 md:hidden"
+              className="fixed inset-0 bg-[#0D0D0D]/85 backdrop-blur-sm z-40 md:hidden"
             />
 
             <motion.div
@@ -112,7 +112,7 @@ export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="fixed top-0 right-0 h-full w-[85vw] max-w-[340px] bg-[#F5F3EE] border-l-4 border-[#0D0D0D] p-5 sm:p-6 flex flex-col justify-between z-50 md:hidden shadow-brutalist-lg select-none"
+              className="fixed top-0 right-0 h-full w-[85vw] max-w-[340px] bg-[#FFFFFF] border-l-4 border-[#0D0D0D] p-5 sm:p-6 flex flex-col justify-between z-50 md:hidden shadow-brutalist-lg select-none"
             >
               <div className="flex justify-between items-center pb-4 border-b-3 border-[#0D0D0D]">
                 <span className="font-mono text-xs font-bold tracking-widest text-[#0D0D0D] uppercase">
@@ -120,7 +120,7 @@ export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
                 </span>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center border-3 border-[#0D0D0D] bg-[#FFDE59] text-[#0D0D0D]"
+                  className="w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center border-3 border-[#0D0D0D] bg-[#0D0D0D] text-[#FFFFFF]"
                 >
                   <X className="w-6 h-6 stroke-[3]" />
                 </button>

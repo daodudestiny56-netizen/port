@@ -10,20 +10,20 @@ interface BentoGridProps {
 
 export default function BentoGrid({ onSelectProject }: BentoGridProps) {
   return (
-    <section id="work" className="w-full px-4 sm:px-6 md:px-10 py-16 grid-border-bottom">
+    <section id="work" className="w-full px-4 sm:px-6 md:px-10 py-16 grid-border-bottom bg-[#0D0D0D] text-[#FFFFFF]">
       {/* Section Title Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-12 pb-4 border-b-4 border-[#0D0D0D]">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-12 pb-4 border-b-4 border-[#FFFFFF]">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#3D5AFE] text-[#F5F3EE] border-3 border-[#0D0D0D] text-xs font-mono font-bold uppercase shadow-brutalist-sm mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#FFFFFF] text-[#0D0D0D] border-3 border-[#0D0D0D] text-xs font-mono font-bold uppercase shadow-brutalist-white-sm mb-3">
             <Terminal className="w-3.5 h-3.5" />
             <span>SELECTED WORK // CASE STUDIES</span>
           </div>
-          <h2 className="font-display font-extrabold text-3xl sm:text-5xl uppercase tracking-tight text-[#0D0D0D]">
+          <h2 className="font-display font-extrabold text-3xl sm:text-5xl uppercase tracking-tight text-[#FFFFFF]">
             PRODUCTION PROJECTS
           </h2>
         </div>
 
-        <span className="font-mono text-xs font-bold text-[#0D0D0D] uppercase bg-[#FFDE59] px-3 py-1 border-2 border-[#0D0D0D]">
+        <span className="font-mono text-xs font-bold text-[#0D0D0D] uppercase bg-[#FFFFFF] px-3 py-1 border-2 border-[#0D0D0D]">
           {portfolioData.projects.length + 1} PROJECTS SHIPPED
         </span>
       </div>

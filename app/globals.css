@@ -7,9 +7,7 @@
 @layer base {
   :root {
     --ink: #0D0D0D;
-    --bone: #F5F3EE;
-    --raw-yellow: #FFDE59;
-    --electric-indigo: #3D5AFE;
+    --bone: #FFFFFF;
   }
 
   * {
@@ -18,14 +16,14 @@
 
   html {
     scroll-behavior: smooth;
-    background-color: var(--bone);
-    color: var(--ink);
+    background-color: #FFFFFF;
+    color: #0D0D0D;
     overflow-x: hidden;
   }
 
   body {
-    background-color: var(--bone);
-    color: var(--ink);
+    background-color: #FFFFFF;
+    color: #0D0D0D;
     font-family: 'Space Grotesk', 'Inter', sans-serif;
     line-height: 1.6;
     overflow-x: hidden;
@@ -40,7 +38,7 @@
   select:focus-visible,
   textarea:focus-visible,
   [role="button"]:focus-visible {
-    outline: 3px solid var(--electric-indigo) !important;
+    outline: 3px solid #0D0D0D !important;
     outline-offset: 3px !important;
   }
 
@@ -59,8 +57,8 @@
   }
 
   ::selection {
-    background-color: var(--raw-yellow);
-    color: var(--ink);
+    background-color: #0D0D0D;
+    color: #FFFFFF;
   }
 }
 
@@ -69,26 +67,26 @@
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bone);
-  border-left: 2px solid var(--ink);
+  background: #FFFFFF;
+  border-left: 2px solid #0D0D0D;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--ink);
+  background: #0D0D0D;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--electric-indigo);
+  background: #333333;
 }
 
 /* Hard Cut Instant Color Swap Utilities */
 .zone-bone {
-  background-color: var(--bone) !important;
-  color: var(--ink) !important;
+  background-color: #FFFFFF !important;
+  color: #0D0D0D !important;
   transition: background-color 0ms, color 0ms !important;
 }
 
 .zone-ink {
-  background-color: var(--ink) !important;
-  color: var(--bone) !important;
+  background-color: #0D0D0D !important;
+  color: #FFFFFF !important;
   transition: background-color 0ms, color 0ms !important;
 }
 

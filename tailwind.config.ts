@@ -10,11 +10,11 @@ const config: Config = {
     extend: {
       colors: {
         ink: "#0D0D0D",
-        bone: "#F5F3EE",
-        "raw-yellow": "#FFDE59",
-        "electric-indigo": "#3D5AFE",
-        background: "#F5F3EE",
-        surface: "#F5F3EE",
+        bone: "#FFFFFF",
+        "raw-yellow": "#FFFFFF",
+        "electric-indigo": "#0D0D0D",
+        background: "#FFFFFF",
+        surface: "#FFFFFF",
         border: "#0D0D0D",
       },
       borderRadius: {
@@ -32,12 +32,9 @@ const config: Config = {
         "brutalist-sm": "3px 3px 0px #0D0D0D",
         brutalist: "5px 5px 0px #0D0D0D",
         "brutalist-lg": "8px 8px 0px #0D0D0D",
-        "brutalist-yellow": "5px 5px 0px #FFDE59",
-        "brutalist-indigo": "5px 5px 0px #3D5AFE",
-        "brutalist-bone": "5px 5px 0px #F5F3EE",
-        "brutalist-yellow-lg": "8px 8px 0px #FFDE59",
-        "brutalist-indigo-lg": "8px 8px 0px #3D5AFE",
-        "brutalist-bone-lg": "8px 8px 0px #F5F3EE",
+        "brutalist-white-sm": "3px 3px 0px #FFFFFF",
+        "brutalist-white": "5px 5px 0px #FFFFFF",
+        "brutalist-white-lg": "8px 8px 0px #FFFFFF",
       },
       fontFamily: {
         display: ["'Bricolage Grotesque'", "sans-serif"],
@@ -53,4 +50,3 @@ const config: Config = {
   plugins: [],
 };
 export default config;
-
