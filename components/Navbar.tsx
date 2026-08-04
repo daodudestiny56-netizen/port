@@ -39,14 +39,14 @@ export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
 
   return (
     <>
-      <header className="relative w-full z-40 flex justify-between items-center py-4 px-2 sm:px-4">
+      <header className="relative w-full z-40 flex justify-between items-center py-2 sm:py-4 px-1 sm:px-4 gap-2">
         {/* Brand Name Tag */}
         <motion.a
           href="#"
           whileHover={{ rotate: 0, scale: 1.03 }}
           transition={{ type: "spring", stiffness: 400, damping: 25 }}
           style={{ transform: "rotate(-1deg)" }}
-          className={`font-display text-xs sm:text-sm md:text-base font-extrabold px-3 py-1.5 uppercase tracking-wider border-3 border-[#0D0D0D] shadow-brutalist-sm transition-colors ${
+          className={`font-display text-xs sm:text-sm md:text-base font-extrabold px-2.5 sm:px-3 py-1 sm:py-1.5 uppercase tracking-wider border-3 border-[#0D0D0D] shadow-brutalist-sm transition-colors truncate max-w-[170px] xs:max-w-[220px] sm:max-w-none ${
             isInkTheme ? "bg-[#F5F3EE] text-[#0D0D0D]" : "bg-[#FFDE59] text-[#0D0D0D]"
           }`}
           data-cursor="hover"
@@ -55,19 +55,19 @@ export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
         </motion.a>
 
         {/* Status Chip & Desktop Sticker-Sheet Navigation */}
-        <div className="flex items-center gap-3 sm:gap-6">
+        <div className="flex items-center gap-2 sm:gap-4 lg:gap-6 shrink-0">
           {/* Status Chip */}
           <div
-            className={`hidden lg:flex items-center gap-2 px-3 py-1 border-3 border-[#0D0D0D] text-xs font-mono font-bold uppercase shadow-brutalist-sm ${
+            className={`hidden xl:flex items-center gap-2 px-3 py-1 border-3 border-[#0D0D0D] text-xs font-mono font-bold uppercase shadow-brutalist-sm ${
               isInkTheme ? "bg-[#0D0D0D] text-[#F5F3EE] border-[#F5F3EE]" : "bg-[#F5F3EE] text-[#0D0D0D]"
             }`}
           >
             <span className="w-2.5 h-2.5 bg-[#3D5AFE] border border-[#0D0D0D]" />
-            <span>{portfolioData.status}</span>
+            <span className="truncate">{portfolioData.status}</span>
           </div>
 
-          {/* Sticker-Sheet Navigation Links (Desktop) */}
-          <nav className="hidden md:flex items-center gap-3">
+          {/* Sticker Navigation Links (Desktop) */}
+          <nav className="hidden md:flex items-center gap-2 lg:gap-3">
             {stickerLinks.map((link) => (
               <motion.a
                 key={link.name}
@@ -75,7 +75,7 @@ export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
                 style={{ transform: `rotate(${link.rotate})` }}
                 whileHover={{ rotate: 0, y: -3, scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                className={`px-3.5 py-1.5 text-xs font-mono font-extrabold tracking-wider border-3 border-[#0D0D0D] shadow-brutalist-sm ${link.bg} ${link.text} block select-none`}
+                className={`px-3 lg:px-3.5 py-1.5 text-xs font-mono font-extrabold tracking-wider border-3 border-[#0D0D0D] shadow-brutalist-sm ${link.bg} ${link.text} block select-none`}
                 data-cursor="hover"
               >
                 {link.name}
@@ -86,8 +86,8 @@ export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden flex items-center justify-center w-11 h-11 border-3 border-[#0D0D0D] bg-[#FFDE59] text-[#0D0D0D] shadow-brutalist-sm focus:outline-none z-50 shrink-0"
-            aria-label={isOpen ? "Close menu" : "Open menu"}
+            className="md:hidden flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] border-3 border-[#0D0D0D] bg-[#FFDE59] text-[#0D0D0D] shadow-brutalist-sm focus:outline-none z-50 shrink-0"
+            aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
             data-cursor="hover"
           >
             {isOpen ? <X className="w-6 h-6 stroke-[3]" /> : <Menu className="w-6 h-6 stroke-[3]" />}
@@ -112,7 +112,7 @@ export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              className="fixed top-0 right-0 h-full w-[85vw] max-w-[360px] bg-[#F5F3EE] border-l-4 border-[#0D0D0D] p-6 flex flex-col justify-between z-50 md:hidden shadow-brutalist-lg select-none"
+              className="fixed top-0 right-0 h-full w-[85vw] max-w-[340px] bg-[#F5F3EE] border-l-4 border-[#0D0D0D] p-5 sm:p-6 flex flex-col justify-between z-50 md:hidden shadow-brutalist-lg select-none"
             >
               <div className="flex justify-between items-center pb-4 border-b-3 border-[#0D0D0D]">
                 <span className="font-mono text-xs font-bold tracking-widest text-[#0D0D0D] uppercase">
@@ -120,13 +120,13 @@ export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
                 </span>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="w-10 h-10 flex items-center justify-center border-3 border-[#0D0D0D] bg-[#FFDE59] text-[#0D0D0D]"
+                  className="w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center border-3 border-[#0D0D0D] bg-[#FFDE59] text-[#0D0D0D]"
                 >
-                  <X className="w-5 h-5 stroke-[3]" />
+                  <X className="w-6 h-6 stroke-[3]" />
                 </button>
               </div>
 
-              <div className="flex flex-col gap-5 my-auto py-6">
+              <div className="flex flex-col gap-4 sm:gap-5 my-auto py-6">
                 {stickerLinks.map((link, idx) => (
                   <motion.a
                     key={link.name}
@@ -137,7 +137,7 @@ export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
                     transition={{ delay: idx * 0.08 }}
                     style={{ transform: `rotate(${link.rotate})` }}
                     whileHover={{ rotate: 0 }}
-                    className={`flex items-center justify-between p-4 border-3 border-[#0D0D0D] text-lg font-mono font-extrabold shadow-brutalist ${link.bg} ${link.text}`}
+                    className={`flex items-center justify-between p-3.5 sm:p-4 border-3 border-[#0D0D0D] text-base sm:text-lg font-mono font-extrabold shadow-brutalist min-h-[48px] ${link.bg} ${link.text}`}
                   >
                     <span>{link.name}</span>
                     <ArrowUpRight className="w-6 h-6 stroke-[3]" />
@@ -145,8 +145,8 @@ export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
                 ))}
               </div>
 
-              <div className="pt-4 border-t-3 border-[#0D0D0D] font-mono text-xs font-bold">
-                <span className="block text-[#0D0D0D] uppercase">CONTACT: {portfolioData.email}</span>
+              <div className="pt-4 border-t-3 border-[#0D0D0D] font-mono text-[11px] sm:text-xs font-bold">
+                <span className="block text-[#0D0D0D] uppercase break-all">CONTACT: {portfolioData.email}</span>
               </div>
             </motion.div>
           </>
