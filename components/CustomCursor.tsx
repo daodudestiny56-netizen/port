@@ -40,12 +40,12 @@ export default function CustomCursor() {
       const targetX = mousePos.current.x;
       const targetY = mousePos.current.y;
 
-      // Tight lerp tracking
-      cursorPos.current.x += (targetX - cursorPos.current.x) * 0.25;
-      cursorPos.current.y += (targetY - cursorPos.current.y) * 0.25;
+      // Tight 0.28 lerp tracking for responsive feel
+      cursorPos.current.x += (targetX - cursorPos.current.x) * 0.28;
+      cursorPos.current.y += (targetY - cursorPos.current.y) * 0.28;
 
       if (cursorRef.current) {
-        cursorRef.current.style.transform = `translate3d(${cursorPos.current.x - 8}px, ${cursorPos.current.y - 8}px, 0) scale(${isHovered ? 2.2 : 1})`;
+        cursorRef.current.style.transform = `translate3d(${cursorPos.current.x - 10}px, ${cursorPos.current.y - 10}px, 0) scale(${isHovered ? 2.2 : 1})`;
       }
 
       animationFrameId = requestAnimationFrame(updatePosition);
@@ -83,11 +83,16 @@ export default function CustomCursor() {
   return (
     <div
       ref={cursorRef}
-      className="fixed top-0 left-0 w-4 h-4 bg-[#FFDE59] border-2 border-[#0D0D0D] pointer-events-none z-[99999] will-change-transform rounded-none mix-blend-difference"
+      className="fixed top-0 left-0 w-5 h-5 pointer-events-none z-[99999] will-change-transform rounded-none select-none"
       style={{
         transform: "translate3d(-100px, -100px, 0)",
-        boxShadow: "2px 2px 0px #0D0D0D",
       }}
-    />
+    >
+      {/* High-Contrast Dual-Layer Brutalist Square */}
+      <div className="relative w-full h-full bg-[#3D5AFE] border-3 border-[#0D0D0D] ring-2 ring-[#F5F3EE] shadow-[3px_3px_0px_#0D0D0D] flex items-center justify-center transition-colors duration-200">
+        {/* Inner High-Visibility Yellow Core Dot */}
+        <div className="w-1.5 h-1.5 bg-[#FFDE59] border border-[#0D0D0D]" />
+      </div>
+    </div>
   );
 }
