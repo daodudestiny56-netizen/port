@@ -45,7 +45,7 @@ export default function About() {
         </div>
 
         <p className="font-sans text-base sm:text-xl font-bold leading-relaxed text-[#0D0D0D]">
-          I am a Frontend Developer with 2+ years of experience building web applications using Next.js, React, and TypeScript. I focus on creating fast page loads, accessible user interfaces, and smooth performance for web apps. Based in Lagos, Nigeria, I build production frontend interfaces for product teams worldwide.
+          I am a Frontend Developer with 2+ years of experience building web applications using Next.js, React, and TypeScript. I focus on creating fast page loads, accessible user interfaces, and smooth performance for web apps. I build production frontend interfaces for product teams worldwide.
         </p>
 
         {/* Dynamic Metric Count-Up Numbers */}

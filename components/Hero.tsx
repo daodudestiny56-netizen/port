@@ -103,7 +103,7 @@ export default function Hero({ currentTheme = "bone" }: HeroProps) {
         className="w-full flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2 pt-4 border-t-3 border-[#0D0D0D] font-mono text-[10px] sm:text-xs font-bold uppercase"
       >
         <span className="bg-[#FFFFFF] text-[#0D0D0D] px-2.5 py-1 border-2 border-[#0D0D0D] text-center sm:text-left">
-          LOCATION: LAGOS, NIGERIA (UTC+1) <span className="text-[#2B4EFF]">{"//"}</span> REMOTE AVAILABLE
+          WORK MODE: <span className="text-[#2B4EFF]">REMOTE AVAILABLE</span>
         </span>
         <span className="bg-[#0D0D0D] text-[#FFFFFF] px-2.5 py-1 border-2 border-[#0D0D0D] text-center sm:text-right">
           STATUS: <span className="text-[#2B4EFF]">OPEN TO FRONTEND ROLES</span>

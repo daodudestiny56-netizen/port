@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ShieldCheck, MapPin, Activity } from "lucide-react";
+import { ShieldCheck, Activity, Globe } from "lucide-react";
 
 interface ProfessionalPortraitProps {
   imageSrc?: string;
@@ -20,7 +20,7 @@ export default function ProfessionalPortrait({
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       className={`relative w-full max-w-md mx-auto group select-none ${className}`}
     >
-      {/* Outer Brutalist Frame with Hover Blueprint Blue Shadow Shift */}
+      {/* Outer Brutalist Frame */}
       <div className="relative w-full bg-[#0D0D0D] border-4 border-[#0D0D0D] shadow-brutalist-lg hover:shadow-brutalist-blueprint-lg transition-all duration-300 overflow-hidden">
         {/* Top Header Stamp */}
         <div className="flex items-center justify-between px-4 py-2.5 bg-[#0D0D0D] border-b-4 border-[#FFFFFF] text-[#FFFFFF] font-mono text-[11px] font-extrabold uppercase">
@@ -58,8 +58,8 @@ export default function ProfessionalPortrait({
         {/* Bottom Metadata Bar */}
         <div className="flex items-center justify-between px-4 py-3 bg-[#0D0D0D] border-t-4 border-[#FFFFFF] text-[#FFFFFF] font-mono text-xs font-bold uppercase">
           <div className="flex items-center gap-1.5">
-            <MapPin className="w-3.5 h-3.5 text-[#2B4EFF]" />
-            <span>LAGOS, NIGERIA</span>
+            <Globe className="w-3.5 h-3.5 text-[#2B4EFF]" />
+            <span>REMOTE AVAILABLE</span>
           </div>
           <span className="bg-[#FFFFFF] text-[#0D0D0D] px-2 py-0.5 text-[10px] font-extrabold border border-[#0D0D0D]">
             FRONTEND ARCHITECT

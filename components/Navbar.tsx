@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ArrowUpRight, Clock } from "lucide-react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
 import { portfolioData } from "@/lib/data";
 
 interface NavbarProps {
@@ -11,26 +11,6 @@ interface NavbarProps {
 
 export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [timeString, setTimeString] = useState<string>("");
-
-  // Live real-time Lagos station clock (UTC+1)
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      const options: Intl.DateTimeFormatOptions = {
-        timeZone: "Africa/Lagos",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false,
-      };
-      setTimeString(new Intl.DateTimeFormat("en-GB", options).format(now));
-    };
-
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -60,7 +40,7 @@ export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
   return (
     <>
       <header className="relative w-full z-40 flex justify-between items-center py-2 sm:py-4 px-1 sm:px-4 gap-2">
-        {/* Brand Name Tag with Stamped Load Transition */}
+        {/* Brand Name Tag */}
         <motion.a
           href="#"
           initial={{ opacity: 0, scale: 0.8, y: -10 }}
@@ -78,7 +58,7 @@ export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
 
         {/* Status Chip & Desktop Sticker Navigation */}
         <div className="flex items-center gap-2 sm:gap-4 lg:gap-6 shrink-0">
-          {/* Real-time Ticking Station Clock */}
+          {/* Status Chip */}
           <div
             className={`hidden xl:flex items-center gap-2 px-3 py-1 border-3 border-[#0D0D0D] text-xs font-mono font-bold uppercase shadow-brutalist-sm ${
               isInkTheme ? "bg-[#0D0D0D] text-[#FFFFFF] border-[#FFFFFF]" : "bg-[#FFFFFF] text-[#0D0D0D]"
@@ -86,12 +66,6 @@ export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
           >
             <span className="w-2.5 h-2.5 bg-[#2B4EFF] border border-[#0D0D0D]" />
             <span className="truncate">{portfolioData.status}</span>
-            {timeString && (
-              <span className="pl-2 border-l border-current flex items-center gap-1 text-[#2B4EFF]">
-                <Clock className="w-3.5 h-3.5 stroke-[3]" />
-                <span>{timeString} WAT</span>
-              </span>
-            )}
           </div>
 
           {/* Staggered Stamp Sticker Links (Desktop) */}

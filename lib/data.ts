@@ -44,7 +44,7 @@ export interface PortfolioData {
 export const portfolioData: PortfolioData = {
   name: "Daodu Destiny Oluwatobiloba",
   role: "Frontend developer building fast, responsive, and accessible web applications using Next.js, React, and TypeScript. Focused on clean code, smooth performance, and great user experiences.",
-  status: "Open to frontend roles — Based in Lagos, remote-friendly",
+  status: "Open to frontend roles — Remote-friendly",
   email: "daodudestiny56@gmail.com",
   socials: {
     github: "https://github.com/daodudestiny56-netizen",
