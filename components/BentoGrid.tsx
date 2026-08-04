@@ -12,12 +12,12 @@ interface BentoGridProps {
 export default function BentoGrid({ onSelectProject }: BentoGridProps) {
   return (
     <section id="work" className="w-full px-4 sm:px-6 md:px-10 py-16 grid-border-bottom bg-[#0D0D0D] text-[#FFFFFF]">
-      {/* Section Title Header with Clip-Path Reveal */}
+      {/* Section Title Header */}
       <motion.div
-        initial={{ clipPath: "inset(0 100% 0 0)", opacity: 0 }}
-        whileInView={{ clipPath: "inset(0 0% 0 0)", opacity: 1 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        initial={{ opacity: 0, y: 15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
         className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-12 pb-4 border-b-4 border-[#FFFFFF]"
       >
         <div>
@@ -35,14 +35,14 @@ export default function BentoGrid({ onSelectProject }: BentoGridProps) {
         </span>
       </motion.div>
 
-      {/* Grid of Staggered Project Cards */}
+      {/* Grid of Projects Always Fully Visible & Rock-Solid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
         {/* Featured Project */}
         <motion.div
-          initial={{ clipPath: "inset(100% 0 0 0)", opacity: 0 }}
-          whileInView={{ clipPath: "inset(0 0 0 0)", opacity: 1 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.05 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
         >
           <ProjectCard
             project={portfolioData.featuredProject}
@@ -55,10 +55,10 @@ export default function BentoGrid({ onSelectProject }: BentoGridProps) {
         {portfolioData.projects.map((project, idx) => (
           <motion.div
             key={project.name}
-            initial={{ clipPath: "inset(100% 0 0 0)", opacity: 0 }}
-            whileInView={{ clipPath: "inset(0 0 0 0)", opacity: 1 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: (idx + 1) * 0.08 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.05 }}
+            transition={{ duration: 0.4, ease: "easeOut", delay: (idx + 1) * 0.06 }}
           >
             <ProjectCard
               project={project}

@@ -10,10 +10,10 @@ export default function About() {
     <section id="about" className="w-full px-4 sm:px-6 md:px-10 py-16 grid-border-bottom bg-[#0D0D0D] text-[#FFFFFF]">
       {/* Section Header */}
       <motion.div
-        initial={{ clipPath: "inset(0 100% 0 0)", opacity: 0 }}
-        whileInView={{ clipPath: "inset(0 0% 0 0)", opacity: 1 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        initial={{ opacity: 0, y: 15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
         className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-12 pb-4 border-b-4 border-[#FFFFFF]"
       >
         <div>
@@ -31,12 +31,12 @@ export default function About() {
         </span>
       </motion.div>
 
-      {/* Concrete 3-Sentence Bio Container with Reveal */}
+      {/* Concrete 3-Sentence Bio Container */}
       <motion.div
-        initial={{ clipPath: "inset(100% 0 0 0)", opacity: 0 }}
-        whileInView={{ clipPath: "inset(0 0 0 0)", opacity: 1 }}
-        viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.05 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
         className="max-w-4xl mx-auto border-4 border-[#FFFFFF] bg-[#FFFFFF] text-[#0D0D0D] p-6 sm:p-10 shadow-brutalist-white-lg"
       >
         <div className="flex items-center gap-2 font-mono text-xs font-extrabold uppercase mb-4 pb-2 border-b-3 border-[#0D0D0D] text-[#2B4EFF]">
@@ -56,7 +56,7 @@ export default function About() {
               initial={{ scale: 0.9, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
+              transition={{ delay: idx * 0.08 }}
               className="bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] p-3 shadow-brutalist-sm hover:border-[#2B4EFF] transition-colors"
             >
               <span className="font-mono text-2xl sm:text-3xl font-extrabold text-[#2B4EFF] block">

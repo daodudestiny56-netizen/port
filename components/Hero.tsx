@@ -24,7 +24,7 @@ export default function Hero({ currentTheme = "bone" }: HeroProps) {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.2 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
             className="flex flex-wrap items-center gap-2 px-3 py-1.5 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] text-[10px] sm:text-xs font-mono font-bold uppercase shadow-brutalist-sm max-w-full"
           >
             <span>FRONTEND ARCHITECTURE</span>
@@ -32,11 +32,11 @@ export default function Hero({ currentTheme = "bone" }: HeroProps) {
             <span>WCAG 2.1 AAA</span>
           </motion.div>
 
-          {/* Headline with Clip-Path Wipe Reveal */}
+          {/* Headline */}
           <motion.h1
-            initial={{ clipPath: "inset(0 100% 0 0)", opacity: 0 }}
-            animate={{ clipPath: "inset(0 0% 0 0)", opacity: 1 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease: "easeOut", delay: 0.2 }}
             className="font-display font-extrabold text-[clamp(2rem,6.5vw,5.5rem)] leading-[0.94] text-[#0D0D0D] tracking-tight uppercase break-words w-full"
           >
             ENGINEERING HIGH-PERFORMANCE WEB INTERFACES & DESIGN SYSTEMS
@@ -46,17 +46,17 @@ export default function Hero({ currentTheme = "bone" }: HeroProps) {
           <motion.p
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.5 }}
+            transition={{ duration: 0.4, ease: "easeOut", delay: 0.3 }}
             className="font-mono text-xs sm:text-sm md:text-base font-bold text-[#FFFFFF] leading-relaxed w-full max-w-2xl bg-[#0D0D0D] p-3 sm:p-4 border-3 border-[#0D0D0D] shadow-brutalist"
           >
             <span className="text-[#2B4EFF]">DAODU DESTINY</span> — Frontend Developer. I build fast, accessible, and smooth web applications using Next.js, React, and TypeScript.
           </motion.p>
 
-          {/* Action CTAs with Tactile Click Feedback (scale: 0.97 on active/tap) */}
+          {/* Action CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.6 }}
+            transition={{ duration: 0.4, ease: "easeOut", delay: 0.4 }}
             className="flex flex-col sm:flex-row w-full sm:w-auto gap-3 sm:gap-4 pt-2"
           >
             {/* Primary CTA */}
@@ -99,7 +99,7 @@ export default function Hero({ currentTheme = "bone" }: HeroProps) {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.4, delay: 0.7 }}
+        transition={{ duration: 0.4, delay: 0.5 }}
         className="w-full flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2 pt-4 border-t-3 border-[#0D0D0D] font-mono text-[10px] sm:text-xs font-bold uppercase"
       >
         <span className="bg-[#FFFFFF] text-[#0D0D0D] px-2.5 py-1 border-2 border-[#0D0D0D] text-center sm:text-left">

@@ -27,10 +27,10 @@ export default function TechStack() {
     <section id="toolkit" className="w-full px-4 sm:px-6 md:px-10 py-16 grid-border-bottom bg-[#FFFFFF] text-[#0D0D0D]">
       {/* Section Header */}
       <motion.div
-        initial={{ clipPath: "inset(0 100% 0 0)", opacity: 0 }}
-        whileInView={{ clipPath: "inset(0 0% 0 0)", opacity: 1 }}
-        viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        initial={{ opacity: 0, y: 15 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
         className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-12 pb-4 border-b-4 border-[#0D0D0D]"
       >
         <div>
@@ -48,7 +48,7 @@ export default function TechStack() {
         </span>
       </motion.div>
 
-      {/* Punch Card Spec Sheet Grid with Terminal Line Readout Stagger */}
+      {/* Punch Card Spec Sheet Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
         {SPEC_SHEET.map((item, idx) => {
           const cardClass = item.isBlackBg
@@ -58,10 +58,10 @@ export default function TechStack() {
           return (
             <motion.div
               key={item.name}
-              initial={{ clipPath: "inset(100% 0 0 0)", opacity: 0, y: 15 }}
-              whileInView={{ clipPath: "inset(0 0 0 0)", opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: idx * 0.05 }}
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.05 }}
+              transition={{ duration: 0.35, ease: "easeOut", delay: idx * 0.04 }}
               whileHover={{ y: -3 }}
               className={`p-5 flex flex-col justify-between h-full select-none transition-all duration-200 ${cardClass}`}
             >
