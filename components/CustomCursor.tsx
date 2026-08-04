@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from "react";
 export default function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(true);
-  const [isHovered, setIsHovered] = useState(false);
   const [isReducedMotion, setIsReducedMotion] = useState(false);
 
   const mousePos = useRef({ x: 0, y: 0 });
@@ -40,11 +39,11 @@ export default function CustomCursor() {
       const targetX = mousePos.current.x;
       const targetY = mousePos.current.y;
 
-      cursorPos.current.x += (targetX - cursorPos.current.x) * 0.28;
-      cursorPos.current.y += (targetY - cursorPos.current.y) * 0.28;
+      cursorPos.current.x += (targetX - cursorPos.current.x) * 0.35;
+      cursorPos.current.y += (targetY - cursorPos.current.y) * 0.35;
 
       if (cursorRef.current) {
-        cursorRef.current.style.transform = `translate3d(${cursorPos.current.x - 10}px, ${cursorPos.current.y - 10}px, 0) scale(${isHovered ? 2.2 : 1})`;
+        cursorRef.current.style.transform = `translate3d(${cursorPos.current.x - 10}px, ${cursorPos.current.y - 10}px, 0)`;
       }
 
       animationFrameId = requestAnimationFrame(updatePosition);
@@ -52,30 +51,11 @@ export default function CustomCursor() {
 
     animationFrameId = requestAnimationFrame(updatePosition);
 
-    const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (!target) return;
-
-      const isInteractive =
-        target.tagName === "A" ||
-        target.tagName === "BUTTON" ||
-        target.closest("a") ||
-        target.closest("button") ||
-        target.closest('[role="button"]') ||
-        target.getAttribute("data-cursor") === "hover" ||
-        target.closest('[data-cursor="hover"]');
-
-      setIsHovered(!!isInteractive);
-    };
-
-    window.addEventListener("mouseover", handleMouseOver);
-
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseover", handleMouseOver);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [isMobile, isReducedMotion, isHovered]);
+  }, [isMobile, isReducedMotion]);
 
   if (isMobile || isReducedMotion) return null;
 
@@ -87,8 +67,8 @@ export default function CustomCursor() {
         transform: "translate3d(-100px, -100px, 0)",
       }}
     >
-      {/* High-Contrast Dual-Layer Brutalist Square with Blueprint Blue (#2B4EFF) */}
-      <div className="relative w-full h-full bg-[#2B4EFF] border-3 border-[#0D0D0D] outline outline-2 outline-[#FFFFFF] shadow-[3px_3px_0px_#0D0D0D] flex items-center justify-center transition-colors duration-200">
+      {/* Fixed-Size Dual-Layer Brutalist Square with Blueprint Blue (#2B4EFF) */}
+      <div className="relative w-full h-full bg-[#2B4EFF] border-3 border-[#0D0D0D] outline outline-2 outline-[#FFFFFF] shadow-[3px_3px_0px_#0D0D0D] flex items-center justify-center">
         {/* Inner High-Visibility White Core Point */}
         <div className="w-1.5 h-1.5 bg-[#FFFFFF] border border-[#0D0D0D]" />
       </div>
