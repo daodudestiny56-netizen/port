@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
-import AsciiPortrait from "@/components/AsciiPortrait";
+import ProfessionalPortrait from "@/components/ProfessionalPortrait";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 import { portfolioData } from "@/lib/data";
 
@@ -27,7 +27,7 @@ export default function Hero({ currentTheme = "bone" }: HeroProps) {
             <span>WCAG 2.1 AAA</span>
           </div>
 
-          {/* Bricolage Grotesque Weight 800 Headline */}
+          {/* Headline */}
           <h1 className="font-display font-extrabold text-[clamp(2rem,6.5vw,5.5rem)] leading-[0.94] text-[#0D0D0D] tracking-tight uppercase break-words w-full">
             ENGINEERING HIGH-PERFORMANCE WEB INTERFACES & DESIGN SYSTEMS
           </h1>
@@ -67,9 +67,9 @@ export default function Hero({ currentTheme = "bone" }: HeroProps) {
           </div>
         </div>
 
-        {/* Right Column: ASCII Matrix Portrait */}
+        {/* Right Column: Professional Portrait Photo Card */}
         <div className="lg:col-span-5 w-full flex items-center justify-center max-w-full overflow-hidden">
-          <AsciiPortrait imageSrc="/images/portrait.jpg" />
+          <ProfessionalPortrait imageSrc="/images/portrait.jpg" />
         </div>
       </div>
 

@@ -174,9 +174,6 @@ export default function Footer() {
       {/* Footer Bottom Stamp */}
       <div className="mt-16 pt-6 border-t-4 border-[#0D0D0D] flex flex-col sm:flex-row justify-between items-center gap-4 font-mono text-xs font-bold uppercase text-[#0D0D0D]">
         <span>© {new Date().getFullYear()} DAODU DESTINY OLUWATOBILOBA. ALL RIGHTS RESERVED.</span>
-        <span className="bg-[#0D0D0D] text-[#FFFFFF] px-2.5 py-1 border-2 border-[#0D0D0D]">
-          BUILT WITH NEXT.JS 14, TAILWIND CSS & <span className="text-[#2B4EFF]">FRAMER MOTION</span>
-        </span>
       </div>
     </footer>
   );
