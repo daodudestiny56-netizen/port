@@ -43,7 +43,7 @@ export interface PortfolioData {
 
 export const portfolioData: PortfolioData = {
   name: "Daodu Destiny Oluwatobiloba",
-  role: "Frontend developer specializing in Next.js, React, and TypeScript. I build high-performance web applications focused on sub-second initial loads, 60fps animations, and strict WCAG accessibility standards.",
+  role: "Frontend developer building fast, responsive, and accessible web applications using Next.js, React, and TypeScript. Focused on clean code, smooth performance, and great user experiences.",
   status: "Open to frontend roles — Based in Lagos, remote-friendly",
   email: "daodudestiny56@gmail.com",
   socials: {
@@ -57,16 +57,16 @@ export const portfolioData: PortfolioData = {
     category: "NEXT.JS / VOICE-AUTH",
     image: "/images/proof.png",
     link: "https://github.com/daodudestiny56-netizen/proof-",
-    description: "Built real-time voice authentication and automated livestreaming architecture using Next.js and WebSockets — ensuring sub-100ms sync latency and zero session state loss under peak concurrency.",
+    description: "Real-time voice verification and streaming app built with Next.js and WebSockets — providing fast sync and reliable session connections.",
     caseStudy: {
-      problem: "Handling high-concurrency audio stream packets and live attendance verification in web clients caused frame stutter and UI thread locks under unstable network conditions.",
-      approach: "Implemented a ring-buffered WebSocket audio packet queue combined with Web Audio API AudioWorklet offloading to process voice verification frames on a background thread without blocking the main React render loop.",
+      problem: "Playing live audio streams while verifying user voice data caused screen lag and app freezes on slow networks.",
+      approach: "Built a background audio processing queue using the Web Audio API to handle voice data smoothly without freezing the screen.",
       codeSnippet: {
         filename: "useVoiceStreamQueue.ts",
         language: "typescript",
         code: `import { useRef, useCallback } from 'react';
 
-// Ring-buffer queue processing voice PCM packets on a background thread
+// Audio queue processing voice packets in the background
 export function useVoiceStreamQueue(wsUrl: string) {
   const audioCtxRef = useRef<AudioContext | null>(null);
   const queueRef = useRef<Float32Array[]>([]);
@@ -75,7 +75,7 @@ export function useVoiceStreamQueue(wsUrl: string) {
     const pcmData = new Float32Array(frameData);
     queueRef.current.push(pcmData);
     
-    // Drain ring buffer to AudioWorklet Node without React state re-renders
+    // Play audio chunks smoothly without blocking UI renders
     if (queueRef.current.length > 5) {
       const chunk = queueRef.current.shift();
       audioCtxRef.current?.postMessage({ command: 'PLAY_CHUNK', chunk });
@@ -86,9 +86,9 @@ export function useVoiceStreamQueue(wsUrl: string) {
 }`
       },
       metrics: [
-        { label: "SYNC LATENCY", value: "<85ms" },
-        { label: "PACKET LOSS DROPS", value: "0.02%" },
-        { label: "MAIN THREAD FPS", value: "60 FPS" },
+        { label: "SYNC SPEED", value: "<85ms" },
+        { label: "PACKET DROPS", value: "0.02%" },
+        { label: "SCREEN FRAME RATE", value: "60 FPS" },
         { label: "LIGHTHOUSE SCORE", value: "98/100" }
       ]
     }
@@ -96,13 +96,13 @@ export function useVoiceStreamQueue(wsUrl: string) {
   projects: [
     {
       name: "VELORAIL",
-      category: "TYPESCRIPT / FRONTEND",
+      category: "TYPESCRIPT / WEB APP",
       image: "/images/velorail.png",
       link: "https://github.com/daodudestiny56-netizen/Velorail",
-      description: "Engineered a Telegram WebApp interface using TypeScript and Web3 API bindings — handling encrypted client state persistence and instant transaction confirmation feedback.",
+      description: "Telegram WebApp interface built with TypeScript — keeping user state saved securely and giving instant feedback for transactions.",
       caseStudy: {
-        problem: "Telegram WebApp containers present severe memory and window execution constraints, leading to app restarts and lost wallet authorization tokens when switching chat views.",
-        approach: "Built a persistent sessionStorage encryption wrapper using Web Crypto AES-GCM and atomic session tokens, paired with an optimistic RPC feedback pipeline.",
+        problem: "Switching chats inside Telegram caused the web app to reload and lose the user's active session state.",
+        approach: "Created an encrypted session storage wrapper with Web Crypto so user data stays saved even when switching screens.",
         codeSnippet: {
           filename: "telegramSessionStore.ts",
           language: "typescript",
@@ -120,20 +120,20 @@ export function useVoiceStreamQueue(wsUrl: string) {
         },
         metrics: [
           { label: "SESSION RECOVERY", value: "100%" },
-          { label: "CONFIRMATION FEEDBACK", value: "<150ms" },
-          { label: "CONTAINER BUNDLE", value: "38 kB" }
+          { label: "FEEDBACK SPEED", value: "<150ms" },
+          { label: "APP BUNDLE SIZE", value: "38 kB" }
         ]
       }
     },
     {
       name: "COCODB WAITLIST",
-      category: "REACT / DATABASE",
+      category: "REACT / LANDING PAGE",
       image: "/images/cocodb.png",
       link: "https://github.com/daodudestiny56-netizen/cocoDB-waitlist",
-      description: "Architected a high-throughput landing page and queue management flow — optimizing JS bundle size to under 45kB and maintaining a 100/100 Lighthouse performance score.",
+      description: "Fast landing page and queue signup system — keeping page load size under 45kB with a 100/100 Lighthouse performance score.",
       caseStudy: {
-        problem: "High surge traffic from developer product announcements caused layout shifts and API bottleneck delays during queue token generation.",
-        approach: "Implemented static HTML route shell pre-rendering, edge API middleware rate limiting, and CSS GPU-composited animations.",
+        problem: "High visitor traffic during product launches caused slow response times and layout shifts on signups.",
+        approach: "Used static pre-rendering, edge API rate limiting, and GPU-optimized CSS animations for fast page loads.",
         codeSnippet: {
           filename: "middleware.ts",
           language: "typescript",
@@ -150,20 +150,20 @@ export async function middleware(req: NextRequest) {
         },
         metrics: [
           { label: "LIGHTHOUSE SCORE", value: "100/100" },
-          { label: "JS BUNDLE SIZE", value: "41 kB" },
-          { label: "FIRST CONTENTFUL PAINT", value: "0.3s" }
+          { label: "PAGE SIZE", value: "41 kB" },
+          { label: "INITIAL LOAD TIME", value: "0.3s" }
         ]
       }
     },
     {
       name: "ZEDX ORIGINAL",
-      category: "TYPESCRIPT / WEB APP",
+      category: "TYPESCRIPT / E-COMMERCE",
       image: "/images/zedx.png",
       link: "https://github.com/daodudestiny56-netizen/zedx-original",
-      description: "Implemented optimistic cart state mutations, client-side caching, and dynamic route prefetching in React — reducing page transition delay to under 50ms across catalog and checkout.",
+      description: "Shopping cart and checkout interface — updating items instantly on click and pre-loading product pages for fast browsing.",
       caseStudy: {
-        problem: "E-commerce shoppers experience friction when cart updates rely on round-trip network requests before reflecting inventory changes visually.",
-        approach: "Engineered an optimistic UI state machine backed by an in-memory action roll-back buffer and pre-fetched route boundaries using Next.js Link preload priorities.",
+        problem: "Shoppers experienced delay when cart updates waited for server responses before showing item changes.",
+        approach: "Used optimistic UI state updates to show cart changes instantly while syncing with the server in the background.",
         codeSnippet: {
           filename: "useOptimisticCart.ts",
           language: "typescript",
@@ -182,21 +182,21 @@ export function useOptimisticCart(initialCart: CartItem[]) {
 }`
         },
         metrics: [
-          { label: "TRANSITION DELAY", value: "<40ms" },
+          { label: "RESPONSE TIME", value: "<40ms" },
           { label: "CART CONVERSION", value: "+18%" },
-          { label: "PREFETCH HIT RATE", value: "94%" }
+          { label: "PRELOAD HIT RATE", value: "94%" }
         ]
       }
     },
     {
       name: "MEDIQUICK",
-      category: "JAVASCRIPT / WEB APP",
+      category: "JAVASCRIPT / OFFLINE APP",
       image: "/images/mediquick.png",
       link: "https://github.com/daodudestiny56-netizen/MediQuick",
-      description: "Built an offline-first progressive WebApp with IndexedDB local caching and zero-dependency search — delivering sub-20ms query response times for emergency medical protocols.",
+      description: "Offline-first medical first-aid guide — providing instant search under 20ms for emergency instructions without internet.",
       caseStudy: {
-        problem: "Users accessing medical emergency step-by-step guides in poor connection zones suffered from blank screen loads and network timeouts.",
-        approach: "Designed a ServiceWorker caching layer paired with an in-memory Trie data structure backed by IndexedDB to search first-aid steps instantly offline.",
+        problem: "Users opening emergency first-aid guides in areas with poor network suffered blank screens and timeouts.",
+        approach: "Built a ServiceWorker offline cache with an in-memory search index so first-aid steps open instantly offline.",
         codeSnippet: {
           filename: "trieSearch.ts",
           language: "javascript",
@@ -210,25 +210,25 @@ export function useOptimisticCart(initialCart: CartItem[]) {
     }
     node.protocolId = protocolId;
   }
-  search(prefix) { /* Sub-5ms in-memory lookup */ }
+  search(prefix) { /* Sub-5ms fast lookup */ }
 }`
         },
         metrics: [
-          { label: "OFFLINE AVAILABILITY", value: "100%" },
-          { label: "QUERY RESPONSE", value: "<15ms" },
-          { label: "COLD START TIME", value: "0.4s" }
+          { label: "OFFLINE ACCESS", value: "100%" },
+          { label: "SEARCH SPEED", value: "<15ms" },
+          { label: "STARTUP TIME", value: "0.4s" }
         ]
       }
     },
     {
       name: "EDGE",
-      category: "TYPESCRIPT / UTILITY",
+      category: "TYPESCRIPT / LIVE DATA",
       image: "/images/edge.png",
       link: "https://github.com/daodudestiny56-netizen/edge",
-      description: "Implemented dynamic order-book UI updates and live odds calculations via Server-Sent Events (SSE) — preventing layout shifts while streaming real-time price tick feeds.",
+      description: "Live market order book interface — updating price feeds smooth at 60fps without screen flickering or layout jumps.",
       caseStudy: {
-        problem: "Rapidly fluctuating market odds caused heavy React DOM re-renders and cumulative layout shifts (CLS), resulting in missed user click targets on trading order books.",
-        approach: "Created a batched DOM tick update scheduler using requestAnimationFrame and CSS transform layers to batch price updates every 16ms.",
+        problem: "Rapid price updates caused screen re-renders and unexpected layout jumps, making buttons hard to click.",
+        approach: "Scheduled price updates using requestAnimationFrame to batch updates every 16ms for smooth rendering.",
         codeSnippet: {
           filename: "useBatchTickScheduler.ts",
           language: "typescript",
@@ -252,9 +252,9 @@ export function useBatchTickScheduler(onBatchRender: (ticks: MarketTick[]) => vo
 }`
         },
         metrics: [
-          { label: "CLS SCORE", value: "0.00" },
-          { label: "TICK THROUGHPUT", value: "2.4k/sec" },
-          { label: "RENDER FRAME RATE", value: "60 FPS" }
+          { label: "LAYOUT SHIFTS", value: "0.00" },
+          { label: "DATA THROUGHPUT", value: "2.4k/sec" },
+          { label: "FRAME RATE", value: "60 FPS" }
         ]
       }
     },
@@ -269,8 +269,8 @@ export function useBatchTickScheduler(onBatchRender: (ticks: MarketTick[]) => vo
     { name: "WebGL", category: "Graphics" },
   ],
   stats: [
-    { value: 2, label: "YEARS OF EXPERIENCE" },
-    { value: 10, label: "PROJECTS SHIPPED" },
+    { value: 2, label: "YEARS EXPERIENCE" },
+    { value: 10, label: "PROJECTS BUILT" },
     { value: 50, label: "OPEN SOURCE PRs" },
     { value: 99, label: "LIGHTHOUSE SCORE AVG", suffix: "%" },
   ],

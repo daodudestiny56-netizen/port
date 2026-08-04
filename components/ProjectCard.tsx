@@ -22,7 +22,7 @@ export default function ProjectCard({ project, onSelectProject, index = 0 }: Pro
   return (
     <MagneticCard
       onClick={handleClick}
-      shadowColor="#FFFFFF"
+      shadowColor="#2B4EFF"
       className="w-full bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#FFFFFF] p-6 sm:p-8 flex flex-col justify-between h-full min-h-[380px] group relative overflow-hidden"
     >
       {/* Card Header: Category Chip + Case Study Label */}
@@ -30,8 +30,8 @@ export default function ProjectCard({ project, onSelectProject, index = 0 }: Pro
         <span className="px-3 py-1 text-[11px] font-mono font-bold tracking-wider uppercase bg-[#FFFFFF] text-[#0D0D0D] border-2 border-[#0D0D0D]">
           {project.category}
         </span>
-        <span className="text-[11px] font-mono font-bold tracking-wider text-[#FFFFFF] uppercase flex items-center gap-1.5 bg-[#0D0D0D] px-2 py-0.5 border border-[#FFFFFF]">
-          <BookOpen className="w-3.5 h-3.5" /> CASE STUDY #{String(index + 1).padStart(2, "0")}
+        <span className="text-[11px] font-mono font-bold tracking-wider text-[#2B4EFF] uppercase flex items-center gap-1.5 bg-[#0D0D0D] px-2 py-0.5 border border-[#2B4EFF]">
+          <BookOpen className="w-3.5 h-3.5" /> PROJECT #{String(index + 1).padStart(2, "0")}
         </span>
       </div>
 
@@ -52,10 +52,10 @@ export default function ProjectCard({ project, onSelectProject, index = 0 }: Pro
       {/* Title & Description */}
       <div className="relative z-10 flex flex-col gap-3 mt-auto pt-4">
         <div className="flex items-center justify-between gap-4">
-          <h3 className="font-display font-extrabold text-2xl sm:text-3xl tracking-tight text-[#FFFFFF] uppercase">
+          <h3 className="font-display font-extrabold text-2xl sm:text-3xl tracking-tight text-[#FFFFFF] uppercase group-hover:text-[#2B4EFF] transition-colors duration-200">
             {project.name}
           </h3>
-          <div className="w-10 h-10 border-2 border-[#0D0D0D] bg-[#FFFFFF] text-[#0D0D0D] flex items-center justify-center shrink-0 group-hover:bg-[#0D0D0D] group-hover:text-[#FFFFFF] group-hover:border-[#FFFFFF] transition-colors duration-300">
+          <div className="w-10 h-10 border-2 border-[#0D0D0D] bg-[#FFFFFF] text-[#0D0D0D] flex items-center justify-center shrink-0 group-hover:bg-[#2B4EFF] group-hover:text-[#FFFFFF] group-hover:border-[#FFFFFF] transition-colors duration-200">
             <ArrowUpRight className="w-6 h-6 stroke-[3]" />
           </div>
         </div>
@@ -64,7 +64,7 @@ export default function ProjectCard({ project, onSelectProject, index = 0 }: Pro
           {project.description}
         </p>
 
-        {/* Tech Stack Pills in JetBrains Mono */}
+        {/* Tech Stack Pills */}
         {project.caseStudy?.metrics && (
           <div className="flex flex-wrap gap-2 pt-2">
             {project.caseStudy.metrics.slice(0, 3).map((m, i) => (
@@ -72,15 +72,15 @@ export default function ProjectCard({ project, onSelectProject, index = 0 }: Pro
                 key={i}
                 className="px-2 py-0.5 text-[10px] font-mono font-bold bg-[#FFFFFF] text-[#0D0D0D] border border-[#0D0D0D]"
               >
-                {m.label}: {m.value}
+                <span className="text-[#2B4EFF]">{m.label}:</span> {m.value}
               </span>
             ))}
           </div>
         )}
 
-        <div className="pt-2 flex items-center gap-1.5 font-mono text-[11px] font-bold text-[#FFFFFF] uppercase">
+        <div className="pt-2 flex items-center gap-1.5 font-mono text-[11px] font-bold text-[#2B4EFF] uppercase underline">
           <Terminal className="w-3.5 h-3.5" />
-          <span>VIEW TECHNICAL CASE STUDY & CODE</span>
+          <span>READ CASE STUDY & CODE</span>
         </div>
       </div>
     </MagneticCard>

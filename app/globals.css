@@ -8,6 +8,8 @@
   :root {
     --ink: #0D0D0D;
     --bone: #FFFFFF;
+    --accent-blueprint: #2B4EFF;
+    --accent-blueprint-dim: rgba(43, 78, 255, 0.12);
   }
 
   * {
@@ -31,14 +33,14 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Keyboard accessibility focus states */
+  /* Keyboard accessibility focus states - Blueprint Blue 3px offset outline */
   a:focus-visible,
   button:focus-visible,
   input:focus-visible,
   select:focus-visible,
   textarea:focus-visible,
   [role="button"]:focus-visible {
-    outline: 3px solid #0D0D0D !important;
+    outline: 3px solid #2B4EFF !important;
     outline-offset: 3px !important;
   }
 
@@ -57,7 +59,7 @@
   }
 
   ::selection {
-    background-color: #0D0D0D;
+    background-color: #2B4EFF;
     color: #FFFFFF;
   }
 }
@@ -74,7 +76,7 @@
   background: #0D0D0D;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #333333;
+  background: #2B4EFF;
 }
 
 /* Hard Cut Instant Color Swap Utilities */

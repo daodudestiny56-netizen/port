@@ -11,8 +11,8 @@ const config: Config = {
       colors: {
         ink: "#0D0D0D",
         bone: "#FFFFFF",
-        "raw-yellow": "#FFFFFF",
-        "electric-indigo": "#0D0D0D",
+        blueprint: "#2B4EFF",
+        "blueprint-dim": "rgba(43, 78, 255, 0.12)",
         background: "#FFFFFF",
         surface: "#FFFFFF",
         border: "#0D0D0D",
@@ -35,6 +35,8 @@ const config: Config = {
         "brutalist-white-sm": "3px 3px 0px #FFFFFF",
         "brutalist-white": "5px 5px 0px #FFFFFF",
         "brutalist-white-lg": "8px 8px 0px #FFFFFF",
+        "brutalist-blueprint": "5px 5px 0px #2B4EFF",
+        "brutalist-blueprint-lg": "8px 8px 0px #2B4EFF",
       },
       fontFamily: {
         display: ["'Bricolage Grotesque'", "sans-serif"],

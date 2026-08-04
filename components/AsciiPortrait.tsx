@@ -122,7 +122,8 @@ export default function AsciiPortrait({
 
           if (char !== " ") {
             if (highlight > 0.15) {
-              ctx.fillStyle = "#FFFFFF";
+              // Blueprint Blue mouse highlight
+              ctx.fillStyle = "#2B4EFF";
             } else {
               ctx.fillStyle = `rgba(255, 255, 255, ${Math.max(0.25, brightness)})`;
             }
@@ -175,7 +176,7 @@ export default function AsciiPortrait({
         ref={canvasRef}
         className="relative z-10 block"
       />
-      <div className="absolute top-3 left-3 z-20 px-2.5 py-1 bg-[#FFFFFF] border-2 border-[#0D0D0D] text-[9px] font-mono font-bold text-[#0D0D0D] uppercase shadow-brutalist-sm">
+      <div className="absolute top-3 left-3 z-20 px-2.5 py-1 bg-[#FFFFFF] border-2 border-[#0D0D0D] text-[9px] font-mono font-bold text-[#2B4EFF] uppercase shadow-brutalist-sm">
         MATRIX_HALFTONE // LIVE
       </div>
     </div>

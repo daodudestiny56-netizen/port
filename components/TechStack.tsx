@@ -28,16 +28,16 @@ export default function TechStack() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-12 pb-4 border-b-4 border-[#0D0D0D]">
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] text-xs font-mono font-bold uppercase shadow-brutalist-sm mb-3">
-            <Cpu className="w-3.5 h-3.5" />
-            <span>TECHNICAL SPECIFICATIONS // PUNCH CARD</span>
+            <Cpu className="w-3.5 h-3.5 text-[#2B4EFF]" />
+            <span>MY TECH STACK <span className="text-[#2B4EFF]">{"//"}</span> TOOLS & SKILLS</span>
           </div>
           <h2 className="font-display font-extrabold text-3xl sm:text-5xl uppercase tracking-tight text-[#0D0D0D]">
-            TOOLKIT & SPEC SHEET
+            MY TOOLKIT
           </h2>
         </div>
 
         <span className="font-mono text-xs font-bold text-[#FFFFFF] uppercase bg-[#0D0D0D] px-3 py-1 border-2 border-[#0D0D0D]">
-          SPECIFICATION INDEX v2.4
+          SKILLS INDEX <span className="text-[#2B4EFF]">v2.4</span>
         </span>
       </div>
 
@@ -45,27 +45,26 @@ export default function TechStack() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
         {SPEC_SHEET.map((item, idx) => {
           const cardClass = item.isBlackBg
-            ? "bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] shadow-brutalist"
-            : "bg-[#FFFFFF] text-[#0D0D0D] border-3 border-[#0D0D0D] shadow-brutalist";
+            ? "bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] shadow-brutalist hover:shadow-brutalist-blueprint"
+            : "bg-[#FFFFFF] text-[#0D0D0D] border-3 border-[#0D0D0D] shadow-brutalist hover:shadow-brutalist-blueprint";
 
           return (
             <div
               key={item.name}
-              className={`p-5 flex flex-col justify-between h-full select-none ${cardClass}`}
+              className={`p-5 flex flex-col justify-between h-full select-none transition-shadow duration-200 ${cardClass}`}
             >
               {/* Top Punch Hole & Category */}
               <div className="flex justify-between items-center pb-3 border-b-2 border-current">
                 <span className="font-mono text-[10px] font-extrabold tracking-widest uppercase opacity-80">
                   {item.category}
                 </span>
-                {/* Punch Card Hole Indicator */}
-                <div className="w-3 h-3 border-2 border-current bg-current opacity-70" />
+                <div className="w-3 h-3 border-2 border-current bg-[#2B4EFF]" />
               </div>
 
               {/* Spec Item Name */}
               <div className="my-6">
-                <span className="font-mono text-xs opacity-75 font-bold block mb-1">
-                  SPEC_0{idx + 1}
+                <span className="font-mono text-xs text-[#2B4EFF] font-bold block mb-1">
+                  SKILL_0{idx + 1}
                 </span>
                 <h3 className="font-display font-extrabold text-2xl tracking-tight uppercase">
                   {item.name}
@@ -78,10 +77,10 @@ export default function TechStack() {
               {/* Status Badge */}
               <div className="pt-3 border-t-2 border-current flex items-center justify-between font-mono text-[10px] font-extrabold uppercase">
                 <span className="flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 stroke-[3]" />
+                  <CheckCircle2 className="w-3.5 h-3.5 stroke-[3] text-[#2B4EFF]" />
                   {item.status}
                 </span>
-                <Zap className="w-3.5 h-3.5 stroke-[3]" />
+                <Zap className="w-3.5 h-3.5 stroke-[3] text-[#2B4EFF]" />
               </div>
             </div>
           );

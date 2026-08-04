@@ -87,8 +87,8 @@ export default function CustomCursor() {
         transform: "translate3d(-100px, -100px, 0)",
       }}
     >
-      {/* Stark Black & White Dual-Layer Brutalist Square */}
-      <div className="relative w-full h-full bg-[#0D0D0D] border-3 border-[#0D0D0D] outline outline-2 outline-[#FFFFFF] shadow-[3px_3px_0px_#0D0D0D] flex items-center justify-center transition-colors duration-200">
+      {/* High-Contrast Dual-Layer Brutalist Square with Blueprint Blue (#2B4EFF) */}
+      <div className="relative w-full h-full bg-[#2B4EFF] border-3 border-[#0D0D0D] outline outline-2 outline-[#FFFFFF] shadow-[3px_3px_0px_#0D0D0D] flex items-center justify-center transition-colors duration-200">
         {/* Inner High-Visibility White Core Point */}
         <div className="w-1.5 h-1.5 bg-[#FFFFFF] border border-[#0D0D0D]" />
       </div>

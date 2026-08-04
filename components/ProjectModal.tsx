@@ -71,7 +71,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             </div>
             <button
               onClick={onClose}
-              className="w-10 h-10 border-3 border-[#0D0D0D] bg-[#FFFFFF] hover:bg-[#0D0D0D] hover:text-[#FFFFFF] flex items-center justify-center text-[#0D0D0D] transition-colors"
+              className="w-10 h-10 border-3 border-[#0D0D0D] bg-[#FFFFFF] hover:bg-[#2B4EFF] hover:text-[#FFFFFF] flex items-center justify-center text-[#0D0D0D] transition-colors"
               aria-label="Close modal"
               data-cursor="hover"
             >
@@ -83,8 +83,8 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           <div className="p-6 md:p-8 overflow-y-auto space-y-8 text-[#0D0D0D]">
             {/* Overview */}
             <div className="border-3 border-[#0D0D0D] bg-[#0D0D0D] text-[#FFFFFF] p-5 shadow-brutalist">
-              <h3 className="font-mono text-xs font-bold text-[#FFFFFF] tracking-widest uppercase mb-2 flex items-center gap-2">
-                <Cpu className="w-4 h-4" /> TECHNICAL ARCHITECTURE OVERVIEW
+              <h3 className="font-mono text-xs font-bold text-[#2B4EFF] tracking-widest uppercase mb-2 flex items-center gap-2">
+                <Cpu className="w-4 h-4" /> PROJECT OVERVIEW
               </h3>
               <p className="font-sans text-xs sm:text-sm md:text-base leading-relaxed">
                 {project.description}
@@ -96,7 +96,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 {/* Real Metrics Grid */}
                 <div>
                   <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-[#0D0D0D] mb-3">
-                    VERIFIED BENCHMARKS & METRICS
+                    PROJECT METRICS
                   </h4>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     {cs.metrics.map((m, idx) => (
@@ -104,7 +104,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                         key={idx}
                         className="p-3 sm:p-4 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] shadow-brutalist-sm flex flex-col gap-1"
                       >
-                        <span className="font-mono text-xl sm:text-2xl font-extrabold text-[#FFFFFF] tracking-tight">
+                        <span className="font-mono text-xl sm:text-2xl font-extrabold text-[#2B4EFF] tracking-tight">
                           {m.value}
                         </span>
                         <span className="font-mono text-[9px] sm:text-[10px] font-bold tracking-wider text-[#FFFFFF]/80 uppercase">
@@ -119,8 +119,8 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Problem */}
                   <div className="p-5 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] shadow-brutalist flex flex-col gap-2">
-                    <span className="font-mono text-xs text-[#FFFFFF] tracking-widest uppercase font-extrabold flex items-center gap-1.5 pb-2 border-b border-[#FFFFFF]/30">
-                      <AlertTriangle className="w-4 h-4" /> THE ARCHITECTURAL PROBLEM
+                    <span className="font-mono text-xs text-[#2B4EFF] tracking-widest uppercase font-extrabold flex items-center gap-1.5 pb-2 border-b border-[#FFFFFF]/30">
+                      <AlertTriangle className="w-4 h-4" /> THE CHALLENGE
                     </span>
                     <p className="font-sans text-xs sm:text-sm leading-relaxed text-[#FFFFFF]/90">
                       {cs.problem}
@@ -129,8 +129,8 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
                   {/* Approach */}
                   <div className="p-5 bg-[#FFFFFF] text-[#0D0D0D] border-3 border-[#0D0D0D] shadow-brutalist flex flex-col gap-2">
-                    <span className="font-mono text-xs text-[#0D0D0D] tracking-widest uppercase font-extrabold flex items-center gap-1.5 pb-2 border-b border-[#0D0D0D]">
-                      <CheckCircle2 className="w-4 h-4" /> ENGINEERING APPROACH
+                    <span className="font-mono text-xs text-[#2B4EFF] tracking-widest uppercase font-extrabold flex items-center gap-1.5 pb-2 border-b border-[#0D0D0D]">
+                      <CheckCircle2 className="w-4 h-4" /> HOW I BUILT IT
                     </span>
                     <p className="font-sans text-xs sm:text-sm leading-relaxed text-[#0D0D0D]">
                       {cs.approach}
@@ -142,12 +142,12 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                 <div className="border-3 border-[#0D0D0D] bg-[#0D0D0D] shadow-brutalist overflow-hidden">
                   <div className="flex justify-between items-center px-4 py-3 bg-[#0D0D0D] text-[#FFFFFF] border-b-3 border-[#FFFFFF]/30 font-mono text-xs font-bold">
                     <div className="flex items-center gap-2">
-                      <Code2 className="w-4 h-4 stroke-[3]" />
-                      <span className="uppercase">{cs.codeSnippet.filename}</span>
+                      <Code2 className="w-4 h-4 stroke-[3] text-[#2B4EFF]" />
+                      <span className="uppercase text-[#2B4EFF]">{cs.codeSnippet.filename}</span>
                     </div>
                     <button
                       onClick={() => handleCopyCode(cs.codeSnippet.code)}
-                      className="flex items-center gap-1.5 px-3 py-1 bg-[#FFFFFF] text-[#0D0D0D] border-2 border-[#0D0D0D] text-[10px] font-mono font-bold uppercase transition-colors"
+                      className="flex items-center gap-1.5 px-3 py-1 bg-[#FFFFFF] text-[#0D0D0D] hover:bg-[#2B4EFF] hover:text-[#FFFFFF] border-2 border-[#0D0D0D] text-[10px] font-mono font-bold uppercase transition-colors"
                       data-cursor="hover"
                     >
                       {copied ? (
@@ -174,15 +174,15 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           {/* Sticky Footer Bar */}
           <div className="flex items-center justify-between gap-4 px-6 py-4 border-t-4 border-[#0D0D0D] bg-[#FFFFFF] shrink-0">
             <span className="font-mono text-xs font-bold text-[#0D0D0D] uppercase flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-[#0D0D0D]" />
-              PRODUCTION ARCHITECTURE
+              <CheckCircle2 className="w-4 h-4 text-[#2B4EFF]" />
+              PRODUCTION READY
             </span>
 
             <a
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-5 py-2.5 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] shadow-brutalist-sm text-xs font-mono font-extrabold uppercase flex items-center gap-2"
+              className="px-5 py-2.5 bg-[#0D0D0D] text-[#FFFFFF] hover:bg-[#2B4EFF] border-3 border-[#0D0D0D] shadow-brutalist-sm text-xs font-mono font-extrabold uppercase flex items-center gap-2 transition-colors"
               data-cursor="hover"
             >
               <span>GITHUB REPO</span>
