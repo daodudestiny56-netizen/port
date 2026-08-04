@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Cpu, CheckCircle2, Zap } from "lucide-react";
 
 interface SpecItem {
@@ -25,7 +26,13 @@ export default function TechStack() {
   return (
     <section id="toolkit" className="w-full px-4 sm:px-6 md:px-10 py-16 grid-border-bottom bg-[#FFFFFF] text-[#0D0D0D]">
       {/* Section Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-12 pb-4 border-b-4 border-[#0D0D0D]">
+      <motion.div
+        initial={{ clipPath: "inset(0 100% 0 0)", opacity: 0 }}
+        whileInView={{ clipPath: "inset(0 0% 0 0)", opacity: 1 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-12 pb-4 border-b-4 border-[#0D0D0D]"
+      >
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] text-xs font-mono font-bold uppercase shadow-brutalist-sm mb-3">
             <Cpu className="w-3.5 h-3.5 text-[#2B4EFF]" />
@@ -39,9 +46,9 @@ export default function TechStack() {
         <span className="font-mono text-xs font-bold text-[#FFFFFF] uppercase bg-[#0D0D0D] px-3 py-1 border-2 border-[#0D0D0D]">
           SKILLS INDEX <span className="text-[#2B4EFF]">v2.4</span>
         </span>
-      </div>
+      </motion.div>
 
-      {/* Punch Card Spec Sheet Grid */}
+      {/* Punch Card Spec Sheet Grid with Terminal Line Readout Stagger */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
         {SPEC_SHEET.map((item, idx) => {
           const cardClass = item.isBlackBg
@@ -49,9 +56,14 @@ export default function TechStack() {
             : "bg-[#FFFFFF] text-[#0D0D0D] border-3 border-[#0D0D0D] shadow-brutalist hover:shadow-brutalist-blueprint";
 
           return (
-            <div
+            <motion.div
               key={item.name}
-              className={`p-5 flex flex-col justify-between h-full select-none transition-shadow duration-200 ${cardClass}`}
+              initial={{ clipPath: "inset(100% 0 0 0)", opacity: 0, y: 15 }}
+              whileInView={{ clipPath: "inset(0 0 0 0)", opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: idx * 0.05 }}
+              whileHover={{ y: -3 }}
+              className={`p-5 flex flex-col justify-between h-full select-none transition-all duration-200 ${cardClass}`}
             >
               {/* Top Punch Hole & Category */}
               <div className="flex justify-between items-center pb-3 border-b-2 border-current">
@@ -82,7 +94,7 @@ export default function TechStack() {
                 </span>
                 <Zap className="w-3.5 h-3.5 stroke-[3] text-[#2B4EFF]" />
               </div>
-            </div>
+            </motion.div>
           );
         })}
       </div>

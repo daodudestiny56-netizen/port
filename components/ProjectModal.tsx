@@ -42,21 +42,22 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6 md:p-10 select-none">
-        {/* Hard Overlay Backdrop */}
+        {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          transition={{ duration: 0.15 }}
           onClick={onClose}
           className="fixed inset-0 bg-[#0D0D0D]/90 backdrop-blur-sm"
         />
 
-        {/* Modal Container */}
+        {/* Modal Container with Sharp Clip-Path Expansion */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 10 }}
-          transition={{ type: "spring", stiffness: 350, damping: 25 }}
+          initial={{ opacity: 0, scale: 0.94, clipPath: "inset(6% 6% 6% 6%)" }}
+          animate={{ opacity: 1, scale: 1, clipPath: "inset(0% 0% 0% 0%)" }}
+          exit={{ opacity: 0, scale: 0.94, clipPath: "inset(6% 6% 6% 6%)" }}
+          transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
           className="relative w-full max-w-4xl max-h-[90vh] bg-[#FFFFFF] border-4 border-[#0D0D0D] shadow-brutalist-lg flex flex-col z-10 overflow-hidden"
         >
           {/* Header Bar */}
@@ -71,7 +72,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             </div>
             <button
               onClick={onClose}
-              className="w-10 h-10 border-3 border-[#0D0D0D] bg-[#FFFFFF] hover:bg-[#2B4EFF] hover:text-[#FFFFFF] flex items-center justify-center text-[#0D0D0D] transition-colors"
+              className="w-10 h-10 border-3 border-[#0D0D0D] bg-[#FFFFFF] hover:bg-[#2B4EFF] hover:text-[#FFFFFF] active:scale-95 flex items-center justify-center text-[#0D0D0D] transition-all"
               aria-label="Close modal"
               data-cursor="hover"
             >
@@ -93,7 +94,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
             {cs && (
               <>
-                {/* Real Metrics Grid */}
+                {/* Metrics Grid */}
                 <div>
                   <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-[#0D0D0D] mb-3">
                     PROJECT METRICS
@@ -147,7 +148,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
                     </div>
                     <button
                       onClick={() => handleCopyCode(cs.codeSnippet.code)}
-                      className="flex items-center gap-1.5 px-3 py-1 bg-[#FFFFFF] text-[#0D0D0D] hover:bg-[#2B4EFF] hover:text-[#FFFFFF] border-2 border-[#0D0D0D] text-[10px] font-mono font-bold uppercase transition-colors"
+                      className="flex items-center gap-1.5 px-3 py-1 bg-[#FFFFFF] text-[#0D0D0D] hover:bg-[#2B4EFF] hover:text-[#FFFFFF] active:scale-95 border-2 border-[#0D0D0D] text-[10px] font-mono font-bold uppercase transition-all"
                       data-cursor="hover"
                     >
                       {copied ? (
@@ -182,7 +183,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-5 py-2.5 bg-[#0D0D0D] text-[#FFFFFF] hover:bg-[#2B4EFF] border-3 border-[#0D0D0D] shadow-brutalist-sm text-xs font-mono font-extrabold uppercase flex items-center gap-2 transition-colors"
+              className="px-5 py-2.5 bg-[#0D0D0D] text-[#FFFFFF] hover:bg-[#2B4EFF] active:scale-95 border-3 border-[#0D0D0D] shadow-brutalist-sm text-xs font-mono font-extrabold uppercase flex items-center gap-2 transition-all"
               data-cursor="hover"
             >
               <span>GITHUB REPO</span>

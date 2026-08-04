@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+import { Menu, X, ArrowUpRight, Clock } from "lucide-react";
 import { portfolioData } from "@/lib/data";
 
 interface NavbarProps {
@@ -11,6 +11,26 @@ interface NavbarProps {
 
 export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [timeString, setTimeString] = useState<string>("");
+
+  // Live real-time Lagos station clock (UTC+1)
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const options: Intl.DateTimeFormatOptions = {
+        timeZone: "Africa/Lagos",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+      };
+      setTimeString(new Intl.DateTimeFormat("en-GB", options).format(now));
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -40,11 +60,13 @@ export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
   return (
     <>
       <header className="relative w-full z-40 flex justify-between items-center py-2 sm:py-4 px-1 sm:px-4 gap-2">
-        {/* Brand Name Tag */}
+        {/* Brand Name Tag with Stamped Load Transition */}
         <motion.a
           href="#"
+          initial={{ opacity: 0, scale: 0.8, y: -10 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ type: "spring", stiffness: 450, damping: 20 }}
           whileHover={{ rotate: 0, scale: 1.03 }}
-          transition={{ type: "spring", stiffness: 400, damping: 25 }}
           style={{ transform: "rotate(-1deg)" }}
           className={`font-display text-xs sm:text-sm md:text-base font-extrabold px-2.5 sm:px-3 py-1 sm:py-1.5 uppercase tracking-wider border-3 border-[#0D0D0D] shadow-brutalist-sm hover:shadow-brutalist-blueprint hover:text-[#2B4EFF] transition-colors truncate max-w-[170px] xs:max-w-[220px] sm:max-w-none ${
             isInkTheme ? "bg-[#FFFFFF] text-[#0D0D0D]" : "bg-[#0D0D0D] text-[#FFFFFF]"
@@ -54,9 +76,9 @@ export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
           {portfolioData.name}
         </motion.a>
 
-        {/* Status Chip & Desktop Sticker-Sheet Navigation */}
+        {/* Status Chip & Desktop Sticker Navigation */}
         <div className="flex items-center gap-2 sm:gap-4 lg:gap-6 shrink-0">
-          {/* Status Chip with Blueprint Blue Dot */}
+          {/* Real-time Ticking Station Clock */}
           <div
             className={`hidden xl:flex items-center gap-2 px-3 py-1 border-3 border-[#0D0D0D] text-xs font-mono font-bold uppercase shadow-brutalist-sm ${
               isInkTheme ? "bg-[#0D0D0D] text-[#FFFFFF] border-[#FFFFFF]" : "bg-[#FFFFFF] text-[#0D0D0D]"
@@ -64,17 +86,31 @@ export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
           >
             <span className="w-2.5 h-2.5 bg-[#2B4EFF] border border-[#0D0D0D]" />
             <span className="truncate">{portfolioData.status}</span>
+            {timeString && (
+              <span className="pl-2 border-l border-current flex items-center gap-1 text-[#2B4EFF]">
+                <Clock className="w-3.5 h-3.5 stroke-[3]" />
+                <span>{timeString} WAT</span>
+              </span>
+            )}
           </div>
 
-          {/* Sticker Navigation Links (Desktop) */}
+          {/* Staggered Stamp Sticker Links (Desktop) */}
           <nav className="hidden md:flex items-center gap-2 lg:gap-3">
-            {stickerLinks.map((link) => (
+            {stickerLinks.map((link, index) => (
               <motion.a
                 key={link.name}
                 href={link.href}
+                initial={{ opacity: 0, scale: 0.7, y: -15 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 450,
+                  damping: 22,
+                  delay: 0.1 + index * 0.05,
+                }}
                 style={{ transform: `rotate(${link.rotate})` }}
                 whileHover={{ rotate: 0, y: -3, scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                whileTap={{ scale: 0.96 }}
                 className={`px-3 lg:px-3.5 py-1.5 text-xs font-mono font-extrabold tracking-wider border-3 border-[#0D0D0D] shadow-brutalist-sm hover:shadow-brutalist-blueprint hover:text-[#2B4EFF] ${link.bg} ${link.text} block select-none transition-colors duration-150`}
                 data-cursor="hover"
               >
@@ -86,7 +122,7 @@ export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] border-3 border-[#0D0D0D] bg-[#0D0D0D] text-[#FFFFFF] shadow-brutalist-sm focus:outline-none z-50 shrink-0"
+            className="md:hidden flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] border-3 border-[#0D0D0D] bg-[#0D0D0D] text-[#FFFFFF] shadow-brutalist-sm focus:outline-none z-50 shrink-0 active:scale-95 transition-transform"
             aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
             data-cursor="hover"
           >
@@ -111,7 +147,7 @@ export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              transition={{ type: "spring", stiffness: 350, damping: 28 }}
               className="fixed top-0 right-0 h-full w-[85vw] max-w-[340px] bg-[#FFFFFF] border-l-4 border-[#0D0D0D] p-5 sm:p-6 flex flex-col justify-between z-50 md:hidden shadow-brutalist-lg select-none"
             >
               <div className="flex justify-between items-center pb-4 border-b-3 border-[#0D0D0D]">
@@ -134,9 +170,10 @@ export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
                     onClick={() => setIsOpen(false)}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.08 }}
+                    transition={{ delay: idx * 0.06 }}
                     style={{ transform: `rotate(${link.rotate})` }}
                     whileHover={{ rotate: 0 }}
+                    whileTap={{ scale: 0.96 }}
                     className={`flex items-center justify-between p-3.5 sm:p-4 border-3 border-[#0D0D0D] text-base sm:text-lg font-mono font-extrabold shadow-brutalist min-h-[48px] ${link.bg} ${link.text}`}
                   >
                     <span>{link.name}</span>
