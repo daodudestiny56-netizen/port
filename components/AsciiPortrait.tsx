@@ -7,8 +7,8 @@ interface AsciiPortraitProps {
   className?: string;
 }
 
-// 69-step high-resolution density ramp for subtle luminance shifts in shadow and midtones
-const DENSITY_RAMP = " .'`^\",:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$";
+// 10-step graphic brutalist density ramp for posterized tonal clarity
+const DENSITY_RAMP = " .:-=+*#%@$";
 
 export default function AsciiPortrait({
   imageSrc = "/images/portrait.jpg",
@@ -48,10 +48,10 @@ export default function AsciiPortrait({
     let animationFrameId: number;
 
     const getGridConfig = (width: number) => {
-      if (width < 480) return { cols: 65, fontSize: 6.5 };
-      if (width < 768) return { cols: 95, fontSize: 7.5 };
-      if (width < 1024) return { cols: 120, fontSize: 8 };
-      return { cols: 145, fontSize: 8.5 };
+      if (width < 480) return { cols: 55, fontSize: 7.5 };
+      if (width < 768) return { cols: 80, fontSize: 8.5 };
+      if (width < 1024) return { cols: 105, fontSize: 9 };
+      return { cols: 120, fontSize: 9.5 };
     };
 
     const drawAscii = () => {
@@ -82,29 +82,42 @@ export default function AsciiPortrait({
 
       if (!offCtx) return;
 
+      // Draw source image onto offscreen canvas
       offCtx.drawImage(img, 0, 0, cols, rows);
       const imgData = offCtx.getImageData(0, 0, cols, rows).data;
 
-      // First Pass: Extract normalized luminance values
-      const luminances = new Float32Array(cols * rows);
+      // Step 1: Raw Luminance Sampling
+      const rawLuminance = new Float32Array(cols * rows);
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
           const idx = (r * cols + c) * 4;
           const red = imgData[idx];
           const green = imgData[idx + 1];
           const blue = imgData[idx + 2];
-          luminances[r * cols + c] = (0.299 * red + 0.587 * green + 0.114 * blue) / 255;
+          rawLuminance[r * cols + c] = (0.299 * red + 0.587 * green + 0.114 * blue) / 255;
         }
       }
 
-      // Helper function to safely sample luminance with boundary clamping
-      const getLum = (r: number, c: number) => {
+      const getRaw = (r: number, c: number) => {
         const clampedR = Math.max(0, Math.min(rows - 1, r));
         const clampedC = Math.max(0, Math.min(cols - 1, c));
-        return luminances[clampedR * cols + clampedC];
+        return rawLuminance[clampedR * cols + clampedC];
       };
 
-      // Solid stark ink background
+      // Step 2: Gaussian Blur / Spatial Smoothing to eliminate pixel static & noise
+      const smoothedLuminance = new Float32Array(cols * rows);
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          // 3x3 Gaussian smoothing kernel
+          const val =
+            getRaw(r - 1, c - 1) * 0.0625 + getRaw(r - 1, c) * 0.125 + getRaw(r - 1, c + 1) * 0.0625 +
+            getRaw(r, c - 1) * 0.125 + getRaw(r, c) * 0.25 + getRaw(r, c + 1) * 0.125 +
+            getRaw(r + 1, c - 1) * 0.0625 + getRaw(r + 1, c) * 0.125 + getRaw(r + 1, c + 1) * 0.0625;
+          smoothedLuminance[r * cols + c] = val;
+        }
+      }
+
+      // Stark Ink Canvas Background
       ctx.fillStyle = "#0D0D0D";
       ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
@@ -112,24 +125,21 @@ export default function AsciiPortrait({
       ctx.textBaseline = "top";
 
       const mouse = mouseRef.current;
-      const GAMMA = 0.58; // Gamma correction (0.58) expands facial shadow and midtone contrast
 
-      // Second Pass: Apply unsharp mask + gamma curve and render characters
+      // Step 3 & 4: Moderate Contrast Boost, Gentle Gamma, & Posterization into 10 Bands
+      const CONTRAST_FACTOR = 1.25; // Expands dark vs light contrast
+      const GENTLE_GAMMA = 0.82; // Mild shadow lift without muddying midtones
+      const RAMP_MAX = DENSITY_RAMP.length - 1;
+
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
-          const centerLum = getLum(r, c);
-          const top = getLum(r - 1, c);
-          const bottom = getLum(r + 1, c);
-          const left = getLum(r, c - 1);
-          const right = getLum(r, c + 1);
+          const smoothLum = smoothedLuminance[r * cols + c];
 
-          // Lightweight Laplacian unsharp mask for local edge contrast (eyes, nose, mouth contours)
-          const edge = 4 * centerLum - top - bottom - left - right;
-          const sharpenedLum = Math.max(0, Math.min(1, centerLum + edge * 0.45));
+          // Expand contrast around mid-gray 0.5
+          const contrastLum = Math.max(0, Math.min(1, 0.5 + (smoothLum - 0.5) * CONTRAST_FACTOR));
 
-          // Gamma boost lifts dark facial shadows while unsharp mask preserves facial features
-          const gammaLum = Math.pow(centerLum, GAMMA);
-          const finalLum = Math.max(0, Math.min(1, gammaLum * 0.68 + sharpenedLum * 0.32));
+          // Gentle gamma adjustment
+          const processedLum = Math.pow(contrastLum, GENTLE_GAMMA);
 
           const posX = c * charWidth;
           const posY = r * charHeight;
@@ -139,23 +149,26 @@ export default function AsciiPortrait({
             const dx = posX - mouse.x;
             const dy = posY - mouse.y;
             const dist = Math.sqrt(dx * dx + dy * dy);
-            const radius = 85;
+            const radius = 80;
             if (dist < radius) {
               highlight = (1 - dist / radius);
             }
           }
 
-          const adjustedLum = Math.min(1, finalLum + highlight * 0.35);
-          const rampIndex = Math.floor(adjustedLum * (DENSITY_RAMP.length - 1));
+          const finalLum = Math.min(1, processedLum + highlight * 0.35);
+
+          // Posterize into discrete bands for graphic, poster-like clarity
+          const quantized = Math.round(finalLum * RAMP_MAX) / RAMP_MAX;
+          const rampIndex = Math.min(RAMP_MAX, Math.max(0, Math.round(quantized * RAMP_MAX)));
           const char = DENSITY_RAMP[rampIndex] || " ";
 
           if (char !== " ") {
             if (highlight > 0.15) {
-              // Blueprint Blue mouse interaction highlight
+              // Blueprint Blue hover highlight
               ctx.fillStyle = "#2B4EFF";
             } else {
-              // Smooth high-contrast monochrome mapping
-              const alpha = Math.max(0.3, finalLum);
+              // Clean graphic contrast
+              const alpha = Math.max(0.35, quantized);
               ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
             }
             ctx.fillText(char, posX, posY);
