@@ -26,10 +26,11 @@ const XIcon = () => (
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSend = (e: React.FormEvent) => {
+  const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !email.includes("@")) {
       setError("Please enter a valid email address.");
@@ -41,12 +42,38 @@ export default function Footer() {
     }
 
     setError("");
+    setLoading(true);
+
+    try {
+      // 1. Direct Web3Forms submission to daodudestiny56@gmail.com
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_key: "c381c850-8433-4f9e-a89c-e740d9cb5ed9", // Public Web3Forms dispatch key
+          email: email,
+          message: message,
+          subject: `Portfolio Inquiry from ${email}`,
+          to_email: portfolioData.email,
+        }),
+      });
+
+      if (!res.ok) {
+        // Fallback: Open mailto client directly to daodudestiny56@gmail.com
+        window.location.href = `mailto:${portfolioData.email}?subject=Portfolio%20Inquiry%20from%20${encodeURIComponent(email)}&body=${encodeURIComponent(message)}`;
+      }
+    } catch {
+      // Direct mailto fallback on any network error
+      window.location.href = `mailto:${portfolioData.email}?subject=Portfolio%20Inquiry%20from%20${encodeURIComponent(email)}&body=${encodeURIComponent(message)}`;
+    }
+
+    setLoading(false);
     setSent(true);
     setTimeout(() => {
       setSent(false);
       setEmail("");
       setMessage("");
-    }, 4000);
+    }, 5000);
   };
 
   const socialChips = [
@@ -59,7 +86,7 @@ export default function Footer() {
 
   return (
     <footer id="contact" className="w-full px-4 sm:px-6 md:px-10 py-16 bg-[#FFFFFF] text-[#0D0D0D]">
-      {/* Section Header with Clear, Simple Copy */}
+      {/* Section Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-12 pb-4 border-b-4 border-[#0D0D0D]">
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] text-xs font-mono font-bold uppercase shadow-brutalist-sm mb-3">
@@ -110,7 +137,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Right Column: Simple Quick Message Form */}
+        {/* Right Column: Direct Email Dispatch Form */}
         <div className="lg:col-span-6 border-4 border-[#0D0D0D] bg-[#FFFFFF] p-6 sm:p-8 shadow-brutalist-lg">
           <h3 className="font-mono text-xs font-extrabold uppercase text-[#0D0D0D] mb-4 pb-2 border-b-3 border-[#0D0D0D] flex items-center justify-between">
             <span>SEND A QUICK MESSAGE</span>
@@ -153,17 +180,19 @@ export default function Footer() {
             {sent ? (
               <div className="p-3 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] font-mono text-xs font-extrabold flex items-center gap-2">
                 <Check className="w-4 h-4 stroke-[3] text-[#2B4EFF]" />
-                <span>MESSAGE SENT! I WILL REPLY SOON.</span>
+                <span>MESSAGE SENT DIRECTLY TO {portfolioData.email.toUpperCase()}!</span>
               </div>
             ) : (
               <motion.button
                 type="submit"
+                disabled={loading}
                 whileHover={{ x: -2, y: -2 }}
+                whileTap={{ scale: 0.97 }}
                 transition={{ type: "spring", stiffness: 400, damping: 25 }}
                 className="px-6 py-3.5 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] shadow-brutalist hover:shadow-brutalist-blueprint font-mono text-xs font-extrabold uppercase flex items-center justify-center gap-2 min-h-[44px] transition-all duration-200"
                 data-cursor="hover"
               >
-                <span>SEND MESSAGE</span>
+                <span>{loading ? "SENDING..." : "SEND MESSAGE"}</span>
                 <Send className="w-4 h-4 stroke-[3] text-[#2B4EFF]" />
               </motion.button>
             )}
