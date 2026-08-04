@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=JetBrains+Mono:ital,wght@0,300..700;1,300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Inter:wght@400;500;600&family=JetBrains+Mono:ital,wght@0,400..700;1,400..700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,202 +6,99 @@
 
 @layer base {
   :root {
-    --accent: #00F0FF;
-    --accent-refined: #3FE8F5;
-    --accent-glow: rgba(0, 240, 255, 0.18);
+    --ink: #0D0D0D;
+    --bone: #F5F3EE;
+    --raw-yellow: #FFDE59;
+    --electric-indigo: #3D5AFE;
+  }
+
+  * {
+    border-color: var(--ink);
   }
 
   html {
     scroll-behavior: smooth;
-    background-color: #0A0A0A;
+    background-color: var(--bone);
+    color: var(--ink);
     overflow-x: hidden;
   }
-  
+
   body {
-    background-color: #0A0A0A;
-    color: #F5F5F5;
-    font-weight: 300;
+    background-color: var(--bone);
+    color: var(--ink);
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    line-height: 1.6;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Custom cursor setup: hide default cursor on desktop */
-  @media (min-width: 768px) {
+  /* Keyboard accessibility focus states */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  [role="button"]:focus-visible {
+    outline: 3px solid var(--electric-indigo) !important;
+    outline-offset: 3px !important;
+  }
+
+  /* Hide default cursor on non-touch devices */
+  @media (pointer: fine) {
     html, body, a, button, [role="button"], input, select, textarea {
       cursor: none !important;
     }
   }
 
-  /* Touch targets minimum size for mobile accessibility */
-  @media (max-width: 767px) {
-    a, button, [role="button"] {
-      min-height: 44px;
-      min-width: 44px;
+  /* Disable custom cursor if reduced motion is requested */
+  @media (prefers-reduced-motion: reduce) {
+    html, body, a, button, [role="button"], input, select, textarea {
+      cursor: auto !important;
     }
   }
 
   ::selection {
-    background-color: #F5F5F5;
-    color: #0A0A0A;
+    background-color: var(--raw-yellow);
+    color: var(--ink);
   }
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0A0A0A;
+  background: var(--bone);
+  border-left: 2px solid var(--ink);
 }
 ::-webkit-scrollbar-thumb {
-  background: #1F1F1F;
-  border-radius: 999px;
+  background: var(--ink);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #2A2A2A;
+  background: var(--electric-indigo);
 }
 
-/* Utilities for clip masks */
-.clip-mask {
-  overflow: hidden;
-  display: inline-block;
+/* Hard Cut Instant Color Swap Utilities */
+.zone-bone {
+  background-color: var(--bone) !important;
+  color: var(--ink) !important;
+  transition: background-color 0ms, color 0ms !important;
 }
 
-/* Background transition timing override */
-.invert-transition {
-  transition: background-color 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
-              color 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+.zone-ink {
+  background-color: var(--ink) !important;
+  color: var(--bone) !important;
+  transition: background-color 0ms, color 0ms !important;
 }
 
-/* Bento Grid Responsive Layout System */
-.bento-grid {
-  display: grid;
-  grid-template-columns: 100%;
-  grid-template-areas:
-    "featured"
-    "clock"
-    "stack";
-  gap: 24px;
-  width: 100%;
-  max-width: 100%;
+/* Visible broadsheet grid lines */
+.grid-border-bottom {
+  border-bottom: 3px solid currentColor;
 }
-
-.bento-grid > * {
-  min-width: 0;
-  max-width: 100%;
-  overflow: hidden;
+.grid-border-right {
+  border-right: 3px solid currentColor;
 }
-
-@media (min-width: 768px) and (max-width: 1279px) {
-  .bento-grid {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-areas:
-      "featured featured"
-      "clock stack";
-  }
+.grid-border-all {
+  border: 3px solid currentColor;
 }
-
-@media (min-width: 1280px) {
-  .bento-grid {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-areas:
-      "featured featured clock"
-      "stack stack stack";
-  }
-}
-
-/* -----------------------------------------
-   ANIMATIONS & ADVANCED EFFECTS SYSTEM
-   ----------------------------------------- */
-
-/* Animation 2: Infinite Marquee keyframes */
-@keyframes marquee-left {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(calc(-100% - var(--marquee-gap, 1rem)));
-  }
-}
-
-@keyframes marquee-right {
-  0% {
-    transform: translateX(calc(-100% - var(--marquee-gap, 1rem)));
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-.animate-marquee-left {
-  animation: marquee-left var(--speed, 25s) linear infinite;
-  will-change: transform;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-}
-
-.animate-marquee-right {
-  animation: marquee-right var(--speed, 25s) linear infinite;
-  will-change: transform;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-}
-
-.group:hover .animate-marquee-left,
-.group:hover .animate-marquee-right {
-  animation-play-state: paused;
-}
-
-/* Animation 9: Card Hover Shadow */
-.card-hover-shadow {
-  transition: box-shadow 0.3s ease, border-color 0.3s ease;
-}
-
-.card-hover-shadow:hover {
-  box-shadow: 0 20px 60px rgba(232, 255, 71, 0.08);
-  border-color: rgba(232, 255, 71, 0.2);
-}
-
-/* Animation 9: Edge-tracking Glow Effect */
-.project-card-glow {
-  position: relative;
-  transition: box-shadow 0.3s ease, border-color 0.3s ease;
-}
-
-.project-card-glow::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: 12px;
-  padding: 1px;
-  background: radial-gradient(
-    250px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
-    rgba(232, 255, 71, 0.25),
-    transparent 60%
-  );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 2;
-}
-
-.project-card-glow:hover::before {
-  opacity: 1;
-}
-
-.project-card-glow:hover {
-  box-shadow: 0 20px 60px rgba(232, 255, 71, 0.08);
-}
-
-/* will-change overrides for hardware acceleration */
-.will-change-transform {
-  will-change: transform;
-}
-
-

@@ -2,13 +2,16 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ArrowUpRight, MessageCircle } from "lucide-react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
 import { portfolioData } from "@/lib/data";
 
-export default function Navbar() {
+interface NavbarProps {
+  currentTheme?: "bone" | "ink";
+}
+
+export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Close drawer on escape key
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setIsOpen(false);
@@ -17,7 +20,6 @@ export default function Navbar() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Prevent background body scroll when drawer is open on mobile
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -26,134 +28,125 @@ export default function Navbar() {
     }
   }, [isOpen]);
 
-  const navLinks = [
-    { name: "Work", href: "#work" },
-    { name: "About", href: "#about" },
-    { name: "Contact", href: "#contact" },
+  const stickerLinks = [
+    { name: "WORK", href: "#work", bg: "bg-[#FFDE59]", text: "text-[#0D0D0D]", rotate: "-2deg" },
+    { name: "TOOLKIT", href: "#toolkit", bg: "bg-[#3D5AFE]", text: "text-[#F5F3EE]", rotate: "1.5deg" },
+    { name: "ABOUT", href: "#about", bg: "bg-[#F5F3EE]", text: "text-[#0D0D0D]", rotate: "-1.5deg" },
+    { name: "CONTACT", href: "#contact", bg: "bg-[#FFDE59]", text: "text-[#0D0D0D]", rotate: "2deg" },
   ];
+
+  const isInkTheme = currentTheme === "ink";
 
   return (
     <>
-      <header className="relative w-full max-w-full overflow-hidden z-40 flex justify-between items-center py-2 gap-2 sm:gap-4">
-        {/* Brand Name */}
-        <a
+      <header className="relative w-full z-40 flex justify-between items-center py-4 px-2 sm:px-4">
+        {/* Brand Name Tag */}
+        <motion.a
           href="#"
-          className="font-display text-xs sm:text-sm md:text-base font-[300] tracking-wider md:tracking-widest text-secondaryText truncate max-w-[140px] xs:max-w-[190px] sm:max-w-none hover:text-primaryText transition-colors shrink min-w-0"
+          whileHover={{ rotate: 0, scale: 1.03 }}
+          transition={{ type: "spring", stiffness: 400, damping: 25 }}
+          style={{ transform: "rotate(-1deg)" }}
+          className={`font-display text-xs sm:text-sm md:text-base font-extrabold px-3 py-1.5 uppercase tracking-wider border-3 border-[#0D0D0D] shadow-brutalist-sm transition-colors ${
+            isInkTheme ? "bg-[#F5F3EE] text-[#0D0D0D]" : "bg-[#FFDE59] text-[#0D0D0D]"
+          }`}
           data-cursor="hover"
         >
           {portfolioData.name}
-        </a>
+        </motion.a>
 
-        {/* Center/Right Status Badge & Desktop Navigation */}
-        <div className="flex items-center gap-2 sm:gap-6 shrink min-w-0 max-w-[calc(100%-130px)] sm:max-w-none">
-          {/* Status Badge */}
-          <div className="flex items-center gap-2 px-2.5 sm:px-3 py-1 rounded-full border border-border bg-surface text-[9px] sm:text-[10px] md:text-xs font-mono tracking-wide shrink min-w-0 max-w-[160px] xs:max-w-[220px] sm:max-w-none">
-            <span className="relative flex h-2 w-2 shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00F0FF] opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00F0FF]"></span>
-            </span>
-            <span className="text-[#3FE8F5] truncate">{portfolioData.status}</span>
+        {/* Status Chip & Desktop Sticker-Sheet Navigation */}
+        <div className="flex items-center gap-3 sm:gap-6">
+          {/* Status Chip */}
+          <div
+            className={`hidden lg:flex items-center gap-2 px-3 py-1 border-3 border-[#0D0D0D] text-xs font-mono font-bold uppercase shadow-brutalist-sm ${
+              isInkTheme ? "bg-[#0D0D0D] text-[#F5F3EE] border-[#F5F3EE]" : "bg-[#F5F3EE] text-[#0D0D0D]"
+            }`}
+          >
+            <span className="w-2.5 h-2.5 bg-[#3D5AFE] border border-[#0D0D0D]" />
+            <span>{portfolioData.status}</span>
           </div>
 
-          {/* Desktop Links (Hidden below 768px) */}
-          <nav className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <a
+          {/* Sticker-Sheet Navigation Links (Desktop) */}
+          <nav className="hidden md:flex items-center gap-3">
+            {stickerLinks.map((link) => (
+              <motion.a
                 key={link.name}
                 href={link.href}
-                className="group relative py-1 text-xs font-mono tracking-wider text-primaryText transition-colors"
+                style={{ transform: `rotate(${link.rotate})` }}
+                whileHover={{ rotate: 0, y: -3, scale: 1.05 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                className={`px-3.5 py-1.5 text-xs font-mono font-extrabold tracking-wider border-3 border-[#0D0D0D] shadow-brutalist-sm ${link.bg} ${link.text} block select-none`}
                 data-cursor="hover"
               >
                 {link.name}
-                <span className="absolute bottom-0 left-0 h-[1.5px] w-0 bg-[#00F0FF] transition-all duration-500 ease-portfolio-ease group-hover:w-full" />
-              </a>
+              </motion.a>
             ))}
           </nav>
 
-          {/* Mobile Hamburger Button (Hidden on 768px+) */}
+          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] rounded-full border border-border bg-[#111111]/90 text-primaryText hover:border-primaryText transition-colors focus:outline-none z-50 shrink-0"
-            aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+            className="md:hidden flex items-center justify-center w-11 h-11 border-3 border-[#0D0D0D] bg-[#FFDE59] text-[#0D0D0D] shadow-brutalist-sm focus:outline-none z-50 shrink-0"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
             data-cursor="hover"
           >
-            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {isOpen ? <X className="w-6 h-6 stroke-[3]" /> : <Menu className="w-6 h-6 stroke-[3]" />}
           </button>
         </div>
       </header>
 
-      {/* Mobile Slide-in Drawer */}
+      {/* Mobile Sticker Drawer */}
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Backdrop Overlay */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-background/80 backdrop-blur-md z-40 md:hidden"
+              className="fixed inset-0 bg-[#0D0D0D]/80 backdrop-blur-sm z-40 md:hidden"
             />
 
-            {/* Slide-in Menu Panel */}
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="fixed top-0 right-0 h-full w-[85vw] max-w-[360px] bg-[#0A0A0A] border-l border-neutral-800 p-8 flex flex-col justify-between z-50 md:hidden shadow-2xl select-none"
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              className="fixed top-0 right-0 h-full w-[85vw] max-w-[360px] bg-[#F5F3EE] border-l-4 border-[#0D0D0D] p-6 flex flex-col justify-between z-50 md:hidden shadow-brutalist-lg select-none"
             >
-              {/* Top Header inside Drawer */}
-              <div className="flex justify-between items-center pb-6 border-b border-border">
-                <span className="font-display text-xs font-[300] tracking-widest text-secondaryText">
-                  Navigation
+              <div className="flex justify-between items-center pb-4 border-b-3 border-[#0D0D0D]">
+                <span className="font-mono text-xs font-bold tracking-widest text-[#0D0D0D] uppercase">
+                  NAV_MENU
                 </span>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="w-11 h-11 flex items-center justify-center rounded-full border border-border bg-surface text-primaryText"
-                  aria-label="Close menu"
+                  className="w-10 h-10 flex items-center justify-center border-3 border-[#0D0D0D] bg-[#FFDE59] text-[#0D0D0D]"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-5 h-5 stroke-[3]" />
                 </button>
               </div>
 
-              {/* Navigation Links */}
-              <div className="flex flex-col gap-6 my-auto py-8">
-                {navLinks.map((link, idx) => (
+              <div className="flex flex-col gap-5 my-auto py-6">
+                {stickerLinks.map((link, idx) => (
                   <motion.a
                     key={link.name}
                     href={link.href}
                     onClick={() => setIsOpen(false)}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 + idx * 0.08, duration: 0.3 }}
-                    className="flex items-center justify-between text-2xl font-display font-[300] tracking-wider text-primaryText hover:text-[#E8FF47] transition-colors py-2 border-b border-neutral-900 min-h-[44px]"
+                    transition={{ delay: idx * 0.08 }}
+                    style={{ transform: `rotate(${link.rotate})` }}
+                    whileHover={{ rotate: 0 }}
+                    className={`flex items-center justify-between p-4 border-3 border-[#0D0D0D] text-lg font-mono font-extrabold shadow-brutalist ${link.bg} ${link.text}`}
                   >
                     <span>{link.name}</span>
-                    <ArrowUpRight className="w-5 h-5 opacity-60" />
+                    <ArrowUpRight className="w-6 h-6 stroke-[3]" />
                   </motion.a>
                 ))}
               </div>
 
-              {/* Drawer Footer / Social Quick Links */}
-              <div className="flex flex-col gap-4 pt-6 border-t border-border">
-                <div className="flex items-center gap-2 text-xs font-mono text-secondaryText">
-                  <span className="w-2 h-2 rounded-full bg-[#00F0FF]" />
-                  <span>{portfolioData.email}</span>
-                </div>
-                {portfolioData.socials.whatsapp && (
-                  <a
-                    href={portfolioData.socials.whatsapp}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-2 text-xs font-mono text-[#00F0FF] min-h-[44px]"
-                  >
-                    <MessageCircle className="w-4 h-4" />
-                    <span>WhatsApp Chat</span>
-                  </a>
-                )}
+              <div className="pt-4 border-t-3 border-[#0D0D0D] font-mono text-xs font-bold">
+                <span className="block text-[#0D0D0D] uppercase">CONTACT: {portfolioData.email}</span>
               </div>
             </motion.div>
           </>

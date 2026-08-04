@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ArrowUpRight, Copy, Check, Code2, Cpu, CheckCircle2 } from "lucide-react";
+import { X, ArrowUpRight, Copy, Check, Code2, Cpu, AlertTriangle, CheckCircle2 } from "lucide-react";
 import { Project } from "@/lib/data";
 
 interface ProjectModalProps {
@@ -42,123 +42,128 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6 md:p-10 select-none">
-        {/* Backdrop Overlay */}
+        {/* Hard Overlay Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.25 }}
           onClick={onClose}
-          className="fixed inset-0 bg-background/85 backdrop-blur-xl"
+          className="fixed inset-0 bg-[#0D0D0D]/85 backdrop-blur-sm"
         />
 
         {/* Modal Container */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          initial={{ opacity: 0, scale: 0.95, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full max-w-4xl max-h-[90vh] bg-[#111111] border border-border rounded-[16px] overflow-hidden flex flex-col z-10 shadow-2xl"
+          exit={{ opacity: 0, scale: 0.95, y: 10 }}
+          transition={{ type: "spring", stiffness: 350, damping: 25 }}
+          className="relative w-full max-w-4xl max-h-[90vh] bg-[#F5F3EE] border-4 border-[#0D0D0D] shadow-brutalist-lg flex flex-col z-10 overflow-hidden"
         >
-          {/* Sticky Header Bar */}
-          <div className="flex justify-between items-center px-6 py-4 border-b border-border bg-[#111111]/90 backdrop-blur-md shrink-0">
+          {/* Header Bar */}
+          <div className="flex justify-between items-center px-6 py-4 border-b-4 border-[#0D0D0D] bg-[#FFDE59] text-[#0D0D0D] shrink-0">
             <div className="flex items-center gap-3">
-              <span className="px-3 py-1 text-[10px] font-mono tracking-wider uppercase bg-[#1A1A1A] border border-border rounded-full text-[#3FE8F5]">
+              <span className="px-3 py-1 text-xs font-mono font-extrabold uppercase bg-[#3D5AFE] text-[#F5F3EE] border-2 border-[#0D0D0D]">
                 {project.category}
               </span>
-              <h2 className="font-display text-lg sm:text-xl font-[300] text-primaryText tracking-tight truncate">
+              <h2 className="font-display font-extrabold text-xl sm:text-2xl uppercase tracking-tight text-[#0D0D0D] truncate">
                 {project.name}
               </h2>
             </div>
             <button
               onClick={onClose}
-              className="w-10 h-10 rounded-full border border-border bg-surface hover:border-primaryText flex items-center justify-center text-primaryText transition-colors min-w-[44px] min-h-[44px]"
+              className="w-10 h-10 border-3 border-[#0D0D0D] bg-[#F5F3EE] hover:bg-[#3D5AFE] hover:text-[#F5F3EE] flex items-center justify-center text-[#0D0D0D] transition-colors"
               aria-label="Close modal"
               data-cursor="hover"
             >
-              <X className="w-5 h-5" />
+              <X className="w-6 h-6 stroke-[3]" />
             </button>
           </div>
 
-          {/* Scrollable Content Body */}
-          <div className="p-6 md:p-8 overflow-y-auto space-y-8 custom-scrollbar font-sans">
-            {/* Overview / Brief */}
-            <div>
-              <h3 className="font-mono text-xs text-[#3FE8F5] tracking-widest uppercase mb-2 flex items-center gap-2">
-                <Cpu className="w-4 h-4" /> TECHNICAL OVERVIEW
+          {/* Scrollable Body */}
+          <div className="p-6 md:p-8 overflow-y-auto space-y-8 text-[#0D0D0D]">
+            {/* Overview */}
+            <div className="border-3 border-[#0D0D0D] bg-[#0D0D0D] text-[#F5F3EE] p-5 shadow-brutalist">
+              <h3 className="font-mono text-xs font-bold text-[#FFDE59] tracking-widest uppercase mb-2 flex items-center gap-2">
+                <Cpu className="w-4 h-4" /> TECHNICAL ARCHITECTURE OVERVIEW
               </h3>
-              <p className="text-sm md:text-base text-secondaryText leading-relaxed font-[300]">
+              <p className="font-sans text-xs sm:text-sm md:text-base leading-relaxed">
                 {project.description}
               </p>
             </div>
 
             {cs && (
               <>
-                {/* Metrics Grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                  {cs.metrics.map((m, idx) => (
-                    <div
-                      key={idx}
-                      className="p-3 sm:p-4 rounded-[10px] bg-[#161616] border border-border flex flex-col gap-1"
-                    >
-                      <span className="font-mono text-xl sm:text-2xl font-bold text-[#00F0FF] tracking-tight">
-                        {m.value}
-                      </span>
-                      <span className="font-mono text-[9px] sm:text-[10px] tracking-wider text-secondaryText uppercase">
-                        {m.label}
-                      </span>
-                    </div>
-                  ))}
+                {/* Real Metrics Grid */}
+                <div>
+                  <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-[#0D0D0D] mb-3">
+                    VERIFIED BENCHMARKS & METRICS
+                  </h4>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    {cs.metrics.map((m, idx) => (
+                      <div
+                        key={idx}
+                        className="p-3 sm:p-4 bg-[#FFDE59] border-3 border-[#0D0D0D] shadow-brutalist-sm flex flex-col gap-1"
+                      >
+                        <span className="font-mono text-xl sm:text-2xl font-extrabold text-[#0D0D0D] tracking-tight">
+                          {m.value}
+                        </span>
+                        <span className="font-mono text-[9px] sm:text-[10px] font-bold tracking-wider text-[#0D0D0D] uppercase">
+                          {m.label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
                 {/* Problem & Approach Split */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Problem */}
-                  <div className="p-5 rounded-[12px] bg-[#161616] border border-border flex flex-col gap-2">
-                    <span className="font-mono text-xs text-red-400 tracking-widest uppercase font-semibold">
-                      THE ARCHITECTURAL BOTTLENECK
+                  <div className="p-5 bg-[#0D0D0D] text-[#F5F3EE] border-3 border-[#0D0D0D] shadow-brutalist flex flex-col gap-2">
+                    <span className="font-mono text-xs text-[#FFDE59] tracking-widest uppercase font-extrabold flex items-center gap-1.5">
+                      <AlertTriangle className="w-4 h-4" /> THE ARCHITECTURAL PROBLEM
                     </span>
-                    <p className="text-xs sm:text-sm text-secondaryText leading-relaxed font-[300]">
+                    <p className="font-sans text-xs sm:text-sm leading-relaxed text-[#F5F3EE]/90">
                       {cs.problem}
                     </p>
                   </div>
 
                   {/* Approach */}
-                  <div className="p-5 rounded-[12px] bg-[#161616] border border-border flex flex-col gap-2">
-                    <span className="font-mono text-xs text-[#3FE8F5] tracking-widest uppercase font-semibold">
-                      ENGINEERING STRATEGY
+                  <div className="p-5 bg-[#3D5AFE] text-[#F5F3EE] border-3 border-[#0D0D0D] shadow-brutalist flex flex-col gap-2">
+                    <span className="font-mono text-xs text-[#FFDE59] tracking-widest uppercase font-extrabold flex items-center gap-1.5">
+                      <CheckCircle2 className="w-4 h-4" /> ENGINEERING APPROACH
                     </span>
-                    <p className="text-xs sm:text-sm text-secondaryText leading-relaxed font-[300]">
+                    <p className="font-sans text-xs sm:text-sm leading-relaxed text-[#F5F3EE]">
                       {cs.approach}
                     </p>
                   </div>
                 </div>
 
-                {/* Illustrative Code Architecture Snippet */}
-                <div className="rounded-[12px] bg-[#0A0A0A] border border-border overflow-hidden">
-                  <div className="flex justify-between items-center px-4 py-2.5 bg-[#141414] border-b border-border font-mono text-xs text-secondaryText">
+                {/* Code Architecture Snippet */}
+                <div className="border-3 border-[#0D0D0D] bg-[#0D0D0D] shadow-brutalist overflow-hidden">
+                  <div className="flex justify-between items-center px-4 py-3 bg-[#FFDE59] border-b-3 border-[#0D0D0D] font-mono text-xs font-bold text-[#0D0D0D]">
                     <div className="flex items-center gap-2">
-                      <Code2 className="w-4 h-4 text-[#00F0FF]" />
-                      <span className="text-primaryText">{cs.codeSnippet.filename}</span>
+                      <Code2 className="w-4 h-4 stroke-[3]" />
+                      <span className="uppercase">{cs.codeSnippet.filename}</span>
                     </div>
                     <button
                       onClick={() => handleCopyCode(cs.codeSnippet.code)}
-                      className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#1F1F1F] text-[10px] hover:text-primaryText transition-colors min-h-[36px]"
+                      className="flex items-center gap-1.5 px-3 py-1 bg-[#3D5AFE] text-[#F5F3EE] border-2 border-[#0D0D0D] text-[10px] font-mono font-bold uppercase transition-colors"
+                      data-cursor="hover"
                     >
                       {copied ? (
                         <>
-                          <Check className="w-3.5 h-3.5 text-[#00F0FF]" />
-                          <span className="text-[#00F0FF]">COPIED</span>
+                          <Check className="w-3.5 h-3.5 stroke-[3]" />
+                          <span>COPIED</span>
                         </>
                       ) : (
                         <>
-                          <Copy className="w-3.5 h-3.5" />
+                          <Copy className="w-3.5 h-3.5 stroke-[3]" />
                           <span>COPY CODE</span>
                         </>
                       )}
                     </button>
                   </div>
-                  <pre className="p-4 overflow-x-auto font-mono text-xs sm:text-sm text-primaryText/90 leading-relaxed bg-[#0A0A0A]">
+                  <pre className="p-4 overflow-x-auto font-mono text-xs text-[#FFDE59] leading-relaxed bg-[#0D0D0D]">
                     <code>{cs.codeSnippet.code}</code>
                   </pre>
                 </div>
@@ -167,23 +172,22 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
           </div>
 
           {/* Sticky Footer Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-4 px-6 py-4 border-t border-border bg-[#111111] shrink-0">
-            <span className="font-mono text-xs text-secondaryText flex items-center gap-1.5">
-              <CheckCircle2 className="w-4 h-4 text-[#00F0FF]" />
-              PRODUCTION READY
+          <div className="flex items-center justify-between gap-4 px-6 py-4 border-t-4 border-[#0D0D0D] bg-[#F5F3EE] shrink-0">
+            <span className="font-mono text-xs font-bold text-[#0D0D0D] uppercase flex items-center gap-1.5">
+              <CheckCircle2 className="w-4 h-4 text-[#3D5AFE]" />
+              PRODUCTION ARCHITECTURE
             </span>
 
-            <div className="flex items-center gap-3">
-              <a
-                href={project.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-2.5 rounded-full border border-border bg-[#1A1A1A] hover:border-[#00F0FF] text-primaryText text-xs font-mono tracking-wider uppercase transition-colors flex items-center gap-2 min-h-[44px]"
-              >
-                <span>GITHUB REPO</span>
-                <ArrowUpRight className="w-4 h-4 text-[#00F0FF]" />
-              </a>
-            </div>
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-5 py-2.5 bg-[#FFDE59] text-[#0D0D0D] border-3 border-[#0D0D0D] shadow-brutalist-sm text-xs font-mono font-extrabold uppercase flex items-center gap-2"
+              data-cursor="hover"
+            >
+              <span>GITHUB REPO</span>
+              <ArrowUpRight className="w-4 h-4 stroke-[3]" />
+            </a>
           </div>
         </motion.div>
       </div>

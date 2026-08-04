@@ -18,7 +18,6 @@ export default function AsciiPortrait({
   const [imageLoaded, setImageLoaded] = useState(false);
   const imgRef = useRef<HTMLImageElement | null>(null);
 
-  // Mouse interaction coordinates
   const mouseRef = useRef<{ x: number; y: number; active: boolean }>({
     x: -1000,
     y: -1000,
@@ -47,12 +46,11 @@ export default function AsciiPortrait({
 
     let animationFrameId: number;
 
-    // Determine columns based on container width
     const getGridConfig = (width: number) => {
-      if (width < 480) return { cols: 55, fontSize: 7 };
-      if (width < 768) return { cols: 80, fontSize: 8 };
-      if (width < 1024) return { cols: 110, fontSize: 8.5 };
-      return { cols: 130, fontSize: 9 };
+      if (width < 480) return { cols: 50, fontSize: 7.5 };
+      if (width < 768) return { cols: 75, fontSize: 8.5 };
+      if (width < 1024) return { cols: 100, fontSize: 9 };
+      return { cols: 120, fontSize: 9.5 };
     };
 
     const drawAscii = () => {
@@ -68,7 +66,6 @@ export default function AsciiPortrait({
       const canvasWidth = cols * charWidth;
       const canvasHeight = rows * charHeight;
 
-      // Set canvas display resolution & DPR handling
       const dpr = window.devicePixelRatio || 1;
       canvas.width = canvasWidth * dpr;
       canvas.height = canvasHeight * dpr;
@@ -77,7 +74,6 @@ export default function AsciiPortrait({
 
       ctx.scale(dpr, dpr);
 
-      // Offscreen canvas for pixel sampling
       const offCanvas = document.createElement("canvas");
       offCanvas.width = cols;
       offCanvas.height = rows;
@@ -85,20 +81,18 @@ export default function AsciiPortrait({
 
       if (!offCtx) return;
 
-      // Draw downscaled image onto offscreen canvas
       offCtx.drawImage(img, 0, 0, cols, rows);
       const imgData = offCtx.getImageData(0, 0, cols, rows).data;
 
-      // Clear main canvas with dark background
-      ctx.fillStyle = "#0A0A0A";
+      // Solid neobrutalist ink background
+      ctx.fillStyle = "#0D0D0D";
       ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
-      ctx.font = `${fontSize}px 'JetBrains Mono', monospace`;
+      ctx.font = `bold ${fontSize}px 'JetBrains Mono', monospace`;
       ctx.textBaseline = "top";
 
       const mouse = mouseRef.current;
 
-      // Render character matrix
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
           const idx = (r * cols + c) * 4;
@@ -106,37 +100,31 @@ export default function AsciiPortrait({
           const green = imgData[idx + 1];
           const blue = imgData[idx + 2];
 
-          // Standard Luminance calculation
           const brightness = (0.299 * red + 0.587 * green + 0.114 * blue) / 255;
 
           const posX = c * charWidth;
           const posY = r * charHeight;
 
-          // Interactive distance check to cursor
           let highlight = 0;
           if (mouse.active) {
             const dx = posX - mouse.x;
             const dy = posY - mouse.y;
             const dist = Math.sqrt(dx * dx + dy * dy);
-            const radius = 90;
+            const radius = 80;
             if (dist < radius) {
               highlight = (1 - dist / radius);
             }
           }
 
-          // Adjust brightness with mouse highlight
           const adjustedBrightness = Math.min(1, brightness + highlight * 0.4);
           const rampIndex = Math.floor(adjustedBrightness * (DENSITY_RAMP.length - 1));
           const char = DENSITY_RAMP[rampIndex] || " ";
 
           if (char !== " ") {
-            if (highlight > 0.1) {
-              // Signal Cyan highlight near cursor
-              ctx.fillStyle = `rgba(0, 240, 255, ${0.4 + highlight * 0.6})`;
+            if (highlight > 0.15) {
+              ctx.fillStyle = "#FFDE59";
             } else {
-              // Soft monochrome gray / white mapping
-              const alpha = Math.max(0.15, brightness);
-              ctx.fillStyle = `rgba(245, 245, 245, ${alpha * 0.9})`;
+              ctx.fillStyle = `rgba(245, 243, 238, ${Math.max(0.2, brightness)})`;
             }
             ctx.fillText(char, posX, posY);
           }
@@ -166,35 +154,14 @@ export default function AsciiPortrait({
       animationFrameId = requestAnimationFrame(render);
     };
 
-    const handleTouchMove = (e: TouchEvent) => {
-      if (e.touches.length > 0) {
-        const rect = canvas.getBoundingClientRect();
-        mouseRef.current.x = e.touches[0].clientX - rect.left;
-        mouseRef.current.y = e.touches[0].clientY - rect.top;
-        mouseRef.current.active = true;
-
-        cancelAnimationFrame(animationFrameId);
-        animationFrameId = requestAnimationFrame(render);
-      }
-    };
-
-    const handleResize = () => {
-      cancelAnimationFrame(animationFrameId);
-      animationFrameId = requestAnimationFrame(render);
-    };
-
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", render);
     canvas.addEventListener("mousemove", handleMouseMove);
     canvas.addEventListener("mouseleave", handleMouseLeave);
-    canvas.addEventListener("touchmove", handleTouchMove, { passive: true });
-    canvas.addEventListener("touchend", handleMouseLeave);
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("resize", render);
       canvas.removeEventListener("mousemove", handleMouseMove);
       canvas.removeEventListener("mouseleave", handleMouseLeave);
-      canvas.removeEventListener("touchmove", handleTouchMove);
-      canvas.removeEventListener("touchend", handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
     };
   }, [imageLoaded]);
@@ -202,20 +169,14 @@ export default function AsciiPortrait({
   return (
     <div
       ref={containerRef}
-      className={`relative w-full flex items-center justify-center p-3 rounded-[16px] bg-[#0E0E0E] border border-border overflow-hidden select-none group/ascii ${className}`}
+      className={`relative w-full flex items-center justify-center p-3 bg-[#0D0D0D] border-3 border-[#0D0D0D] shadow-brutalist overflow-hidden select-none ${className}`}
     >
-      {/* Background Glow */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#00F0FF]/5 via-transparent to-transparent opacity-40 pointer-events-none" />
-
-      {/* ASCII Halftone Canvas */}
       <canvas
         ref={canvasRef}
-        className="relative z-10 cursor-crosshair rounded-[8px] transition-transform duration-300 group-hover/ascii:scale-[1.01]"
+        className="relative z-10 block"
       />
-
-      {/* Top Monospace Label Badge */}
-      <div className="absolute top-4 left-4 z-20 px-2.5 py-1 rounded-full bg-[#161616]/90 border border-border text-[9px] font-mono text-[#3FE8F5] tracking-wider backdrop-blur-md">
-        Halftone matrix · 130 cols
+      <div className="absolute top-3 left-3 z-20 px-2 py-0.5 bg-[#FFDE59] border-2 border-[#0D0D0D] text-[9px] font-mono font-bold text-[#0D0D0D] uppercase shadow-brutalist-sm">
+        MATRIX_HALFTONE // LIVE
       </div>
     </div>
   );

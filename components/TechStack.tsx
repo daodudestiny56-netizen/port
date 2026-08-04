@@ -1,117 +1,95 @@
 "use client";
 
-import { portfolioData } from "@/lib/data";
-import Marquee from "@/components/ui/Marquee";
-import { motion } from "framer-motion";
-import { staggerChildVariants } from "@/lib/animations";
+import { Cpu, CheckCircle2, Zap } from "lucide-react";
 
-const NextjsLogo = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm1 14.5l-3.3-4.3v4.3H8.3V7.5h1.4l3.3 4.3V7.5h1.4v9h-1.4z" fill="currentColor" />
-  </svg>
-);
+interface SpecItem {
+  name: string;
+  category: string;
+  spec: string;
+  status: string;
+  accent: "yellow" | "indigo" | "bone";
+}
 
-const ReactLogo = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" xmlns="http://www.w3.org/2000/svg">
-    <ellipse cx="12" cy="12" rx="10" ry="3.5" transform="rotate(0 12 12)" />
-    <ellipse cx="12" cy="12" rx="10" ry="3.5" transform="rotate(60 12 12)" />
-    <ellipse cx="12" cy="12" rx="10" ry="3.5" transform="rotate(120 12 12)" />
-    <circle cx="12" cy="12" r="1.5" fill="currentColor" />
-  </svg>
-);
-
-const TypeScriptLogo = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
-    <rect x="3" y="3" width="18" height="18" rx="2.5" />
-    <path d="M8 10h4M10 10v6" />
-    <path d="M13.5 15c0 .6.4 1 1 1h1.5c.6 0 1-.4 1-1v-1.5c0-.6-.4-1-1-1H15c-.6 0-1-.4-1-1V11c0-.6.4-1 1-1h1.5c.6 0 1 .4 1 1" />
-  </svg>
-);
-
-const TailwindCSSLogo = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 6c-2.4 0-3.9 1.2-4.5 3.6.9-1.2 2-1.7 3.2-1.4.9.2 1.5.7 2.1 1.3 1 1 2.1 1.8 3.8 1.8 2.4 0 3.9-1.2 4.5-3.6-.9 1.2-2 1.7-3.2 1.4-.7-.1-1.1-.6-1.7-1.2-1.1-1.1-2.1-1.9-4.2-1.9zm-4.5 5.4c-2.4 0-3.9 1.2-4.5 3.6.9-1.2 2-1.7 3.2-1.4.7.1 1.1.6 1.7 1.2 1.1 1.1 2.1 1.9 4.2 1.9 2.4 0 3.9-1.2 4.5-3.6-.9 1.2-2 1.7-3.2 1.4-.9-.2-1.5-.7-2.1-1.3-1-1-2.1-1.8-3.8-1.8z" />
-  </svg>
-);
-
-const FramerMotionLogo = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5 3h14L12 10H5z" />
-    <path d="M5 10h7l7 7H5z" />
-    <path d="M12 17h7l-7 4z" />
-  </svg>
-);
-
-const GSAPLogo = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="12" r="10" />
-    <circle cx="12" cy="12" r="4.5" />
-    <path d="M12 2v5.5M12 16.5V22M2 12h5.5M16.5 12H22M4.9 4.9l3.9 3.9M15.2 15.2l3.9 3.9M19.1 4.9l-3.9 3.9M8.8 15.2l-3.9 3.9" />
-  </svg>
-);
-
-const WebGLLogo = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 2L4 7v10l8 5 8-5V7l-8-5z" />
-    <path d="M12 22V12M4 7l8 5 8-5" />
-  </svg>
-);
-
-const getIcon = (name: string) => {
-  switch (name.toLowerCase()) {
-    case "next.js":
-      return NextjsLogo;
-    case "react":
-      return ReactLogo;
-    case "typescript":
-      return TypeScriptLogo;
-    case "tailwindcss":
-      return TailwindCSSLogo;
-    case "framer motion":
-      return FramerMotionLogo;
-    case "gsap":
-      return GSAPLogo;
-    case "webgl":
-      return WebGLLogo;
-    default:
-      return WebGLLogo;
-  }
-};
+const SPEC_SHEET: SpecItem[] = [
+  { name: "NEXT.JS 14", category: "FRAMEWORK", spec: "App Router / SSR / Edge Middleware", status: "VERIFIED 100%", accent: "yellow" },
+  { name: "REACT 18", category: "LIBRARY", spec: "Concurrent Mode / Server Components", status: "VERIFIED 100%", accent: "indigo" },
+  { name: "TYPESCRIPT", category: "LANGUAGE", spec: "Strict Null Checks / Generics / AST", status: "STRICT MODE", accent: "bone" },
+  { name: "TAILWIND CSS", category: "STYLING", spec: "Custom Tokens / JIT Engine / Directives", status: "ZERO CONFLICT", accent: "yellow" },
+  { name: "FRAMER MOTION", category: "ANIMATION", spec: "Physics Springs / Layout Animations", status: "60 FPS GUARANTEE", accent: "indigo" },
+  { name: "GSAP 3", category: "ANIMATION", spec: "ScrollTrigger / Timeline Offload", status: "GPU ACCEL", accent: "bone" },
+  { name: "WEBGL / CANVAS", category: "GRAPHICS", spec: "Custom Shaders / Halftone Matrix", status: "SUB-16MS FRAME", accent: "yellow" },
+  { name: "WEBSOCKETS", category: "NETWORK", spec: "Real-time PCM Audio / Ring Buffers", status: "SUB-85MS LATENCY", accent: "indigo" },
+];
 
 export default function TechStack() {
-  const tools = portfolioData.toolkit;
-
   return (
-    <motion.div
-      variants={staggerChildVariants}
-      whileHover={{ scale: 1.02, y: -4 }}
-      className="relative flex flex-col justify-between h-full w-full max-w-full bg-surface border border-border rounded-[12px] p-5 md:p-7 card-hover-shadow group select-none overflow-hidden"
-    >
-      <div className="w-full max-w-full overflow-hidden">
-        <h4 className="font-display text-[11px] font-[300] tracking-widest text-secondaryText mb-6">
-          Toolkit
-        </h4>
-        
-        {/* Infinite marquee of pills */}
-        <Marquee speed="20s" direction="left" className="py-1 w-full max-w-full overflow-hidden">
-          {tools.map((tool, index) => {
-            const IconComponent = getIcon(tool.name);
-            return (
-              <div
-                key={index}
-                className="flex items-center gap-2.5 px-3.5 sm:px-4 py-2 sm:py-2.5 bg-[#1A1A1A] border border-[#2A2A2A] rounded-[12px] text-xs font-mono font-[300] text-primaryText transition-all duration-300 ease-portfolio-ease hover:-translate-y-0.5 hover:border-[#00F0FF] shrink-0 group/pill"
-              >
-                <IconComponent className="w-4 h-4 sm:w-[18px] sm:h-[18px] text-secondaryText transition-colors duration-300 group-hover/pill:text-[#00F0FF]" />
-                <span>{tool.name}</span>
-              </div>
-            );
-          })}
-        </Marquee>
+    <section id="toolkit" className="w-full px-4 sm:px-6 md:px-10 py-16 grid-border-bottom">
+      {/* Section Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-12 pb-4 border-b-4 border-[#0D0D0D]">
+        <div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#3D5AFE] text-[#F5F3EE] border-3 border-[#0D0D0D] text-xs font-mono font-bold uppercase shadow-brutalist-sm mb-3">
+            <Cpu className="w-3.5 h-3.5" />
+            <span>TECHNICAL SPECIFICATIONS // PUNCH CARD</span>
+          </div>
+          <h2 className="font-display font-extrabold text-3xl sm:text-5xl uppercase tracking-tight text-[#0D0D0D]">
+            TOOLKIT & SPEC SHEET
+          </h2>
+        </div>
+
+        <span className="font-mono text-xs font-bold text-[#0D0D0D] uppercase bg-[#FFDE59] px-3 py-1 border-2 border-[#0D0D0D]">
+          SPECIFICATION INDEX v2.4
+        </span>
       </div>
-      
-      <p className="text-[11px] text-secondaryText font-[300] uppercase tracking-wider mt-8">
-        Constantly expanding core technical capabilities
-      </p>
-    </motion.div>
+
+      {/* Punch Card Spec Sheet Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+        {SPEC_SHEET.map((item, idx) => {
+          const bgClass =
+            item.accent === "yellow"
+              ? "bg-[#FFDE59] text-[#0D0D0D]"
+              : item.accent === "indigo"
+              ? "bg-[#3D5AFE] text-[#F5F3EE]"
+              : "bg-[#F5F3EE] text-[#0D0D0D]";
+
+          return (
+            <div
+              key={item.name}
+              className={`border-3 border-[#0D0D0D] p-5 shadow-brutalist flex flex-col justify-between h-full select-none ${bgClass}`}
+            >
+              {/* Top Punch Hole & Category */}
+              <div className="flex justify-between items-center pb-3 border-b-2 border-current">
+                <span className="font-mono text-[10px] font-extrabold tracking-widest uppercase opacity-80">
+                  {item.category}
+                </span>
+                {/* Punch Card Hole Indicator */}
+                <div className="w-3 h-3 border-2 border-current bg-current opacity-70" />
+              </div>
+
+              {/* Spec Item Name */}
+              <div className="my-6">
+                <span className="font-mono text-xs opacity-75 font-bold block mb-1">
+                  SPEC_0{idx + 1}
+                </span>
+                <h3 className="font-display font-extrabold text-2xl tracking-tight uppercase">
+                  {item.name}
+                </h3>
+                <p className="font-mono text-xs font-bold mt-2 leading-relaxed opacity-90">
+                  {item.spec}
+                </p>
+              </div>
+
+              {/* Status Badge */}
+              <div className="pt-3 border-t-2 border-current flex items-center justify-between font-mono text-[10px] font-extrabold uppercase">
+                <span className="flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5 stroke-[3]" />
+                  {item.status}
+                </span>
+                <Zap className="w-3.5 h-3.5 stroke-[3]" />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
   );
 }

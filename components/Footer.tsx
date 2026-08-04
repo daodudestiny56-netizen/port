@@ -1,275 +1,183 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { Check, Copy, MessageCircle } from "lucide-react";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Mail, MessageCircle, Send, Check } from "lucide-react";
 import { portfolioData } from "@/lib/data";
-import ClipText from "@/components/ui/ClipText";
-import Marquee from "@/components/ui/Marquee";
-import { usePreloader } from "@/context/PreloaderContext";
 
-const GithubIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-    <path d="M9 18c-4.51 2-5-2-7-2" />
+// Custom brutalist inline SVGs for social icons to avoid library icon name variance
+const GithubIcon = () => (
+  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
   </svg>
 );
 
-const TwitterIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
+const LinkedinIcon = () => (
+  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
   </svg>
 );
 
-const LinkedinIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-    <rect width="4" height="12" x="2" y="9" />
-    <circle cx="4" cy="4" r="2" />
+const TwitterIcon = () => (
+  <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
   </svg>
 );
 
 export default function Footer() {
-  const footerRef = useRef<HTMLDivElement>(null);
-  const [copied, setCopied] = useState(false);
-  const { isLoaded } = usePreloader();
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState("");
 
-  // Scoped scroll tracking for the footer viewport entry
-  const { scrollYProgress } = useScroll({
-    target: footerRef,
-    offset: ["start end", "end end"],
-  });
+  const handleSend = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !email.includes("@")) {
+      setError("PLEASE ENTER A VALID EMAIL ADDRESS.");
+      return;
+    }
+    if (!message || message.trim().length < 5) {
+      setError("MESSAGE MUST BE AT LEAST 5 CHARACTERS.");
+      return;
+    }
 
-  // Animation 10: Invert color scheme progressively using soft gray values to shield user eyes
-  const backgroundColor = useTransform(
-    scrollYProgress,
-    [0, 0.3, 0.65, 1],
-    ["#0A0A0A", "#1F1F1F", "#808080", "#B5B5B5"]
-  );
-  
-  const primaryTextColor = useTransform(
-    scrollYProgress,
-    [0, 0.3, 0.65, 1],
-    ["#F5F5F5", "#F5F5F5", "#141414", "#0A0A0A"]
-  );
-
-  const secondaryTextColor = useTransform(
-    scrollYProgress,
-    [0, 0.3, 0.65, 1],
-    ["#6B6B6B", "#888888", "#333333", "#222222"]
-  );
-
-  const borderColor = useTransform(
-    scrollYProgress,
-    [0, 0.3, 0.65, 1],
-    ["#1F1F1F", "#333333", "#8E8E8E", "#9C9C9C"]
-  );
-
-  const accentColor = useTransform(
-    scrollYProgress,
-    [0, 0.3, 0.65, 1],
-    ["#00F0FF", "#00F0FF", "#008B99", "#005F66"]
-  );
-
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText(portfolioData.email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2200);
+    setError("");
+    setSent(true);
+    setTimeout(() => {
+      setSent(false);
+      setEmail("");
+      setMessage("");
+    }, 4000);
   };
 
-  return (
-    <motion.footer
-      id="contact"
-      ref={footerRef}
-      style={{ backgroundColor, color: primaryTextColor }}
-      className="relative w-full min-h-[100dvh] flex flex-col justify-between px-4 sm:px-6 md:px-12 py-10 md:py-16 select-none overflow-hidden"
-    >
-      {/* Top Section: Subtitle & CTA */}
-      <div className="flex flex-col gap-2 mt-4 sm:mt-8">
-        {isLoaded && (
-          <ClipText
-            text="Say hello"
-            lineClassName="font-display text-xs font-[300] tracking-widest"
-          />
-        )}
-        
-        <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 md:gap-10 mt-2 self-start w-full sm:w-auto">
-          {/* Email Copy Interaction */}
-          <div className="flex items-center gap-3 group">
-            <button
-              onClick={handleCopyEmail}
-              className="font-mono text-sm sm:text-base md:text-lg border-b border-dashed border-current pb-0.5 hover:opacity-80 transition-opacity duration-200 flex items-center gap-2 min-h-[44px]"
-              data-cursor="hover"
-            >
-              {portfolioData.email}
-            </button>
-            
-            <div className="flex items-center justify-center w-9 h-9 rounded-full border border-current/10 bg-current/5 relative shrink-0">
-              <AnimatePresence mode="wait">
-                {copied ? (
-                  <motion.div
-                    key="check"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Check className="w-3.5 h-3.5" />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="copy"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Copy className="w-3.5 h-3.5 opacity-60" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+  const socialChips = [
+    { name: "EMAIL", href: `mailto:${portfolioData.email}`, icon: Mail, bg: "bg-[#FFDE59]", text: "text-[#0D0D0D]" },
+    { name: "GITHUB", href: portfolioData.socials.github, icon: GithubIcon, bg: "bg-[#3D5AFE]", text: "text-[#F5F3EE]" },
+    { name: "LINKEDIN", href: portfolioData.socials.linkedin, icon: LinkedinIcon, bg: "bg-[#F5F3EE]", text: "text-[#0D0D0D]" },
+    { name: "TWITTER", href: portfolioData.socials.twitter, icon: TwitterIcon, bg: "bg-[#FFDE59]", text: "text-[#0D0D0D]" },
+    { name: "WHATSAPP", href: portfolioData.socials.whatsapp || "#", icon: MessageCircle, bg: "bg-[#3D5AFE]", text: "text-[#F5F3EE]" },
+  ];
 
-              {/* Micro-toast tooltip */}
-              <AnimatePresence>
-                {copied && (
-                  <motion.span
-                    initial={{ opacity: 0, y: 10, scale: 0.9 }}
-                    animate={{ opacity: 1, y: -28, scale: 1 }}
-                    exit={{ opacity: 0, y: 10, scale: 0.9 }}
-                    className="absolute px-2 py-1 text-[9px] font-display font-medium tracking-wider bg-[#111111] text-[#F5F5F5] rounded border border-neutral-800 pointer-events-none whitespace-nowrap"
-                  >
-                    Copied
-                  </motion.span>
-                )}
-              </AnimatePresence>
-            </div>
+  return (
+    <footer id="contact" className="w-full px-4 sm:px-6 md:px-10 py-16">
+      {/* Section Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-12 pb-4 border-b-4 border-[#0D0D0D]">
+        <div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#3D5AFE] text-[#F5F3EE] border-3 border-[#0D0D0D] text-xs font-mono font-bold uppercase shadow-brutalist-sm mb-3">
+            <Mail className="w-3.5 h-3.5" />
+            <span>DIRECT CONTACT // NO INTERMEDIARIES</span>
+          </div>
+          <h2 className="font-display font-extrabold text-3xl sm:text-5xl uppercase tracking-tight text-[#0D0D0D]">
+            INITIATE CONTACT
+          </h2>
+        </div>
+
+        <span className="font-mono text-xs font-bold text-[#0D0D0D] uppercase bg-[#FFDE59] px-3 py-1 border-2 border-[#0D0D0D]">
+          RESPONSE TIME: &lt;24 HOURS
+        </span>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 w-full">
+        {/* Left Column: Direct Stamped Chip Links */}
+        <div className="lg:col-span-6 flex flex-col gap-6">
+          <p className="font-sans text-base font-bold text-[#0D0D0D] leading-relaxed">
+            Direct channels for hiring managers, technical recruiters, and team leads. Click any chip below to connect immediately.
+          </p>
+
+          {/* Stamped Chip Grid */}
+          <div className="flex flex-wrap gap-4">
+            {socialChips.map((chip) => {
+              const Icon = chip.icon;
+              return (
+                <motion.a
+                  key={chip.name}
+                  href={chip.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ x: -2, y: -2 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                  className={`px-5 py-3 border-3 border-[#0D0D0D] shadow-brutalist flex items-center gap-2.5 font-mono text-xs font-extrabold uppercase ${chip.bg} ${chip.text}`}
+                  data-cursor="hover"
+                >
+                  <Icon />
+                  <span>{chip.name}</span>
+                </motion.a>
+              );
+            })}
           </div>
 
-          {/* WhatsApp Direct Chat */}
-          {portfolioData.socials.whatsapp && (
-            <motion.a
-              href={portfolioData.socials.whatsapp}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: accentColor }}
-              className="font-mono text-sm sm:text-base md:text-lg border-b border-solid border-current pb-0.5 hover:opacity-80 transition-opacity duration-200 flex items-center gap-2 min-h-[44px]"
-              data-cursor="hover"
-            >
-              <MessageCircle className="w-4 h-4 text-current shrink-0" />
-              {"Let's chat on WhatsApp"}
-            </motion.a>
-          )}
-        </div>
-      </div>
-
-      {/* Animation 2: Infinite Marquee Scrolling Rows moving in opposite directions */}
-      <div className="w-full flex flex-col my-auto py-6 sm:py-8">
-        <Marquee speed="25s" direction="left" gap="2.5rem" className="py-3 sm:py-4 border-t border-b border-current/10 font-display font-black text-[clamp(2.5rem,7vw,6rem)] tracking-tighter">
-          <span>Architect</span>
-          <span>Build</span>
-          <span>Engineer</span>
-          <span>Scale</span>
-          <span>Deploy</span>
-        </Marquee>
-        <Marquee speed="30s" direction="right" gap="2.5rem" className="py-3 sm:py-4 border-b border-current/10 font-display font-black text-[clamp(2.5rem,7vw,6rem)] tracking-tighter">
-          <span>Performant</span>
-          <span>Accessible</span>
-          <span>Type-safe</span>
-          <span>Reusable</span>
-          <span>Reliable</span>
-        </Marquee>
-      </div>
-
-      {/* Middle Section: Massive Typography Headline */}
-      <div className="mb-8 sm:mb-12">
-        {isLoaded && (
-          <ClipText
-            text="Let's build."
-            lineClassName="font-display font-[300] text-[clamp(2.5rem,9vw,7.5rem)] leading-none tracking-tighter select-none"
-          />
-        )}
-      </div>
-
-      {/* Bottom Bar Section */}
-      <motion.div
-        style={{ borderColor }}
-        className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 pt-6 sm:pt-8 border-t"
-      >
-        {/* Left: Copyright */}
-        <div className="flex flex-col gap-1">
-          <span className="text-[11px] font-display tracking-widest font-[300]">
-            {portfolioData.name}
-          </span>
-          <motion.span
-            style={{ color: secondaryTextColor }}
-            className="text-[10px] font-[300] tracking-wide"
-          >
-            &copy; {new Date().getFullYear()} — All rights reserved
-          </motion.span>
+          <div className="p-4 bg-[#FFDE59] border-3 border-[#0D0D0D] shadow-brutalist font-mono text-xs font-bold uppercase text-[#0D0D0D]">
+            <span>EMAIL DIRECTLY: {portfolioData.email}</span>
+          </div>
         </div>
 
-        {/* Right: Social Links */}
-        <div className="flex items-center gap-4 sm:gap-6 md:gap-8 flex-wrap">
-          <a
-            href={portfolioData.socials.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative py-1 text-xs md:text-sm font-[300] tracking-wider transition-colors flex items-center gap-1.5 min-h-[44px]"
-            data-cursor="hover"
-          >
-            <GithubIcon className="w-3.5 h-3.5 shrink-0" />
-            <span>GitHub</span>
-            <motion.span
-              style={{ backgroundColor: accentColor }}
-              className="absolute bottom-1 left-0 h-[1.5px] w-0 transition-all duration-500 ease-portfolio-ease group-hover:w-full"
-            />
-          </a>
-          <a
-            href={portfolioData.socials.twitter}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative py-1 text-xs md:text-sm font-[300] tracking-wider transition-colors flex items-center gap-1.5 min-h-[44px]"
-            data-cursor="hover"
-          >
-            <TwitterIcon className="w-3.5 h-3.5 shrink-0" />
-            <span>Twitter</span>
-            <motion.span
-              style={{ backgroundColor: accentColor }}
-              className="absolute bottom-1 left-0 h-[1.5px] w-0 transition-all duration-500 ease-portfolio-ease group-hover:w-full"
-            />
-          </a>
-          <a
-            href={portfolioData.socials.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative py-1 text-xs md:text-sm font-[300] tracking-wider transition-colors flex items-center gap-1.5 min-h-[44px]"
-            data-cursor="hover"
-          >
-            <LinkedinIcon className="w-3.5 h-3.5 shrink-0" />
-            <span>LinkedIn</span>
-            <motion.span
-              style={{ backgroundColor: accentColor }}
-              className="absolute bottom-1 left-0 h-[1.5px] w-0 transition-all duration-500 ease-portfolio-ease group-hover:w-full"
-            />
-          </a>
-          {portfolioData.socials.whatsapp && (
-            <a
-              href={portfolioData.socials.whatsapp}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative py-1 text-xs md:text-sm font-[300] tracking-wider transition-colors flex items-center gap-1.5 min-h-[44px]"
-              data-cursor="hover"
-            >
-              <MessageCircle className="w-3.5 h-3.5 shrink-0" />
-              <span>WhatsApp</span>
-              <motion.span
-                style={{ backgroundColor: accentColor }}
-                className="absolute bottom-1 left-0 h-[1.5px] w-0 transition-all duration-500 ease-portfolio-ease group-hover:w-full"
+        {/* Right Column: Direct Validated Quick Form */}
+        <div className="lg:col-span-6 border-4 border-[#0D0D0D] bg-[#F5F3EE] p-6 sm:p-8 shadow-brutalist-lg">
+          <h3 className="font-mono text-xs font-extrabold uppercase text-[#0D0D0D] mb-4 pb-2 border-b-3 border-[#0D0D0D]">
+            TRANSMIT QUICK DISPATCH
+          </h3>
+
+          <form onSubmit={handleSend} className="flex flex-col gap-4">
+            <div>
+              <label className="block font-mono text-[11px] font-bold uppercase mb-1 text-[#0D0D0D]">
+                YOUR EMAIL ADDRESS
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="recruiter@company.com"
+                className="w-full px-4 py-3 bg-[#F5F3EE] border-3 border-[#0D0D0D] font-mono text-xs text-[#0D0D0D] font-bold focus:bg-[#FFDE59] focus:outline-none"
               />
-            </a>
-          )}
+            </div>
+
+            <div>
+              <label className="block font-mono text-[11px] font-bold uppercase mb-1 text-[#0D0D0D]">
+                PROJECT DETAILS / ROLE INQUIRY
+              </label>
+              <textarea
+                rows={3}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="We are looking for a Senior Frontend Developer..."
+                className="w-full px-4 py-3 bg-[#F5F3EE] border-3 border-[#0D0D0D] font-mono text-xs text-[#0D0D0D] font-bold focus:bg-[#FFDE59] focus:outline-none"
+              />
+            </div>
+
+            {error && (
+              <span className="font-mono text-xs font-bold text-red-600 bg-red-100 p-2 border-2 border-red-600">
+                {error}
+              </span>
+            )}
+
+            {sent ? (
+              <div className="p-3 bg-[#FFDE59] border-3 border-[#0D0D0D] font-mono text-xs font-extrabold text-[#0D0D0D] flex items-center gap-2">
+                <Check className="w-4 h-4 stroke-[3]" />
+                <span>DISPATCH RECEIVED. WILL RESPOND SHORTLY!</span>
+              </div>
+            ) : (
+              <motion.button
+                type="submit"
+                whileHover={{ x: -2, y: -2 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                className="px-6 py-3.5 bg-[#3D5AFE] text-[#F5F3EE] border-3 border-[#0D0D0D] shadow-brutalist font-mono text-xs font-extrabold uppercase flex items-center justify-center gap-2"
+                data-cursor="hover"
+              >
+                <span>TRANSMIT DISPATCH</span>
+                <Send className="w-4 h-4 stroke-[3]" />
+              </motion.button>
+            )}
+          </form>
         </div>
-      </motion.div>
-    </motion.footer>
+      </div>
+
+      {/* Footer Bottom Stamp */}
+      <div className="mt-16 pt-6 border-t-4 border-[#0D0D0D] flex flex-col sm:flex-row justify-between items-center gap-4 font-mono text-xs font-bold uppercase text-[#0D0D0D]">
+        <span>© {new Date().getFullYear()} DAODU DESTINY OLUWATOBILOBA. ALL RIGHTS RESERVED.</span>
+        <span className="bg-[#FFDE59] px-2.5 py-1 border-2 border-[#0D0D0D]">
+          BUILT WITH NEXT.JS 14, TAILWIND CSS & FRAMER MOTION
+        </span>
+      </div>
+    </footer>
   );
 }

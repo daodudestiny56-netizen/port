@@ -1,127 +1,86 @@
 "use client";
 
-import { motion, Variants } from "framer-motion";
-import { portfolioData } from "@/lib/data";
-import { EASE_PORTFOLIO } from "@/lib/animations";
-import { usePreloader } from "@/context/PreloaderContext";
-import ClipText from "@/components/ui/ClipText";
+import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import AsciiPortrait from "@/components/AsciiPortrait";
+import { ArrowDownRight, ArrowUpRight } from "lucide-react";
+import { portfolioData } from "@/lib/data";
 
-export default function Hero() {
-  const words = ["Building", "Digital", "Experiences"];
-  const { isLoaded } = usePreloader();
+interface HeroProps {
+  currentTheme?: "bone" | "ink";
+}
 
-  // Mobile duration reducer helper (30% reduction => factor of 0.7)
-  const getDuration = (base: number) => {
-    if (typeof window !== "undefined" && window.innerWidth < 768) {
-      return base * 0.7;
-    }
-    return base;
-  };
-
-  const fadeUpVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: getDuration(0.8),
-        ease: EASE_PORTFOLIO,
-        delay: 0.5,
-      },
-    },
-  };
-
+export default function Hero({ currentTheme = "bone" }: HeroProps) {
   return (
-    <section className="relative w-full min-h-[100dvh] flex flex-col justify-between px-4 sm:px-6 md:px-12 py-6 md:py-10 bg-transparent select-none overflow-hidden">
-      {/* Top Header Row (Navbar) */}
-      <Navbar />
+    <section className="relative w-full min-h-screen flex flex-col justify-between p-4 sm:p-6 md:p-10 select-none grid-border-bottom">
+      {/* Sticker Navigation Header */}
+      <Navbar currentTheme={currentTheme} />
 
-      {/* Center 2-Column Layout: Typography + ASCII Portrait */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10 items-center my-auto py-6 sm:py-10 w-full">
-        {/* Left Column: Heading & Role Bio */}
-        <div className="lg:col-span-7 flex flex-col justify-center items-start w-full">
-          {isLoaded && (
-            <ClipText
-              text={words}
-              typewriterLineIndex={1}
-              lineClassName="font-display font-[300] text-[clamp(2.25rem,6.5vw,5.5rem)] leading-[0.98] text-primaryText select-none origin-bottom tracking-tight"
-            />
-          )}
+      {/* Main Hero Layout: Headline + ASCII Matrix */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center my-auto py-8 w-full">
+        {/* Left Column: Big Headline & Concrete Positioning */}
+        <div className="lg:col-span-7 flex flex-col items-start gap-6">
+          {/* Tagline Badge */}
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#3D5AFE] text-[#F5F3EE] border-3 border-[#0D0D0D] text-xs font-mono font-bold uppercase shadow-brutalist-sm">
+            <span>FRONTEND ARCHITECTURE</span>
+            <span>{"//"}</span>
+            <span>WCAG 2.1 AAA</span>
+          </div>
 
-          {/* Hero description */}
-          <motion.p
-            initial="hidden"
-            animate={isLoaded ? "visible" : "hidden"}
-            variants={fadeUpVariants}
-            className="mt-6 md:mt-8 max-w-xl text-[clamp(0.95rem,2vw,1.125rem)] text-secondaryText font-[300] leading-relaxed will-change-transform"
-          >
-            {portfolioData.role}
-          </motion.p>
+          {/* Bricolage Grotesque Weight 800 Headline */}
+          <h1 className="font-display font-extrabold text-[clamp(2.5rem,7vw,5.75rem)] leading-[0.92] text-[#0D0D0D] tracking-tight uppercase">
+            ENGINEERING HIGH-PERFORMANCE WEB INTERFACES & DESIGN SYSTEMS
+          </h1>
+
+          {/* One-line Real Positioning Statement in Mono Type */}
+          <p className="font-mono text-xs sm:text-sm md:text-base font-bold text-[#0D0D0D] leading-relaxed max-w-2xl bg-[#FFDE59] p-3.5 border-3 border-[#0D0D0D] shadow-brutalist">
+            DAODU DESTINY — Frontend engineer specializing in Next.js, React, and TypeScript. Building sub-second web applications, 60fps interaction physics, and resilient state architectures.
+          </p>
+
+          {/* Action CTAs with Hard Shadows */}
+          <div className="flex flex-wrap gap-4 pt-2">
+            {/* Bold Primary CTA */}
+            <motion.a
+              href="#work"
+              whileHover={{ x: -2, y: -2 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+              className="px-6 py-3.5 bg-[#FFDE59] text-[#0D0D0D] font-mono text-xs sm:text-sm font-extrabold uppercase border-3 border-[#0D0D0D] shadow-brutalist-lg flex items-center gap-2.5"
+              data-cursor="hover"
+            >
+              <span>EXPLORE CASE STUDIES</span>
+              <ArrowDownRight className="w-5 h-5 stroke-[3]" />
+            </motion.a>
+
+            {/* Secondary CTA */}
+            <motion.a
+              href={portfolioData.socials.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ x: -2, y: -2 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+              className="px-6 py-3.5 bg-[#3D5AFE] text-[#F5F3EE] font-mono text-xs sm:text-sm font-extrabold uppercase border-3 border-[#0D0D0D] shadow-brutalist-lg flex items-center gap-2.5"
+              data-cursor="hover"
+            >
+              <span>GITHUB REPOSITORY</span>
+              <ArrowUpRight className="w-5 h-5 stroke-[3]" />
+            </motion.a>
+          </div>
         </div>
 
-        {/* Right Column: ASCII Halftone Portrait at top of page */}
-        <motion.div
-          initial="hidden"
-          animate={isLoaded ? "visible" : "hidden"}
-          variants={fadeUpVariants}
-          className="lg:col-span-5 w-full flex items-center justify-center"
-        >
+        {/* Right Column: ASCII Matrix Portrait */}
+        <div className="lg:col-span-5 w-full flex items-center justify-center">
           <AsciiPortrait imageSrc="/images/portrait.jpg" />
-        </motion.div>
+        </div>
       </div>
 
-      {/* Bottom Row */}
-      <div className="flex flex-row justify-between items-end w-full mt-auto z-10 gap-4 pt-4">
-        {/* CTA links */}
-        <motion.div
-          initial="hidden"
-          animate={isLoaded ? "visible" : "hidden"}
-          variants={fadeUpVariants}
-          className="flex gap-4 sm:gap-6 md:gap-8 items-center"
-        >
-          <a
-            href="#work"
-            className="group relative flex items-center min-h-[44px] text-xs md:text-sm font-[300] tracking-wider text-primaryText transition-colors"
-            data-cursor="hover"
-          >
-            View work <span className="inline-block transition-transform duration-300 group-hover:translate-x-1 ml-1">&rarr;</span>
-            <span className="absolute bottom-1 left-0 h-[1.5px] w-0 bg-accent transition-all duration-500 ease-portfolio-ease group-hover:w-full" />
-          </a>
-          <a
-            href="#contact"
-            className="group relative flex items-center min-h-[44px] text-xs md:text-sm font-[300] tracking-wider text-primaryText transition-colors"
-            data-cursor="hover"
-          >
-            Contact <span className="inline-block transition-transform duration-300 group-hover:translate-x-1 ml-1">&rarr;</span>
-            <span className="absolute bottom-1 left-0 h-[1.5px] w-0 bg-accent transition-all duration-500 ease-portfolio-ease group-hover:w-full" />
-          </a>
-        </motion.div>
-
-        {/* Scroll Indicator */}
-        <motion.div
-          initial="hidden"
-          animate={isLoaded ? "visible" : "hidden"}
-          variants={fadeUpVariants}
-          className="relative hidden sm:flex items-center justify-center shrink-0 w-20 h-20 md:w-24 md:h-24 pointer-events-none"
-        >
-          <svg
-            className="w-full h-full animate-spin-slow"
-            viewBox="0 0 100 100"
-          >
-            <path
-              id="circlePath"
-              d="M 50, 50 m -35, 0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0"
-              fill="none"
-            />
-            <text className="text-[7.5px] fill-secondaryText font-display tracking-[0.18em] font-[300]">
-              <textPath href="#circlePath" startOffset="0%">
-                Scroll to explore · Scroll to explore ·
-              </textPath>
-            </text>
-          </svg>
-        </motion.div>
+      {/* Footer Spec Bar */}
+      <div className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pt-4 border-t-3 border-[#0D0D0D] font-mono text-[10px] sm:text-xs font-bold uppercase">
+        <span className="bg-[#F5F3EE] px-2 py-0.5 border-2 border-[#0D0D0D]">
+          LOCATION: LAGOS, NIGERIA (UTC+1) // REMOTE AVAILABLE
+        </span>
+        <span className="bg-[#FFDE59] px-2 py-0.5 border-2 border-[#0D0D0D]">
+          STATUS: OPEN TO FRONTEND ROLES
+        </span>
       </div>
     </section>
   );
