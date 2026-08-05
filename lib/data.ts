@@ -86,10 +86,9 @@ export function useVoiceStreamQueue(wsUrl: string) {
 }`
       },
       metrics: [
-        { label: "SYNC SPEED", value: "<85ms" },
-        { label: "PACKET DROPS", value: "0.02%" },
-        { label: "SCREEN FRAME RATE", value: "60 FPS" },
-        { label: "LIGHTHOUSE SCORE", value: "98/100" }
+        { label: "STREAM ENGINE", value: "WEB AUDIO API" },
+        { label: "PROTOCOL", value: "WEBSOCKETS" },
+        { label: "STATE BUFFER", value: "PCM FLOAT32" }
       ]
     }
   },
@@ -119,9 +118,9 @@ export function useVoiceStreamQueue(wsUrl: string) {
 }`
         },
         metrics: [
-          { label: "SESSION RECOVERY", value: "100%" },
-          { label: "FEEDBACK SPEED", value: "<150ms" },
-          { label: "APP BUNDLE SIZE", value: "38 kB" }
+          { label: "SECURITY", value: "AES-GCM" },
+          { label: "STORAGE", value: "CLOUD STORAGE" },
+          { label: "BUNDLE SIZE", value: "38 kB" }
         ]
       }
     },
@@ -130,7 +129,7 @@ export function useVoiceStreamQueue(wsUrl: string) {
       category: "REACT / LANDING PAGE",
       image: "/images/cocodb.png",
       link: "https://github.com/daodudestiny56-netizen/cocoDB-waitlist",
-      description: "Fast landing page and queue signup system — keeping page load size under 45kB with a 100/100 Lighthouse performance score.",
+      description: "Fast landing page and queue signup system — keeping page load size under 45kB with high Lighthouse performance.",
       caseStudy: {
         problem: "High visitor traffic during product launches caused slow response times and layout shifts on signups.",
         approach: "Used static pre-rendering, edge API rate limiting, and GPU-optimized CSS animations for fast page loads.",
@@ -149,9 +148,9 @@ export async function middleware(req: NextRequest) {
 }`
         },
         metrics: [
-          { label: "LIGHTHOUSE SCORE", value: "100/100" },
-          { label: "PAGE SIZE", value: "41 kB" },
-          { label: "INITIAL LOAD TIME", value: "0.3s" }
+          { label: "RENDERING", value: "STATIC SSG" },
+          { label: "PAGE BUNDLE", value: "41 kB" },
+          { label: "SECURITY", value: "EDGE RATELIMIT" }
         ]
       }
     },
@@ -182,9 +181,9 @@ export function useOptimisticCart(initialCart: CartItem[]) {
 }`
         },
         metrics: [
-          { label: "RESPONSE TIME", value: "<40ms" },
-          { label: "CART CONVERSION", value: "+18%" },
-          { label: "PRELOAD HIT RATE", value: "94%" }
+          { label: "STATE HOOK", value: "USE OPTIMISTIC" },
+          { label: "UPDATES", value: "INSTANT UI" },
+          { label: "ROUTING", value: "PREFETCHING" }
         ]
       }
     },
@@ -193,7 +192,7 @@ export function useOptimisticCart(initialCart: CartItem[]) {
       category: "JAVASCRIPT / OFFLINE APP",
       image: "/images/mediquick.png",
       link: "https://github.com/daodudestiny56-netizen/MediQuick",
-      description: "Offline-first medical first-aid guide — providing instant search under 20ms for emergency instructions without internet.",
+      description: "Offline-first medical first-aid guide — providing fast search for emergency instructions without internet.",
       caseStudy: {
         problem: "Users opening emergency first-aid guides in areas with poor network suffered blank screens and timeouts.",
         approach: "Built a ServiceWorker offline cache with an in-memory search index so first-aid steps open instantly offline.",
@@ -210,13 +209,13 @@ export function useOptimisticCart(initialCart: CartItem[]) {
     }
     node.protocolId = protocolId;
   }
-  search(prefix) { /* Sub-5ms fast lookup */ }
+  search(prefix) { /* Fast lookup */ }
 }`
         },
         metrics: [
-          { label: "OFFLINE ACCESS", value: "100%" },
-          { label: "SEARCH SPEED", value: "<15ms" },
-          { label: "STARTUP TIME", value: "0.4s" }
+          { label: "CACHE ENGINE", value: "SERVICE WORKER" },
+          { label: "SEARCH DATA", value: "TRIE INDEX" },
+          { label: "NETWORK MODE", value: "OFFLINE FIRST" }
         ]
       }
     },
@@ -225,7 +224,7 @@ export function useOptimisticCart(initialCart: CartItem[]) {
       category: "TYPESCRIPT / LIVE DATA",
       image: "/images/edge.png",
       link: "https://github.com/daodudestiny56-netizen/edge",
-      description: "Live market order book interface — updating price feeds smooth at 60fps without screen flickering or layout jumps.",
+      description: "Live market order book interface — updating price feeds smoothly without screen flickering or layout jumps.",
       caseStudy: {
         problem: "Rapid price updates caused screen re-renders and unexpected layout jumps, making buttons hard to click.",
         approach: "Scheduled price updates using requestAnimationFrame to batch updates every 16ms for smooth rendering.",
@@ -252,9 +251,9 @@ export function useBatchTickScheduler(onBatchRender: (ticks: MarketTick[]) => vo
 }`
         },
         metrics: [
-          { label: "LAYOUT SHIFTS", value: "0.00" },
-          { label: "DATA THROUGHPUT", value: "2.4k/sec" },
-          { label: "FRAME RATE", value: "60 FPS" }
+          { label: "SCHEDULER", value: "RAF BATCHING" },
+          { label: "TARGET RATE", value: "60 FPS" },
+          { label: "CLS SCORE", value: "0.00 SHIFT" }
         ]
       }
     },
@@ -270,8 +269,8 @@ export function useBatchTickScheduler(onBatchRender: (ticks: MarketTick[]) => vo
   ],
   stats: [
     { value: 2, label: "YEARS EXPERIENCE" },
-    { value: 10, label: "PROJECTS BUILT" },
-    { value: 50, label: "OPEN SOURCE PRs" },
-    { value: 99, label: "LIGHTHOUSE SCORE AVG", suffix: "%" },
+    { value: 6, label: "FEATURED PROJECTS" },
+    { value: 100, label: "STRICT TYPESCRIPT", suffix: "%" },
+    { value: 60, label: "TARGET FPS RENDER", suffix: " FPS" },
   ],
 };

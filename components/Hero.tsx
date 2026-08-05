@@ -29,7 +29,7 @@ export default function Hero({ currentTheme = "bone" }: HeroProps) {
           >
             <span>FRONTEND ARCHITECTURE</span>
             <span className="hidden xs:inline text-[#2B4EFF]">{"//"}</span>
-            <span>WCAG 2.1 AAA</span>
+            <span>SEMANTIC HTML5</span>
           </motion.div>
 
           {/* Headline */}
