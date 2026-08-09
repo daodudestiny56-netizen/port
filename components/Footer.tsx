@@ -45,12 +45,12 @@ export default function Footer() {
     setLoading(true);
 
     try {
-      // 1. Direct Web3Forms submission to daodudestiny56@gmail.com
+      // Direct Web3Forms submission to daodudestiny56@gmail.com
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          access_key: "c381c850-8433-4f9e-a89c-e740d9cb5ed9", // Public Web3Forms dispatch key
+          access_key: "c381c850-8433-4f9e-a89c-e740d9cb5ed9",
           email: email,
           message: message,
           subject: `Portfolio Inquiry from ${email}`,
@@ -59,11 +59,9 @@ export default function Footer() {
       });
 
       if (!res.ok) {
-        // Fallback: Open mailto client directly to daodudestiny56@gmail.com
         window.location.href = `mailto:${portfolioData.email}?subject=Portfolio%20Inquiry%20from%20${encodeURIComponent(email)}&body=${encodeURIComponent(message)}`;
       }
     } catch {
-      // Direct mailto fallback on any network error
       window.location.href = `mailto:${portfolioData.email}?subject=Portfolio%20Inquiry%20from%20${encodeURIComponent(email)}&body=${encodeURIComponent(message)}`;
     }
 
@@ -107,7 +105,7 @@ export default function Footer() {
         {/* Left Column: Direct Links */}
         <div className="lg:col-span-6 flex flex-col gap-6">
           <p className="font-sans text-base font-bold text-[#0D0D0D] leading-relaxed">
-            Looking for a frontend developer or have a project in mind? Connect with me directly on any channel below:
+            Looking for a software engineer or have a project in mind? Connect with me directly on any channel below:
           </p>
 
           {/* Social Links Chips Grid */}

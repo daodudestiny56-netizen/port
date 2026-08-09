@@ -10,17 +10,17 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: `${portfolioData.name} | Frontend Developer`,
+  title: `${portfolioData.name} | Software Engineer`,
   description: portfolioData.role,
   authors: [{ name: portfolioData.name }],
   openGraph: {
-    title: `${portfolioData.name} | Frontend Developer`,
+    title: `${portfolioData.name} | Software Engineer`,
     description: portfolioData.role,
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: `${portfolioData.name} | Frontend Developer`,
+    title: `${portfolioData.name} | Software Engineer`,
     description: portfolioData.role,
   },
 };

@@ -18,7 +18,7 @@ export default function Hero({ currentTheme = "bone" }: HeroProps) {
 
       {/* Main Hero Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 md:gap-12 items-center my-auto py-6 sm:py-8 w-full max-w-full">
-        {/* Left Column: Big Headline & Simple Positioning */}
+        {/* Left Column: Big Headline & Positioning */}
         <div className="lg:col-span-7 flex flex-col items-start gap-4 sm:gap-6 w-full max-w-full">
           {/* Tagline Badges */}
           <motion.div
@@ -27,9 +27,9 @@ export default function Hero({ currentTheme = "bone" }: HeroProps) {
             transition={{ duration: 0.3, delay: 0.1 }}
             className="flex flex-wrap items-center gap-2 px-3 py-1.5 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] text-[10px] sm:text-xs font-mono font-bold uppercase shadow-brutalist-sm max-w-full"
           >
-            <span>FRONTEND ARCHITECTURE</span>
+            <span>SOFTWARE ARCHITECTURE</span>
             <span className="hidden xs:inline text-[#2B4EFF]">{"//"}</span>
-            <span>SEMANTIC HTML5</span>
+            <span>FULL-STACK CAPABLE</span>
           </motion.div>
 
           {/* Headline */}
@@ -39,7 +39,7 @@ export default function Hero({ currentTheme = "bone" }: HeroProps) {
             transition={{ duration: 0.4, ease: "easeOut", delay: 0.2 }}
             className="font-display font-extrabold text-[clamp(2rem,6.5vw,5.5rem)] leading-[0.94] text-[#0D0D0D] tracking-tight uppercase break-words w-full"
           >
-            ENGINEERING HIGH-PERFORMANCE WEB INTERFACES & DESIGN SYSTEMS
+            ENGINEERING HIGH-PERFORMANCE WEB APPLICATIONS & SCALABLE SYSTEMS
           </motion.h1>
 
           {/* Positioning Statement */}
@@ -49,7 +49,7 @@ export default function Hero({ currentTheme = "bone" }: HeroProps) {
             transition={{ duration: 0.4, ease: "easeOut", delay: 0.3 }}
             className="font-mono text-xs sm:text-sm md:text-base font-bold text-[#FFFFFF] leading-relaxed w-full max-w-2xl bg-[#0D0D0D] p-3 sm:p-4 border-3 border-[#0D0D0D] shadow-brutalist"
           >
-            <span className="text-[#2B4EFF]">DAODU DESTINY</span> — Frontend Developer. I build fast, accessible, and smooth web applications using Next.js, React, and TypeScript.
+            <span className="text-[#2B4EFF]">DAODU DESTINY</span> — Software Engineer. I build robust, high-performance web applications, scalable systems, and interactive digital products with modern technologies.
           </motion.p>
 
           {/* Action CTAs */}
@@ -106,7 +106,7 @@ export default function Hero({ currentTheme = "bone" }: HeroProps) {
           WORK MODE: <span className="text-[#2B4EFF]">REMOTE AVAILABLE</span>
         </span>
         <span className="bg-[#0D0D0D] text-[#FFFFFF] px-2.5 py-1 border-2 border-[#0D0D0D] text-center sm:text-right">
-          STATUS: <span className="text-[#2B4EFF]">OPEN TO FRONTEND ROLES</span>
+          STATUS: <span className="text-[#2B4EFF]">OPEN TO SOFTWARE ROLES</span>
         </span>
       </motion.div>
     </section>

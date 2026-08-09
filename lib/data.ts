@@ -43,8 +43,8 @@ export interface PortfolioData {
 
 export const portfolioData: PortfolioData = {
   name: "Daodu Destiny Oluwatobiloba",
-  role: "Frontend developer building fast, responsive, and accessible web applications using Next.js, React, and TypeScript. Focused on clean code, smooth performance, and great user experiences.",
-  status: "Open to frontend roles — Remote-friendly",
+  role: "Software Engineer building scalable, high-performance web applications, robust APIs, and interactive digital products. Focused on clean architecture, resilient engineering, and exceptional user experiences.",
+  status: "Open to software engineering roles — Remote-friendly",
   email: "daodudestiny56@gmail.com",
   socials: {
     github: "https://github.com/daodudestiny56-netizen",
@@ -262,6 +262,7 @@ export function useBatchTickScheduler(onBatchRender: (ticks: MarketTick[]) => vo
     { name: "Next.js", category: "Framework" },
     { name: "React", category: "Library" },
     { name: "TypeScript", category: "Language" },
+    { name: "Node.js", category: "Backend" },
     { name: "TailwindCSS", category: "Styling" },
     { name: "Framer Motion", category: "Animation" },
     { name: "GSAP", category: "Animation" },

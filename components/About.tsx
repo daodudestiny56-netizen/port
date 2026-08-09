@@ -19,7 +19,7 @@ export default function About() {
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#FFFFFF] text-[#0D0D0D] border-3 border-[#0D0D0D] text-xs font-mono font-bold uppercase shadow-brutalist-white-sm mb-3">
             <UserCheck className="w-3.5 h-3.5 text-[#2B4EFF]" />
-            <span>FRONTEND DEVELOPER {"//"} MY PROFILE</span>
+            <span>SOFTWARE ENGINEER {"//"} MY PROFILE</span>
           </div>
           <h2 className="font-display font-extrabold text-3xl sm:text-5xl uppercase tracking-tight text-[#FFFFFF]">
             ABOUT ME
@@ -31,7 +31,7 @@ export default function About() {
         </span>
       </motion.div>
 
-      {/* Concrete 3-Sentence Bio Container */}
+      {/* Concrete Bio Container */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -45,7 +45,7 @@ export default function About() {
         </div>
 
         <p className="font-sans text-base sm:text-xl font-bold leading-relaxed text-[#0D0D0D]">
-          I am a Frontend Developer with 2+ years of experience building web applications using Next.js, React, and TypeScript. I focus on creating fast page loads, accessible user interfaces, and smooth performance for web apps. I build production frontend interfaces for product teams worldwide.
+          I am a Software Engineer with 2+ years of experience building full-featured web applications, robust APIs, and modern user interfaces using Next.js, React, TypeScript, and Node.js. I focus on building scalable systems, high-performance software, and smooth digital experiences. I deliver production-ready software solutions for product teams worldwide.
         </p>
 
         {/* Dynamic Metric Count-Up Numbers */}

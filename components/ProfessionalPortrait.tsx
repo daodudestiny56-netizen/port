@@ -38,7 +38,7 @@ export default function ProfessionalPortrait({
         <div className="relative w-full aspect-[4/5] bg-[#161616] overflow-hidden">
           <Image
             src={imageSrc}
-            alt="Daodu Destiny - Frontend Developer"
+            alt="Daodu Destiny - Software Engineer"
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
             priority
@@ -62,7 +62,7 @@ export default function ProfessionalPortrait({
             <span>REMOTE AVAILABLE</span>
           </div>
           <span className="bg-[#FFFFFF] text-[#0D0D0D] px-2 py-0.5 text-[10px] font-extrabold border border-[#0D0D0D]">
-            FRONTEND ARCHITECT
+            SOFTWARE ENGINEER
           </span>
         </div>
       </div>
