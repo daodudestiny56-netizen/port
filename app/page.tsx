@@ -1,90 +1,53 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useCallback, useState } from "react";
+import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import BentoGrid from "@/components/BentoGrid";
+import Work from "@/components/Work";
 import TechStack from "@/components/TechStack";
+import Principles from "@/components/Principles";
 import About from "@/components/About";
 import Footer from "@/components/Footer";
 import ProjectModal from "@/components/ProjectModal";
-import CustomCursor from "@/components/CustomCursor";
-import { Project } from "@/lib/data";
+import ZoomPortal from "@/components/ui/ZoomPortal";
+import { CircuitDivider, EdgeDivider, TapeDivider } from "@/components/ui/Dividers";
+import { portfolioData, Project } from "@/lib/data";
 
-type Zone = "hero" | "work" | "toolkit" | "about" | "contact";
+const TAPE_ITEMS = [
+  "SOFTWARE ENGINEER",
+  "SYSTEM DESIGN",
+  "REAL-TIME APPS",
+  "TYPESCRIPT",
+  "OFFLINE-FIRST",
+  "PERFORMANCE",
+  "ACCESSIBILITY",
+  "APIS",
+];
 
 export default function Home() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [activeZone, setActiveZone] = useState<Zone>("hero");
-
-  useEffect(() => {
-    const sectionIds: Zone[] = ["hero", "work", "toolkit", "about", "contact"];
-    const observers: IntersectionObserver[] = [];
-
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (!el) return;
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              setActiveZone(id);
-            }
-          });
-        },
-        { threshold: 0.3 }
-      );
-
-      observer.observe(el);
-      observers.push(observer);
-    });
-
-    return () => {
-      observers.forEach((obs) => obs.disconnect());
-    };
-  }, []);
-
-  const isInkZone = activeZone === "work" || activeZone === "about";
+  const closeModal = useCallback(() => setSelectedProject(null), []);
+  const projectCount = portfolioData.projects.length + 1;
 
   return (
-    <main
-      className={`relative min-h-screen w-full max-w-full overflow-x-hidden flex flex-col select-none transition-none ${
-        isInkZone ? "zone-ink" : "zone-bone"
-      }`}
-      style={{ transition: "background-color 0ms, color 0ms" }}
-    >
-      <CustomCursor />
+    <main className="relative w-full max-w-full overflow-x-clip flex flex-col">
+      <Navbar />
 
-      {/* Hero Zone (Bone Background) */}
-      <div id="hero" className="w-full zone-bone">
-        <Hero currentTheme="bone" />
-      </div>
+      <Hero />
+      <TapeDivider items={TAPE_ITEMS} background="bone" />
+      <ZoomPortal title="SELECTED WORK" subtitle={`${String(projectCount).padStart(2, "0")} CASE STUDIES · PROBLEM → APPROACH → CODE`} />
+      <Work onSelectProject={setSelectedProject} />
+      <EdgeDivider from="ink" to="bone" shape="zigzag" />
+      <TechStack />
+      <CircuitDivider background="bone" label="DD.CORE" />
+      <EdgeDivider from="bone" to="ink" shape="steps" teeth={24} />
+      <Principles />
+      <EdgeDivider from="ink" to="bone" shape="zigzag" teeth={40} />
+      <About />
+      <TapeDivider items={TAPE_ITEMS.slice().reverse()} background="bone" />
+      <Footer />
 
-      {/* Work Zone (Ink Background Hard Cut) */}
-      <div id="work" className="w-full zone-ink">
-        <BentoGrid onSelectProject={(p) => setSelectedProject(p)} />
-      </div>
-
-      {/* Toolkit Zone (Bone Background Hard Cut) */}
-      <div id="toolkit" className="w-full zone-bone">
-        <TechStack />
-      </div>
-
-      {/* About Zone (Ink Background Hard Cut) */}
-      <div id="about" className="w-full zone-ink">
-        <About />
-      </div>
-
-      {/* Contact Zone (Bone Background Hard Cut) */}
-      <div id="contact" className="w-full zone-bone">
-        <Footer />
-      </div>
-
-      {/* Technical Case Study Modal */}
-      <ProjectModal
-        project={selectedProject}
-        onClose={() => setSelectedProject(null)}
-      />
+      <ProjectModal project={selectedProject} onClose={closeModal} />
     </main>
   );
 }

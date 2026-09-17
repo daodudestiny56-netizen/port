@@ -17,6 +17,10 @@ const config: Config = {
         surface: "#FFFFFF",
         border: "#0D0D0D",
       },
+      borderWidth: {
+        3: "3px",
+        6: "6px",
+      },
       borderRadius: {
         DEFAULT: "0px",
         none: "0px",

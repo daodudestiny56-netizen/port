@@ -1,111 +1,91 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { usePreloader } from "@/context/PreloaderContext";
 
-interface PreloaderProps {
-  onComplete?: () => void;
-}
+const DURATION_MS = 1500;
+const BOOT_LINES = ["COMPILING INTERFACE", "MOUNTING 3D RUNTIME", "HANGING THE CARDS", "READY"];
 
-export default function Preloader({ onComplete }: PreloaderProps) {
+export default function Preloader() {
+  const { isLoaded, setIsLoaded } = usePreloader();
   const [count, setCount] = useState(0);
-  const [isSlidingUp, setIsSlidingUp] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
-  const [hasCheckedSession, setHasCheckedSession] = useState(false);
-  const { setIsLoaded } = usePreloader();
 
   useEffect(() => {
-    // Check if session storage flag exists
-    if (typeof window !== "undefined") {
-      const shown = sessionStorage.getItem("portfolio-preloader-shown");
-      if (shown === "true") {
-        setIsVisible(false);
-        setIsLoaded(true);
-        if (onComplete) onComplete();
-        setHasCheckedSession(true);
-        return;
-      }
-      setHasCheckedSession(true);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setIsLoaded(true);
+      return;
     }
-  }, [setIsLoaded, onComplete]);
 
-  useEffect(() => {
-    if (!hasCheckedSession || !isVisible) return;
-
-    let current = 0;
-    let timer: NodeJS.Timeout;
-
-    const tick = () => {
-      let delay = 30; // standard speed
-
-      if (current >= 80 && current < 95) {
-        // Slow down between 80 and 95
-        delay = 80 + Math.random() * 120;
-      } else if (current >= 95) {
-        // Snap to 100
-        delay = 40;
+    document.documentElement.style.overflow = "hidden";
+    let frame: number;
+    let start: number | null = null;
+    const tick = (now: number) => {
+      if (start === null) start = now;
+      const progress = Math.min((now - start) / DURATION_MS, 1);
+      setCount(Math.round((1 - Math.pow(1 - progress, 3)) * 100));
+      if (progress < 1) {
+        frame = requestAnimationFrame(tick);
       } else {
-        // Fast start
-        delay = 10 + Math.random() * 30;
+        setIsLoaded(true);
       }
-
-      timer = setTimeout(() => {
-        current += 1;
-        if (current > 100) {
-          // Slide number up out of clip mask
-          setIsSlidingUp(true);
-          if (typeof window !== "undefined") {
-            sessionStorage.setItem("portfolio-preloader-shown", "true");
-          }
-
-          // After sliding up, fade container out
-          setTimeout(() => {
-            setIsVisible(false);
-            setIsLoaded(true);
-            if (onComplete) onComplete();
-          }, 800);
-        } else {
-          setCount(current);
-          tick();
-        }
-      }, delay);
     };
-
-    tick();
+    frame = requestAnimationFrame(tick);
 
     return () => {
-      if (timer) clearTimeout(timer);
+      cancelAnimationFrame(frame);
+      document.documentElement.style.overflow = "";
     };
-  }, [hasCheckedSession, isVisible, setIsLoaded, onComplete]);
+  }, [setIsLoaded]);
 
-  // If already shown in session, don't render preloader markup
-  if (!isVisible && hasCheckedSession) {
-    return null;
-  }
+  useEffect(() => {
+    if (isLoaded) document.documentElement.style.overflow = "";
+  }, [isLoaded]);
 
-  const formattedCount = count < 10 ? `0${count}` : `${count}`;
+  const line = BOOT_LINES[Math.min(Math.floor((count / 100) * BOOT_LINES.length), BOOT_LINES.length - 1)];
 
   return (
     <AnimatePresence>
-      {isVisible && (
+      {!isLoaded && (
         <motion.div
-          initial={{ opacity: 1 }}
-          exit={{
-            opacity: 0,
-            transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-          }}
-          className="fixed inset-0 bg-background z-[99999] flex items-center justify-center select-none"
+          key="preloader"
+          className="preloader fixed inset-0 z-[100000] bg-[#0D0D0D] text-[#FFFFFF] flex flex-col justify-between p-5 sm:p-10 overflow-hidden"
+          exit={{ clipPath: "inset(0% 0% 100% 0%)" }}
+          initial={{ clipPath: "inset(0% 0% 0% 0%)" }}
+          transition={{ duration: 0.75, ease: [0.76, 0, 0.24, 1], delay: 0.15 }}
         >
-          <div className="overflow-hidden relative h-[96px] md:h-[120px] flex items-center justify-center">
-            <motion.h1
-              initial={{ y: 0 }}
-              animate={isSlidingUp ? { y: "-110%" } : { y: 0 }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[80px] md:text-[96px] font-display font-extrabold leading-none text-primaryText font-mono tracking-tighter"
-            >
-              {formattedCount}
-            </motion.h1>
+          <div className="flex justify-between items-start font-mono text-[11px] sm:text-xs font-extrabold uppercase tracking-widest">
+            <span>DAODU DESTINY <span className="text-[#2B4EFF]">{"//"}</span> SOFTWARE ENGINEER</span>
+            <span className="hidden sm:inline">PORTFOLIO BUILD</span>
+          </div>
+
+          <motion.div
+            exit={{ scale: 6, opacity: 0 }}
+            transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+            className="flex items-end justify-center"
+          >
+            <span className="font-display font-extrabold leading-none tracking-tighter text-[clamp(7rem,28vw,22rem)] tabular-nums">
+              {String(count).padStart(3, "0")}
+            </span>
+            <span className="font-display font-extrabold text-[#2B4EFF] text-[clamp(2rem,6vw,5rem)] leading-none mb-[0.2em]">%</span>
+          </motion.div>
+
+          <div className="flex flex-col gap-3">
+            <div className="flex justify-between font-mono text-[11px] sm:text-xs font-extrabold uppercase tracking-widest">
+              <span>
+                &gt; {line}
+                <span className="animate-blink">_</span>
+              </span>
+              <span className="text-[#2B4EFF]">3 YRS / 6 PROJECTS</span>
+            </div>
+            <div className="grid gap-1 h-4" style={{ gridTemplateColumns: "repeat(20, minmax(0, 1fr))" }}>
+              {Array.from({ length: 20 }).map((_, i) => (
+                <span
+                  key={i}
+                  className={`border-2 border-[#FFFFFF] ${i < Math.round(count / 5) ? "bg-[#2B4EFF]" : "bg-transparent"}`}
+                />
+              ))}
+            </div>
           </div>
         </motion.div>
       )}

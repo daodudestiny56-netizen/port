@@ -1,16 +1,50 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useMotionValueEvent, useScroll, useSpring } from "framer-motion";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import { portfolioData } from "@/lib/data";
+import { usePreloader } from "@/context/PreloaderContext";
 
-interface NavbarProps {
-  currentTheme?: "bone" | "ink";
-}
+const LINKS = [
+  { id: "work", label: "WORK", index: "01" },
+  { id: "toolkit", label: "TOOLKIT", index: "02" },
+  { id: "principles", label: "PRINCIPLES", index: "03" },
+  { id: "about", label: "ABOUT", index: "04" },
+  { id: "contact", label: "CONTACT", index: "05" },
+];
 
-export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
+export default function Navbar() {
+  const { isLoaded } = usePreloader();
   const [isOpen, setIsOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [active, setActive] = useState<string | null>(null);
+  const lastY = useRef(0);
+
+  const { scrollY, scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 200, damping: 30 });
+
+  useMotionValueEvent(scrollY, "change", (y) => {
+    const goingDown = y > lastY.current;
+    setHidden(goingDown && y > 480);
+    lastY.current = y;
+  });
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    LINKS.forEach(({ id }) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -21,146 +55,130 @@ export default function Navbar({ currentTheme = "bone" }: NavbarProps) {
   }, []);
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => {
       document.body.style.overflow = "";
-    }
+    };
   }, [isOpen]);
-
-  const stickerLinks = [
-    { name: "WORK", href: "#work", bg: "bg-[#0D0D0D]", text: "text-[#FFFFFF]", rotate: "-2deg" },
-    { name: "TOOLKIT", href: "#toolkit", bg: "bg-[#FFFFFF]", text: "text-[#0D0D0D]", rotate: "1.5deg" },
-    { name: "ABOUT", href: "#about", bg: "bg-[#0D0D0D]", text: "text-[#FFFFFF]", rotate: "-1.5deg" },
-    { name: "CONTACT", href: "#contact", bg: "bg-[#FFFFFF]", text: "text-[#0D0D0D]", rotate: "2deg" },
-  ];
-
-  const isInkTheme = currentTheme === "ink";
 
   return (
     <>
-      <header className="relative w-full z-40 flex justify-between items-center py-2 sm:py-4 px-1 sm:px-4 gap-2">
-        {/* Brand Name Tag */}
-        <motion.a
-          href="#"
-          initial={{ opacity: 0, scale: 0.8, y: -10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 450, damping: 20 }}
-          whileHover={{ rotate: 0, scale: 1.03 }}
-          style={{ transform: "rotate(-1deg)" }}
-          className={`font-display text-xs sm:text-sm md:text-base font-extrabold px-2.5 sm:px-3 py-1 sm:py-1.5 uppercase tracking-wider border-3 border-[#0D0D0D] shadow-brutalist-sm hover:shadow-brutalist-blueprint hover:text-[#2B4EFF] transition-colors truncate max-w-[170px] xs:max-w-[220px] sm:max-w-none ${
-            isInkTheme ? "bg-[#FFFFFF] text-[#0D0D0D]" : "bg-[#0D0D0D] text-[#FFFFFF]"
-          }`}
-          data-cursor="hover"
+      <motion.header
+        initial={{ y: "-160%" }}
+        animate={{ y: isLoaded && !(hidden && !isOpen) ? "0%" : "-160%" }}
+        transition={{ type: "spring", stiffness: 260, damping: 28, delay: isLoaded && lastY.current === 0 ? 0.6 : 0 }}
+        className="fixed top-3 inset-x-3 sm:top-4 sm:inset-x-6 z-[1000]"
+      >
+        <nav
+          aria-label="Primary"
+          className="relative flex items-center justify-between gap-3 bg-[#FFFFFF] text-[#0D0D0D] border-3 border-[#0D0D0D] shadow-brutalist pl-2 pr-2 py-2"
         >
-          {portfolioData.name}
-        </motion.a>
+          <a href="#hero" className="flex items-center gap-2.5 min-w-0" data-cursor="hover">
+            <span className="grid place-items-center w-10 h-10 shrink-0 bg-[#2B4EFF] text-[#FFFFFF] border-3 border-[#0D0D0D] font-display font-extrabold text-sm">
+              DD
+            </span>
+            <span className="hidden sm:flex flex-col leading-none min-w-0">
+              <span className="font-display font-extrabold text-sm uppercase tracking-tight truncate">Daodu Destiny</span>
+              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#2B4EFF]">Software Engineer</span>
+            </span>
+          </a>
 
-        {/* Status Chip & Desktop Sticker Navigation */}
-        <div className="flex items-center gap-2 sm:gap-4 lg:gap-6 shrink-0">
-          {/* Status Chip */}
-          <div
-            className={`hidden xl:flex items-center gap-2 px-3 py-1 border-3 border-[#0D0D0D] text-xs font-mono font-bold uppercase shadow-brutalist-sm ${
-              isInkTheme ? "bg-[#0D0D0D] text-[#FFFFFF] border-[#FFFFFF]" : "bg-[#FFFFFF] text-[#0D0D0D]"
-            }`}
-          >
-            <span className="w-2.5 h-2.5 bg-[#2B4EFF] border border-[#0D0D0D]" />
-            <span className="truncate">{portfolioData.status}</span>
+          <ul className="hidden lg:flex items-center gap-1">
+            {LINKS.map((link) => {
+              const isActive = active === link.id;
+              return (
+                <li key={link.id}>
+                  <a
+                    href={`#${link.id}`}
+                    className={`relative flex items-center gap-1.5 px-3 py-2 font-mono text-xs font-extrabold uppercase tracking-wider border-2 transition-colors duration-150 ${
+                      isActive
+                        ? "bg-[#0D0D0D] text-[#FFFFFF] border-[#0D0D0D]"
+                        : "border-transparent hover:border-[#0D0D0D] hover:bg-[#2B4EFF] hover:text-[#FFFFFF]"
+                    }`}
+                    aria-current={isActive ? "true" : undefined}
+                    data-cursor="hover"
+                  >
+                    <span className={isActive ? "text-[#2B4EFF]" : "opacity-50"}>{link.index}</span>
+                    {link.label}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+
+          <div className="flex items-center gap-2">
+            <span className="hidden md:flex items-center gap-2 px-3 py-2 border-2 border-[#0D0D0D] font-mono text-[11px] font-extrabold uppercase">
+              <span className="relative flex w-2.5 h-2.5">
+                <span className="absolute inset-0 bg-[#2B4EFF] animate-ping" />
+                <span className="relative w-2.5 h-2.5 bg-[#2B4EFF] border border-[#0D0D0D]" />
+              </span>
+              AVAILABLE
+            </span>
+            <a
+              href="#contact"
+              className="hidden sm:flex items-center gap-1.5 px-4 py-2 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] font-mono text-xs font-extrabold uppercase hover:bg-[#2B4EFF] transition-colors"
+              data-cursor="hover"
+            >
+              HIRE ME <ArrowUpRight className="w-4 h-4 stroke-[3]" />
+            </a>
+            <button
+              onClick={() => setIsOpen((v) => !v)}
+              className="lg:hidden grid place-items-center w-11 h-11 border-3 border-[#0D0D0D] bg-[#0D0D0D] text-[#FFFFFF] active:scale-95 transition-transform"
+              aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-expanded={isOpen}
+              data-cursor="hover"
+            >
+              {isOpen ? <X className="w-6 h-6 stroke-[3]" /> : <Menu className="w-6 h-6 stroke-[3]" />}
+            </button>
           </div>
 
-          {/* Staggered Stamp Sticker Links (Desktop) */}
-          <nav className="hidden md:flex items-center gap-2 lg:gap-3">
-            {stickerLinks.map((link, index) => (
-              <motion.a
-                key={link.name}
-                href={link.href}
-                initial={{ opacity: 0, scale: 0.7, y: -15 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 450,
-                  damping: 22,
-                  delay: 0.1 + index * 0.05,
-                }}
-                style={{ transform: `rotate(${link.rotate})` }}
-                whileHover={{ rotate: 0, y: -3, scale: 1.05 }}
-                whileTap={{ scale: 0.96 }}
-                className={`px-3 lg:px-3.5 py-1.5 text-xs font-mono font-extrabold tracking-wider border-3 border-[#0D0D0D] shadow-brutalist-sm hover:shadow-brutalist-blueprint hover:text-[#2B4EFF] ${link.bg} ${link.text} block select-none transition-colors duration-150`}
-                data-cursor="hover"
-              >
-                {link.name}
-              </motion.a>
-            ))}
-          </nav>
+          {/* Scroll progress rail */}
+          <motion.span
+            aria-hidden="true"
+            style={{ scaleX: progress }}
+            className="absolute left-0 right-0 -bottom-[3px] h-[5px] bg-[#2B4EFF] origin-left"
+          />
+        </nav>
+      </motion.header>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] border-3 border-[#0D0D0D] bg-[#0D0D0D] text-[#FFFFFF] shadow-brutalist-sm focus:outline-none z-50 shrink-0 active:scale-95 transition-transform"
-            aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
-            data-cursor="hover"
-          >
-            {isOpen ? <X className="w-6 h-6 stroke-[3]" /> : <Menu className="w-6 h-6 stroke-[3]" />}
-          </button>
-        </div>
-      </header>
-
-      {/* Mobile Sticker Drawer */}
       <AnimatePresence>
         {isOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-[#0D0D0D]/85 backdrop-blur-sm z-40 md:hidden"
-            />
-
-            <motion.div
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 350, damping: 28 }}
-              className="fixed top-0 right-0 h-full w-[85vw] max-w-[340px] bg-[#FFFFFF] border-l-4 border-[#0D0D0D] p-5 sm:p-6 flex flex-col justify-between z-50 md:hidden shadow-brutalist-lg select-none"
-            >
-              <div className="flex justify-between items-center pb-4 border-b-3 border-[#0D0D0D]">
-                <span className="font-mono text-xs font-bold tracking-widest text-[#2B4EFF] uppercase">
-                  NAV_MENU
-                </span>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  className="w-11 h-11 min-w-[44px] min-h-[44px] flex items-center justify-center border-3 border-[#0D0D0D] bg-[#0D0D0D] text-[#FFFFFF]"
+          <motion.div
+            key="drawer"
+            initial={{ clipPath: "circle(0% at calc(100% - 44px) 44px)" }}
+            animate={{ clipPath: "circle(150% at calc(100% - 44px) 44px)" }}
+            exit={{ clipPath: "circle(0% at calc(100% - 44px) 44px)" }}
+            transition={{ duration: 0.55, ease: [0.76, 0, 0.24, 1] }}
+            className="fixed inset-0 z-[999] bg-[#0D0D0D] text-[#FFFFFF] board-dots-ink flex flex-col justify-end p-5 pb-8 lg:hidden"
+          >
+            <ul className="flex flex-col gap-3">
+              {LINKS.map((link, idx) => (
+                <motion.li
+                  key={link.id}
+                  initial={{ opacity: 0, x: 40, rotate: 4 }}
+                  animate={{ opacity: 1, x: 0, rotate: idx % 2 ? 1 : -1 }}
+                  transition={{ delay: 0.15 + idx * 0.05, type: "spring", stiffness: 300, damping: 20 }}
                 >
-                  <X className="w-6 h-6 stroke-[3]" />
-                </button>
-              </div>
-
-              <div className="flex flex-col gap-4 sm:gap-5 my-auto py-6">
-                {stickerLinks.map((link, idx) => (
-                  <motion.a
-                    key={link.name}
-                    href={link.href}
+                  <a
+                    href={`#${link.id}`}
                     onClick={() => setIsOpen(false)}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.06 }}
-                    style={{ transform: `rotate(${link.rotate})` }}
-                    whileHover={{ rotate: 0 }}
-                    whileTap={{ scale: 0.96 }}
-                    className={`flex items-center justify-between p-3.5 sm:p-4 border-3 border-[#0D0D0D] text-base sm:text-lg font-mono font-extrabold shadow-brutalist min-h-[48px] ${link.bg} ${link.text}`}
+                    className={`flex items-center justify-between px-4 py-3 border-3 font-display font-extrabold text-3xl sm:text-4xl uppercase tracking-tight ${
+                      idx % 2 ? "bg-[#FFFFFF] text-[#0D0D0D] border-[#0D0D0D] shadow-brutalist-blueprint" : "bg-[#0D0D0D] text-[#FFFFFF] border-[#FFFFFF] shadow-brutalist-blueprint"
+                    }`}
                   >
-                    <span>{link.name}</span>
-                    <ArrowUpRight className="w-6 h-6 stroke-[3] text-[#2B4EFF]" />
-                  </motion.a>
-                ))}
-              </div>
-
-              <div className="pt-4 border-t-3 border-[#0D0D0D] font-mono text-[11px] sm:text-xs font-bold">
-                <span className="block text-[#0D0D0D] uppercase break-all">CONTACT: <span className="text-[#2B4EFF]">{portfolioData.email}</span></span>
-              </div>
-            </motion.div>
-          </>
+                    <span>
+                      <span className="font-mono text-sm text-[#2B4EFF] mr-3 align-middle">{link.index}</span>
+                      {link.label}
+                    </span>
+                    <ArrowUpRight className="w-7 h-7 stroke-[3] text-[#2B4EFF]" />
+                  </a>
+                </motion.li>
+              ))}
+            </ul>
+            <p className="mt-8 pt-4 border-t-3 border-[#FFFFFF] font-mono text-xs font-bold uppercase break-all">
+              {portfolioData.email}
+            </p>
+          </motion.div>
         )}
       </AnimatePresence>
     </>

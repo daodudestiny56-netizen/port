@@ -24,6 +24,16 @@ export interface Stat {
   suffix?: string;
 }
 
+export interface ToolGroup {
+  group: string;
+  items: { name: string; note: string }[];
+}
+
+export interface Principle {
+  title: string;
+  body: string;
+}
+
 export interface PortfolioData {
   name: string;
   role: string;
@@ -37,7 +47,8 @@ export interface PortfolioData {
   };
   featuredProject: Project;
   projects: Project[];
-  toolkit: { name: string; category: string }[];
+  toolkit: ToolGroup[];
+  principles: Principle[];
   stats: Stat[];
 }
 
@@ -259,17 +270,62 @@ export function useBatchTickScheduler(onBatchRender: (ticks: MarketTick[]) => vo
     },
   ],
   toolkit: [
-    { name: "Next.js", category: "Framework" },
-    { name: "React", category: "Library" },
-    { name: "TypeScript", category: "Language" },
-    { name: "Node.js", category: "Backend" },
-    { name: "TailwindCSS", category: "Styling" },
-    { name: "Framer Motion", category: "Animation" },
-    { name: "GSAP", category: "Animation" },
-    { name: "WebGL", category: "Graphics" },
+    {
+      group: "LANGUAGES & FRAMEWORKS",
+      items: [
+        { name: "TypeScript", note: "Primary language across my projects" },
+        { name: "React", note: "Component architecture & state design" },
+        { name: "Next.js", note: "App Router, SSR / SSG, middleware" },
+        { name: "Node.js", note: "APIs, server logic & tooling" },
+      ],
+    },
+    {
+      group: "REAL-TIME & PLATFORM",
+      items: [
+        { name: "WebSockets", note: "Live sync for streaming interfaces" },
+        { name: "Service Workers", note: "Offline-first caching strategies" },
+        { name: "Web Audio API", note: "Background audio processing" },
+        { name: "Web Crypto", note: "AES-GCM encrypted client storage" },
+      ],
+    },
+    {
+      group: "INTERFACE & MOTION",
+      items: [
+        { name: "Three.js", note: "3D scenes — including this site" },
+        { name: "Framer Motion", note: "Springs, gestures & scroll motion" },
+        { name: "GSAP", note: "Timeline-driven animation" },
+        { name: "Tailwind CSS", note: "Token-based design systems" },
+      ],
+    },
+  ],
+  principles: [
+    {
+      title: "ARCHITECTURE FIRST",
+      body: "Clear boundaries and boring, proven patterns beat clever code. I design data flow before I design screens.",
+    },
+    {
+      title: "MEASURE, THEN OPTIMISE",
+      body: "Performance work starts with a profiler, not a hunch. Frame budgets, bundle sizes and network waterfalls guide every change.",
+    },
+    {
+      title: "TYPES ARE CONTRACTS",
+      body: "Strict types document intent and catch whole classes of bugs before they reach users or reviewers.",
+    },
+    {
+      title: "RESILIENT BY DEFAULT",
+      body: "Slow networks, dropped connections and offline users are the normal case. I build for them from day one.",
+    },
+    {
+      title: "ACCESSIBLE ALWAYS",
+      body: "Keyboard paths, focus states, reduced motion and contrast are requirements — not polish for later.",
+    },
+    {
+      title: "SHIP SMALL, SHIP OFTEN",
+      body: "Small, reviewable changes keep momentum high and risk low. Leave every file cleaner than I found it.",
+    },
   ],
   stats: [
-    { value: 2, label: "YEARS EXPERIENCE" },
+    { value: 3, label: "YEARS EXPERIENCE" },
     { value: 6, label: "FEATURED PROJECTS" },
     { value: 100, label: "STRICT TYPESCRIPT", suffix: "%" },
     { value: 60, label: "TARGET FPS RENDER", suffix: " FPS" },

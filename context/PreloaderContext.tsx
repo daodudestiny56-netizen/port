@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 interface PreloaderContextType {
   isLoaded: boolean;
@@ -8,15 +8,15 @@ interface PreloaderContextType {
 }
 
 const PreloaderContext = createContext<PreloaderContextType>({
-  isLoaded: false,
+  isLoaded: true,
   setIsLoaded: () => {},
 });
 
 export const PreloaderProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isLoaded, setIsLoaded] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   return (
-    <PreloaderContext.Provider value={{ isLoaded, setIsLoaded: () => {} }}>
+    <PreloaderContext.Provider value={{ isLoaded, setIsLoaded }}>
       {children}
     </PreloaderContext.Provider>
   );

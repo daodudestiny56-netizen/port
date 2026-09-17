@@ -1,34 +1,47 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import { Mail, MessageCircle, Send, Check } from "lucide-react";
+import { ArrowUp, ArrowUpRight, Check, Copy, Mail, MessageCircle, Send } from "lucide-react";
 import { portfolioData } from "@/lib/data";
+import HangingCard from "@/components/ui/HangingCard";
+import ScrollZoomText from "@/components/ui/ScrollZoomText";
+
+const BrutalistScene = dynamic(() => import("@/components/three/BrutalistScene"), { ssr: false });
 
 const GithubIcon = () => (
-  <svg className="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
+  <svg className="w-5 h-5 fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
     <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
   </svg>
 );
 
 const LinkedinIcon = () => (
-  <svg className="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
+  <svg className="w-5 h-5 fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
     <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
   </svg>
 );
 
 const XIcon = () => (
-  <svg className="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
+  <svg className="w-5 h-5 fill-current shrink-0" viewBox="0 0 24 24" aria-hidden="true">
     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
   </svg>
 );
 
+const MailIcon = () => <Mail className="w-5 h-5 shrink-0" />;
+const WhatsappIcon = () => <MessageCircle className="w-5 h-5 shrink-0" />;
+
+type Status = "idle" | "sending" | "sent" | "fallback";
+
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
+  const [copied, setCopied] = useState(false);
+  const hudRef = useRef<HTMLSpanElement>(null);
+
+  const mailtoHref = `mailto:${portfolioData.email}?subject=${encodeURIComponent(`Portfolio Inquiry from ${email}`)}&body=${encodeURIComponent(message)}`;
 
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,165 +55,217 @@ export default function Footer() {
     }
 
     setError("");
-    setLoading(true);
+    setStatus("sending");
 
     try {
-      // Direct Web3Forms submission to daodudestiny56@gmail.com
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           access_key: "c381c850-8433-4f9e-a89c-e740d9cb5ed9",
-          email: email,
-          message: message,
+          email,
+          message,
           subject: `Portfolio Inquiry from ${email}`,
           to_email: portfolioData.email,
         }),
       });
+      if (!res.ok) throw new Error(`Request failed: ${res.status}`);
 
-      if (!res.ok) {
-        window.location.href = `mailto:${portfolioData.email}?subject=Portfolio%20Inquiry%20from%20${encodeURIComponent(email)}&body=${encodeURIComponent(message)}`;
-      }
+      setStatus("sent");
+      setTimeout(() => {
+        setStatus("idle");
+        setEmail("");
+        setMessage("");
+      }, 5000);
     } catch {
-      window.location.href = `mailto:${portfolioData.email}?subject=Portfolio%20Inquiry%20from%20${encodeURIComponent(email)}&body=${encodeURIComponent(message)}`;
+      // Delivery failed — hand off to the visitor's mail client instead of claiming success.
+      setStatus("fallback");
+      window.location.href = mailtoHref;
     }
-
-    setLoading(false);
-    setSent(true);
-    setTimeout(() => {
-      setSent(false);
-      setEmail("");
-      setMessage("");
-    }, 5000);
   };
 
-  const socialChips = [
-    { name: "EMAIL", href: `mailto:${portfolioData.email}`, icon: Mail, bg: "bg-[#0D0D0D]", text: "text-[#FFFFFF]" },
-    { name: "GITHUB", href: portfolioData.socials.github, icon: GithubIcon, bg: "bg-[#FFFFFF]", text: "text-[#0D0D0D]" },
-    { name: "LINKEDIN", href: portfolioData.socials.linkedin, icon: LinkedinIcon, bg: "bg-[#0D0D0D]", text: "text-[#FFFFFF]" },
-    { name: "TWITTER / X", href: portfolioData.socials.twitter, icon: XIcon, bg: "bg-[#FFFFFF]", text: "text-[#0D0D0D]" },
-    { name: "WHATSAPP", href: portfolioData.socials.whatsapp || "#", icon: MessageCircle, bg: "bg-[#0D0D0D]", text: "text-[#FFFFFF]" },
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(portfolioData.email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      window.location.href = `mailto:${portfolioData.email}`;
+    }
+  };
+
+  const channels = [
+    { name: "GITHUB", handle: "daodudestiny56-netizen", href: portfolioData.socials.github, icon: GithubIcon },
+    { name: "LINKEDIN", handle: "daodu-destiny", href: portfolioData.socials.linkedin, icon: LinkedinIcon },
+    { name: "X / TWITTER", handle: "@DaYouNGdeboss", href: portfolioData.socials.twitter, icon: XIcon },
+    ...(portfolioData.socials.whatsapp
+      ? [{ name: "WHATSAPP", handle: "Direct message", href: portfolioData.socials.whatsapp, icon: WhatsappIcon }]
+      : []),
+    { name: "EMAIL", handle: portfolioData.email, href: `mailto:${portfolioData.email}`, icon: MailIcon },
   ];
 
   return (
-    <footer id="contact" className="w-full px-4 sm:px-6 md:px-10 py-16 bg-[#FFFFFF] text-[#0D0D0D]">
-      {/* Section Header */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-12 pb-4 border-b-4 border-[#0D0D0D]">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] text-xs font-mono font-bold uppercase shadow-brutalist-sm mb-3">
-            <Mail className="w-3.5 h-3.5 text-[#2B4EFF]" />
-            <span>DIRECT CONTACT <span className="text-[#2B4EFF]">{"//"}</span> QUICK LINKS</span>
-          </div>
-          <h2 className="font-display font-extrabold text-3xl sm:text-5xl uppercase tracking-tight text-[#0D0D0D]">
-            GET IN TOUCH
-          </h2>
-        </div>
-
-        <span className="font-mono text-xs font-bold text-[#FFFFFF] uppercase bg-[#0D0D0D] px-3 py-1 border-2 border-[#0D0D0D]">
-          REPLY TIME: <span className="text-[#2B4EFF]">WITHIN 24 HOURS</span>
-        </span>
+    <footer id="contact" className="relative w-full bg-[#0D0D0D] text-[#FFFFFF] board-dots-ink overflow-hidden">
+      <div className="pt-16">
+        <ScrollZoomText text="LET'S BUILD" direction="in" className="text-[#FFFFFF]" />
+        <ScrollZoomText text="SOMETHING THAT LASTS" direction="in" className="text-outline-blue" sizeClass="text-[clamp(2.2rem,8vw,7.5rem)] tracking-wider" />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 w-full">
-        {/* Left Column: Direct Links */}
-        <div className="lg:col-span-6 flex flex-col gap-6">
-          <p className="font-sans text-base font-bold text-[#0D0D0D] leading-relaxed">
-            Looking for a software engineer or have a project in mind? Connect with me directly on any channel below:
-          </p>
-
-          {/* Social Links Chips Grid */}
-          <div className="flex flex-wrap gap-3 sm:gap-4 w-full">
-            {socialChips.map((chip) => {
-              const Icon = chip.icon;
-              return (
-                <motion.a
-                  key={chip.name}
-                  href={chip.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ x: -2, y: -2 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                  className={`px-4 sm:px-5 py-3 border-3 border-[#0D0D0D] shadow-brutalist hover:shadow-brutalist-blueprint flex items-center gap-2.5 font-mono text-xs font-extrabold uppercase shrink-0 transition-all duration-200 ${chip.bg} ${chip.text}`}
-                  data-cursor="hover"
-                >
-                  <Icon />
-                  <span>{chip.name}</span>
-                </motion.a>
-              );
-            })}
-          </div>
-
-          <div className="p-4 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] shadow-brutalist font-mono text-xs font-bold uppercase">
-            <span>MY EMAIL: <span className="text-[#2B4EFF]">{portfolioData.email}</span></span>
-          </div>
+      <div className="px-4 sm:px-6 md:px-10 pt-16 pb-10">
+        <div className="flex flex-wrap items-center gap-3 mb-16 font-mono text-xs font-extrabold uppercase tracking-widest">
+          <span className="px-2 py-1 bg-[#2B4EFF] border-2 border-[#FFFFFF]">05</span>
+          <span className="h-[3px] w-10 bg-[#FFFFFF]" />
+          <span>CONTACT</span>
+          <span className="ml-auto px-3 py-1.5 bg-[#FFFFFF] text-[#0D0D0D] border-3 border-[#FFFFFF] shadow-brutalist-blueprint">
+            I USUALLY REPLY WITHIN <span className="text-[#2B4EFF]">24 HOURS</span>
+          </span>
         </div>
 
-        {/* Right Column: Direct Email Dispatch Form */}
-        <div className="lg:col-span-6 border-4 border-[#0D0D0D] bg-[#FFFFFF] p-6 sm:p-8 shadow-brutalist-lg">
-          <h3 className="font-mono text-xs font-extrabold uppercase text-[#0D0D0D] mb-4 pb-2 border-b-3 border-[#0D0D0D] flex items-center justify-between">
-            <span>SEND A QUICK MESSAGE</span>
-            <span className="text-[#2B4EFF]">#MESSAGE</span>
-          </h3>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-12">
+          {/* Form, clipped to the board */}
+          <div className="lg:col-span-7">
+            <HangingCard attachment="clips" attachmentColor="blue" tone="ink" tilt={-0.6} swayAngle={0.5} swayDuration={7}>
+              <div className="bg-[#FFFFFF] text-[#0D0D0D] border-3 border-[#0D0D0D] shadow-[12px_12px_0_#2B4EFF] p-6 sm:p-10">
+                <div className="flex items-center justify-between pb-3 mb-6 border-b-3 border-[#0D0D0D] font-mono text-xs font-extrabold uppercase tracking-widest">
+                  <span>NEW MESSAGE</span>
+                  <span className="text-[#2B4EFF]">TO: {portfolioData.email}</span>
+                </div>
 
-          <form onSubmit={handleSend} className="flex flex-col gap-4">
-            <div>
-              <label className="block font-mono text-[11px] font-bold uppercase mb-1 text-[#0D0D0D]">
-                YOUR EMAIL ADDRESS
-              </label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@company.com"
-                className="w-full px-4 py-3 bg-[#FFFFFF] border-3 border-[#0D0D0D] font-mono text-xs text-[#0D0D0D] font-bold focus:bg-[#0D0D0D] focus:text-[#FFFFFF] focus:outline-none transition-colors"
-              />
-            </div>
+                <h3 className="font-display font-extrabold text-3xl sm:text-5xl uppercase leading-[0.9] tracking-tight mb-8">
+                  Have a role or a project in mind?
+                </h3>
 
-            <div>
-              <label className="block font-mono text-[11px] font-bold uppercase mb-1 text-[#0D0D0D]">
-                YOUR MESSAGE OR PROJECT DETAILS
-              </label>
-              <textarea
-                rows={3}
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="Hi Destiny, I would like to talk about a project..."
-                className="w-full px-4 py-3 bg-[#FFFFFF] border-3 border-[#0D0D0D] font-mono text-xs text-[#0D0D0D] font-bold focus:bg-[#0D0D0D] focus:text-[#FFFFFF] focus:outline-none transition-colors"
-              />
-            </div>
+                <form onSubmit={handleSend} className="flex flex-col gap-5" noValidate>
+                  <div>
+                    <label htmlFor="contact-email" className="block font-mono text-[11px] font-extrabold uppercase mb-1.5">
+                      Your email
+                    </label>
+                    <input
+                      id="contact-email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="you@company.com"
+                      className="w-full px-4 py-3.5 bg-[#FFFFFF] border-3 border-[#0D0D0D] font-mono text-sm font-bold text-[#0D0D0D] placeholder:text-[#0D0D0D]/40 focus:bg-[#0D0D0D] focus:text-[#FFFFFF] focus:shadow-brutalist-blueprint focus:outline-none transition-all"
+                    />
+                  </div>
 
-            {error && (
-              <span className="font-mono text-xs font-bold text-red-600 bg-red-100 p-2 border-2 border-red-600">
-                {error}
-              </span>
-            )}
+                  <div>
+                    <label htmlFor="contact-message" className="block font-mono text-[11px] font-extrabold uppercase mb-1.5">
+                      Role, project or idea
+                    </label>
+                    <textarea
+                      id="contact-message"
+                      rows={5}
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      placeholder="Hi Destiny, we're hiring for..."
+                      className="w-full px-4 py-3.5 bg-[#FFFFFF] border-3 border-[#0D0D0D] font-mono text-sm font-bold text-[#0D0D0D] placeholder:text-[#0D0D0D]/40 focus:bg-[#0D0D0D] focus:text-[#FFFFFF] focus:shadow-brutalist-blueprint focus:outline-none transition-all resize-y"
+                    />
+                  </div>
 
-            {sent ? (
-              <div className="p-3 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] font-mono text-xs font-extrabold flex items-center gap-2">
-                <Check className="w-4 h-4 stroke-[3] text-[#2B4EFF]" />
-                <span>MESSAGE SENT DIRECTLY TO {portfolioData.email.toUpperCase()}!</span>
+                  {error && (
+                    <p role="alert" className="font-mono text-xs font-bold text-[#FFFFFF] bg-[#D92D20] p-2.5 border-3 border-[#0D0D0D]">
+                      {error}
+                    </p>
+                  )}
+
+                  {status === "sent" ? (
+                    <p role="status" className="p-4 bg-[#2B4EFF] text-[#FFFFFF] border-3 border-[#0D0D0D] font-mono text-xs font-extrabold uppercase flex items-center gap-2">
+                      <Check className="w-5 h-5 stroke-[3]" /> Message delivered. I&apos;ll be in touch soon.
+                    </p>
+                  ) : status === "fallback" ? (
+                    <p role="status" className="p-4 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] font-mono text-xs font-bold uppercase leading-relaxed">
+                      Couldn&apos;t send from here — your email app should open with the message ready.{" "}
+                      <a href={mailtoHref} className="text-[#2B4EFF] underline">
+                        Open it manually
+                      </a>
+                    </p>
+                  ) : (
+                    <motion.button
+                      type="submit"
+                      disabled={status === "sending"}
+                      whileHover={{ x: -3, y: -3 }}
+                      whileTap={{ scale: 0.97, x: 3, y: 3 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                      className="min-h-[56px] px-6 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] shadow-brutalist-blueprint-lg font-mono text-sm font-extrabold uppercase flex items-center justify-center gap-3 disabled:opacity-70"
+                      data-cursor="hover"
+                    >
+                      {status === "sending" ? "SENDING…" : "SEND MESSAGE"}
+                      <Send className="w-5 h-5 stroke-[3] text-[#2B4EFF]" />
+                    </motion.button>
+                  )}
+                </form>
               </div>
-            ) : (
-              <motion.button
-                type="submit"
-                disabled={loading}
-                whileHover={{ x: -2, y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                className="px-6 py-3.5 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] shadow-brutalist hover:shadow-brutalist-blueprint font-mono text-xs font-extrabold uppercase flex items-center justify-center gap-2 min-h-[44px] transition-all duration-200"
-                data-cursor="hover"
-              >
-                <span>{loading ? "SENDING..." : "SEND MESSAGE"}</span>
-                <Send className="w-4 h-4 stroke-[3] text-[#2B4EFF]" />
-              </motion.button>
-            )}
-          </form>
-        </div>
-      </div>
+            </HangingCard>
+          </div>
 
-      {/* Footer Bottom Stamp */}
-      <div className="mt-16 pt-6 border-t-4 border-[#0D0D0D] flex flex-col sm:flex-row justify-between items-center gap-4 font-mono text-xs font-bold uppercase text-[#0D0D0D]">
-        <span>© {new Date().getFullYear()} DAODU DESTINY OLUWATOBILOBA. ALL RIGHTS RESERVED.</span>
+          {/* Channels + 3D knot */}
+          <div className="lg:col-span-5 flex flex-col gap-8">
+            <div className="relative border-3 border-[#FFFFFF] bg-[#0D0D0D]">
+              <div className="flex items-center justify-between px-3 py-2 bg-[#FFFFFF] text-[#0D0D0D] font-mono text-[10px] font-extrabold uppercase">
+                <span>
+                  knot.tsx <span className="text-[#2B4EFF]">— drag me</span>
+                </span>
+                <span ref={hudRef} className="tabular-nums opacity-60">-- FPS</span>
+              </div>
+              <div className="relative h-56 sm:h-64">
+                <BrutalistScene variant="knot" hudRef={hudRef} />
+              </div>
+            </div>
+
+            <button
+              onClick={copyEmail}
+              className="group flex items-center justify-between gap-3 px-4 py-4 bg-[#2B4EFF] text-[#FFFFFF] border-3 border-[#FFFFFF] shadow-[6px_6px_0_#FFFFFF] hover:shadow-[10px_10px_0_#FFFFFF] hover:-translate-x-1 hover:-translate-y-1 transition-all text-left"
+              data-cursor="hover"
+            >
+              <span className="min-w-0">
+                <span className="block font-mono text-[10px] font-extrabold uppercase tracking-widest">{copied ? "COPIED TO CLIPBOARD" : "COPY EMAIL"}</span>
+                <span className="block font-display font-extrabold text-lg sm:text-2xl truncate">{portfolioData.email}</span>
+              </span>
+              {copied ? <Check className="w-6 h-6 stroke-[3] shrink-0" /> : <Copy className="w-6 h-6 stroke-[3] shrink-0" />}
+            </button>
+
+            <ul className="border-3 border-[#FFFFFF]">
+              {channels.map((c) => {
+                const Icon = c.icon;
+                return (
+                  <li key={c.name} className="border-b-3 last:border-b-0 border-[#FFFFFF]">
+                    <a
+                      href={c.href}
+                      target={c.href.startsWith("mailto:") ? undefined : "_blank"}
+                      rel="noopener noreferrer"
+                      className="group relative flex items-center gap-4 px-4 py-4 overflow-hidden"
+                      data-cursor="hover"
+                    >
+                      <span className="absolute inset-0 bg-[#FFFFFF] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
+                      <span className="relative flex items-center gap-4 min-w-0 flex-1 group-hover:text-[#0D0D0D] transition-colors">
+                        <Icon />
+                        <span className="min-w-0">
+                          <span className="block font-display font-extrabold text-lg uppercase leading-none">{c.name}</span>
+                          <span className="block font-mono text-[11px] font-bold opacity-70 truncate">{c.handle}</span>
+                        </span>
+                      </span>
+                      <ArrowUpRight className="relative w-6 h-6 stroke-[3] text-[#2B4EFF] group-hover:rotate-45 transition-transform" />
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-24 pt-6 border-t-4 border-[#FFFFFF] flex flex-col md:flex-row justify-between items-start md:items-center gap-4 font-mono text-[11px] sm:text-xs font-bold uppercase">
+          <span>© {new Date().getFullYear()} Daodu Destiny Oluwatobiloba</span>
+          <span className="opacity-70">Built with Next.js, Three.js &amp; Framer Motion</span>
+          <a
+            href="#hero"
+            className="flex items-center gap-2 px-3 py-2 bg-[#FFFFFF] text-[#0D0D0D] border-3 border-[#FFFFFF] hover:bg-[#2B4EFF] hover:text-[#FFFFFF] transition-colors"
+            data-cursor="hover"
+          >
+            BACK TO TOP <ArrowUp className="w-4 h-4 stroke-[3]" />
+          </a>
+        </div>
       </div>
     </footer>
   );

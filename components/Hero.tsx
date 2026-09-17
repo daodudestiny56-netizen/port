@@ -1,113 +1,228 @@
 "use client";
 
-import { motion } from "framer-motion";
-import Navbar from "@/components/Navbar";
-import ProfessionalPortrait from "@/components/ProfessionalPortrait";
-import { ArrowDownRight, ArrowUpRight } from "lucide-react";
+import { useRef } from "react";
+import dynamic from "next/dynamic";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ArrowDownRight, ArrowUpRight, Move3d } from "lucide-react";
 import { portfolioData } from "@/lib/data";
+import { usePreloader } from "@/context/PreloaderContext";
+import HangingCard from "@/components/ui/HangingCard";
+import IdBadge from "@/components/IdBadge";
 
-interface HeroProps {
-  currentTheme?: "bone" | "ink";
+const BrutalistScene = dynamic(() => import("@/components/three/BrutalistScene"), { ssr: false });
+
+const HEADLINE: { word: string; accent?: boolean }[] = [
+  { word: "ENGINEERING" },
+  { word: "SOFTWARE", accent: true },
+  { word: "THAT" },
+  { word: "SCALES," },
+  { word: "SHIPS" },
+  { word: "&" },
+  { word: "LASTS." },
+];
+
+function RotatingSticker() {
+  const text = "OPEN TO ROLES • REMOTE FRIENDLY • ";
+  return (
+    <div className="relative w-28 h-28 sm:w-32 sm:h-32">
+      <svg viewBox="0 0 200 200" className="absolute inset-0 w-full h-full animate-spin-slow" aria-hidden="true">
+        <defs>
+          <path id="sticker-circle" d="M100 100 m-74 0 a74 74 0 1 1 148 0 a74 74 0 1 1 -148 0" />
+        </defs>
+        <circle cx="100" cy="100" r="98" fill="#2B4EFF" stroke="#0D0D0D" strokeWidth="4" />
+        <text fontFamily="JetBrains Mono, monospace" fontWeight="800" fontSize="19" fill="#FFFFFF" letterSpacing="2">
+          <textPath href="#sticker-circle">{text + text}</textPath>
+        </text>
+      </svg>
+      <div className="absolute inset-0 grid place-items-center">
+        <span className="grid place-items-center w-12 h-12 bg-[#FFFFFF] border-3 border-[#0D0D0D] font-display font-extrabold text-lg text-[#0D0D0D]">
+          {portfolioData.stats[0].value}Y
+        </span>
+      </div>
+    </div>
+  );
 }
 
-export default function Hero({ currentTheme = "bone" }: HeroProps) {
+export default function Hero() {
+  const { isLoaded } = usePreloader();
+  const sectionRef = useRef<HTMLElement>(null);
+  const hudRef = useRef<HTMLSpanElement>(null);
+
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
+  const contentScale = useTransform(scrollYProgress, [0, 1], [1, 0.82]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const sceneScale = useTransform(scrollYProgress, [0, 1], [1, 1.25]);
+
+  const state = isLoaded ? "show" : "hidden";
+
   return (
-    <section className="relative w-full min-h-[100dvh] flex flex-col justify-between p-3 sm:p-6 md:p-10 select-none grid-border-bottom overflow-hidden bg-[#FFFFFF] text-[#0D0D0D]">
-      {/* Sticker Navigation Header */}
-      <Navbar currentTheme={currentTheme} />
-
-      {/* Main Hero Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 md:gap-12 items-center my-auto py-6 sm:py-8 w-full max-w-full">
-        {/* Left Column: Big Headline & Positioning */}
-        <div className="lg:col-span-7 flex flex-col items-start gap-4 sm:gap-6 w-full max-w-full">
-          {/* Tagline Badges */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
-            className="flex flex-wrap items-center gap-2 px-3 py-1.5 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] text-[10px] sm:text-xs font-mono font-bold uppercase shadow-brutalist-sm max-w-full"
-          >
-            <span>SOFTWARE ARCHITECTURE</span>
-            <span className="hidden xs:inline text-[#2B4EFF]">{"//"}</span>
-            <span>FULL-STACK CAPABLE</span>
-          </motion.div>
-
-          {/* Headline */}
-          <motion.h1
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: "easeOut", delay: 0.2 }}
-            className="font-display font-extrabold text-[clamp(2rem,6.5vw,5.5rem)] leading-[0.94] text-[#0D0D0D] tracking-tight uppercase break-words w-full"
-          >
-            ENGINEERING HIGH-PERFORMANCE WEB APPLICATIONS & SCALABLE SYSTEMS
-          </motion.h1>
-
-          {/* Positioning Statement */}
-          <motion.p
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: "easeOut", delay: 0.3 }}
-            className="font-mono text-xs sm:text-sm md:text-base font-bold text-[#FFFFFF] leading-relaxed w-full max-w-2xl bg-[#0D0D0D] p-3 sm:p-4 border-3 border-[#0D0D0D] shadow-brutalist"
-          >
-            <span className="text-[#2B4EFF]">DAODU DESTINY</span> — Software Engineer. I build robust, high-performance web applications, scalable systems, and interactive digital products with modern technologies.
-          </motion.p>
-
-          {/* Action CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: "easeOut", delay: 0.4 }}
-            className="flex flex-col sm:flex-row w-full sm:w-auto gap-3 sm:gap-4 pt-2"
-          >
-            {/* Primary CTA */}
-            <motion.a
-              href="#work"
-              whileHover={{ x: -2, y: -2 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 450, damping: 25 }}
-              className="w-full sm:w-auto min-h-[44px] px-5 sm:px-6 py-3 bg-[#0D0D0D] text-[#FFFFFF] font-mono text-xs sm:text-sm font-extrabold uppercase border-3 border-[#0D0D0D] shadow-brutalist-lg hover:shadow-brutalist-blueprint-lg flex items-center justify-center gap-2.5 transition-all duration-200"
-              data-cursor="hover"
-            >
-              <span>VIEW MY WORK</span>
-              <ArrowDownRight className="w-5 h-5 stroke-[3] text-[#2B4EFF] shrink-0" />
-            </motion.a>
-
-            {/* Secondary CTA */}
-            <motion.a
-              href={portfolioData.socials.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ x: -2, y: -2 }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 450, damping: 25 }}
-              className="w-full sm:w-auto min-h-[44px] px-5 sm:px-6 py-3 bg-[#FFFFFF] text-[#0D0D0D] font-mono text-xs sm:text-sm font-extrabold uppercase border-3 border-[#0D0D0D] shadow-brutalist-lg hover:shadow-brutalist-blueprint-lg flex items-center justify-center gap-2.5 transition-all duration-200"
-              data-cursor="hover"
-            >
-              <span>GITHUB REPOSITORY</span>
-              <ArrowUpRight className="w-5 h-5 stroke-[3] text-[#2B4EFF] shrink-0" />
-            </motion.a>
-          </motion.div>
-        </div>
-
-        {/* Right Column: Professional Portrait Photo Card */}
-        <div className="lg:col-span-5 w-full flex items-center justify-center max-w-full overflow-hidden">
-          <ProfessionalPortrait imageSrc="/images/portrait.jpg" />
-        </div>
-      </div>
-
-      {/* Footer Spec Bar */}
+    <section
+      id="hero"
+      ref={sectionRef}
+      className="relative w-full min-h-[100svh] overflow-hidden bg-[#FFFFFF] text-[#0D0D0D] board-grid-bone"
+    >
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.4, delay: 0.5 }}
-        className="w-full flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2 pt-4 border-t-3 border-[#0D0D0D] font-mono text-[10px] sm:text-xs font-bold uppercase"
+        style={{ scale: contentScale, y: contentY }}
+        className="relative flex flex-col min-h-[100svh] px-4 sm:px-6 md:px-10 pt-28 sm:pt-32 pb-6 origin-top"
       >
-        <span className="bg-[#FFFFFF] text-[#0D0D0D] px-2.5 py-1 border-2 border-[#0D0D0D] text-center sm:text-left">
-          WORK MODE: <span className="text-[#2B4EFF]">REMOTE AVAILABLE</span>
-        </span>
-        <span className="bg-[#0D0D0D] text-[#FFFFFF] px-2.5 py-1 border-2 border-[#0D0D0D] text-center sm:text-right">
-          STATUS: <span className="text-[#2B4EFF]">OPEN TO SOFTWARE ROLES</span>
-        </span>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center my-auto w-full">
+          {/* Left: headline */}
+          <div className="lg:col-span-7 flex flex-col items-start gap-6 min-w-0">
+            <motion.div
+              initial="hidden"
+              animate={state}
+              variants={{ hidden: { opacity: 0, x: -30 }, show: { opacity: 1, x: 0 } }}
+              transition={{ duration: 0.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-wrap items-center gap-2 font-mono text-[11px] sm:text-xs font-extrabold uppercase"
+            >
+              <span className="px-2.5 py-1.5 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D]">
+                SOFTWARE ENGINEER
+              </span>
+              <span className="px-2.5 py-1.5 bg-[#FFFFFF] border-3 border-[#0D0D0D] shadow-brutalist-sm">
+                <span className="text-[#2B4EFF]">{portfolioData.stats[0].value}+ YRS</span> SHIPPING PRODUCTION CODE
+              </span>
+            </motion.div>
+
+            <h1 className="font-display font-extrabold uppercase tracking-tight leading-[0.9] text-[clamp(2.7rem,7.4vw,7rem)]">
+              {HEADLINE.map(({ word, accent }, i) => (
+                <span key={i} className="inline-block overflow-hidden align-bottom mr-[0.2em] pb-[0.06em] pt-[0.04em]">
+                  <motion.span
+                    className={`inline-block ${
+                      accent ? "bg-[#2B4EFF] text-[#FFFFFF] px-[0.12em] border-[0.05em] border-[#0D0D0D] shadow-[0.07em_0.07em_0_#0D0D0D]" : ""
+                    } ${word === "&" ? "text-outline-ink" : ""}`}
+                    initial="hidden"
+                    animate={state}
+                    variants={{
+                      hidden: { y: "110%", rotate: 6, scale: 1.3 },
+                      show: { y: "0%", rotate: accent ? -2 : 0, scale: 1 },
+                    }}
+                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.35 + i * 0.07 }}
+                  >
+                    {word}
+                  </motion.span>
+                </span>
+              ))}
+            </h1>
+
+            <motion.p
+              initial="hidden"
+              animate={state}
+              variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
+              transition={{ duration: 0.6, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
+              className="max-w-xl font-sans text-base sm:text-lg font-medium leading-relaxed border-l-[6px] border-[#2B4EFF] pl-4"
+            >
+              {`I'm Daodu Destiny — a software engineer with ${portfolioData.stats[0].value} years building production web applications, APIs and real-time interfaces. I design architecture that stays clean, fast and easy to change long after launch.`}
+            </motion.p>
+
+            <motion.div
+              initial="hidden"
+              animate={state}
+              variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
+              transition={{ duration: 0.6, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col sm:flex-row w-full sm:w-auto gap-3 sm:gap-4 pt-2"
+            >
+              <motion.a
+                href="#work"
+                whileHover={{ x: -3, y: -3 }}
+                whileTap={{ scale: 0.96, x: 3, y: 3 }}
+                transition={{ type: "spring", stiffness: 450, damping: 25 }}
+                className="min-h-[52px] px-6 bg-[#0D0D0D] text-[#FFFFFF] font-mono text-sm font-extrabold uppercase border-3 border-[#0D0D0D] shadow-brutalist-blueprint-lg flex items-center justify-center gap-3"
+                data-cursor="hover"
+              >
+                VIEW CASE STUDIES
+                <ArrowDownRight className="w-5 h-5 stroke-[3] text-[#2B4EFF]" />
+              </motion.a>
+              <motion.a
+                href={portfolioData.socials.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ x: -3, y: -3 }}
+                whileTap={{ scale: 0.96, x: 3, y: 3 }}
+                transition={{ type: "spring", stiffness: 450, damping: 25 }}
+                className="min-h-[52px] px-6 bg-[#FFFFFF] text-[#0D0D0D] font-mono text-sm font-extrabold uppercase border-3 border-[#0D0D0D] shadow-brutalist-lg flex items-center justify-center gap-3"
+                data-cursor="hover"
+              >
+                GITHUB
+                <ArrowUpRight className="w-5 h-5 stroke-[3] text-[#2B4EFF]" />
+              </motion.a>
+            </motion.div>
+          </div>
+
+          {/* Right: three.js window with the pinned ID badge */}
+          <motion.div
+            initial="hidden"
+            animate={state}
+            variants={{ hidden: { opacity: 0, scale: 0.6, rotate: 8 }, show: { opacity: 1, scale: 1, rotate: 0 } }}
+            transition={{ type: "spring", stiffness: 120, damping: 14, delay: 0.55 }}
+            className="lg:col-span-5 relative w-full max-w-[560px] mx-auto lg:mr-0"
+          >
+            <div className="absolute -bottom-12 -right-3 sm:-right-8 z-20">
+              <RotatingSticker />
+            </div>
+
+            <div className="relative bg-[#FFFFFF] border-3 border-[#0D0D0D] shadow-brutalist-lg">
+              <div className="flex items-center justify-between gap-2 px-3 py-2 bg-[#0D0D0D] text-[#FFFFFF] font-mono text-[10px] sm:text-[11px] font-extrabold uppercase">
+                <span className="flex items-center gap-2">
+                  <span className="flex gap-1">
+                    <span className="w-2.5 h-2.5 bg-[#2B4EFF]" />
+                    <span className="w-2.5 h-2.5 bg-[#FFFFFF]" />
+                    <span className="w-2.5 h-2.5 border border-[#FFFFFF]" />
+                  </span>
+                  scene.tsx <span className="text-[#2B4EFF]">— three.js</span>
+                </span>
+                <span ref={hudRef} className="tabular-nums text-[#FFFFFF]/70">-- FPS</span>
+              </div>
+              <div className="relative h-[360px] sm:h-[440px] lg:h-[480px] overflow-hidden">
+                <motion.div style={{ scale: sceneScale }} className="absolute inset-0 origin-center">
+                  <BrutalistScene variant="hero" hudRef={hudRef} />
+                </motion.div>
+                {/* Corner registration marks */}
+                {["top-2 left-2 border-t-3 border-l-3", "top-2 right-2 border-t-3 border-r-3", "bottom-2 left-2 border-b-3 border-l-3", "bottom-2 right-2 border-b-3 border-r-3"].map((c) => (
+                  <span key={c} aria-hidden="true" className={`pointer-events-none absolute w-4 h-4 border-[#2B4EFF] ${c}`} />
+                ))}
+              </div>
+              <div className="flex items-center justify-between px-3 py-2 border-t-3 border-[#0D0D0D] font-mono text-[10px] sm:text-[11px] font-extrabold uppercase">
+                <span className="hidden sm:inline text-[#2B4EFF]">WEBGL</span>
+                <span className="flex items-center gap-1.5 ml-auto pr-24 sm:pr-28">
+                  <Move3d className="w-4 h-4 text-[#2B4EFF]" /> DRAG TO SPIN
+                </span>
+              </div>
+            </div>
+
+            {/* Pinned access badge */}
+            <div className="relative -mt-24 ml-auto mr-2 w-fit lg:absolute lg:mt-0 lg:-left-12 lg:top-[50%] lg:mr-0 z-10">
+              <HangingCard attachment="clip" attachmentColor="blue" tilt={-4} swayAngle={2.2} swayDuration={4.5} delay={0.2}>
+                <IdBadge />
+              </HangingCard>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Spec bar */}
+        <motion.dl
+          initial="hidden"
+          animate={state}
+          variants={{ hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0 } }}
+          transition={{ duration: 0.6, delay: 1.15, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-14 grid grid-cols-2 md:grid-cols-4 border-3 border-[#0D0D0D] bg-[#FFFFFF] font-mono text-[10px] sm:text-xs font-extrabold uppercase shadow-brutalist"
+        >
+          {[
+            { k: "EXPERIENCE", v: `${String(portfolioData.stats[0].value).padStart(2, "0")} YEARS` },
+            { k: "FOCUS", v: "FULL-STACK WEB" },
+            { k: "CORE STACK", v: "TS / REACT / NODE" },
+            { k: "STATUS", v: "OPEN TO ROLES" },
+          ].map((item, i) => (
+            <div
+              key={item.k}
+              className={`px-3 sm:px-4 py-3 ${i % 2 === 0 ? "border-r-3" : "md:border-r-3"} ${i < 2 ? "border-b-3 md:border-b-0" : ""} last:border-r-0 border-[#0D0D0D] ${
+                i === 3 ? "bg-[#0D0D0D] text-[#FFFFFF]" : ""
+              }`}
+            >
+              <dt className="opacity-60">{item.k}</dt>
+              <dd className={`mt-0.5 ${i === 3 ? "text-[#2B4EFF]" : ""}`}>{item.v}</dd>
+            </div>
+          ))}
+        </motion.dl>
       </motion.div>
     </section>
   );

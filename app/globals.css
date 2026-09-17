@@ -20,7 +20,7 @@
     scroll-behavior: smooth;
     background-color: #FFFFFF;
     color: #0D0D0D;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   body {
@@ -28,7 +28,7 @@
     color: #0D0D0D;
     font-family: 'Space Grotesk', 'Inter', sans-serif;
     line-height: 1.6;
-    overflow-x: hidden;
+    overflow-x: clip;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -79,26 +79,83 @@
   background: #2B4EFF;
 }
 
-/* Hard Cut Instant Color Swap Utilities */
-.zone-bone {
-  background-color: #FFFFFF !important;
-  color: #0D0D0D !important;
-  transition: background-color 0ms, color 0ms !important;
-}
-
-.zone-ink {
-  background-color: #0D0D0D !important;
-  color: #FFFFFF !important;
-  transition: background-color 0ms, color 0ms !important;
-}
-
 /* Visible broadsheet grid lines */
 .grid-border-bottom {
   border-bottom: 3px solid currentColor;
 }
-.grid-border-right {
-  border-right: 3px solid currentColor;
+
+/* Outlined display type */
+.text-outline-ink {
+  color: transparent;
+  -webkit-text-stroke: 2px #0D0D0D;
 }
-.grid-border-all {
-  border: 3px solid currentColor;
+.text-outline-bone {
+  color: transparent;
+  -webkit-text-stroke: 2px #FFFFFF;
+}
+.text-outline-blue {
+  color: transparent;
+  -webkit-text-stroke: 2px #2B4EFF;
+}
+
+/* Pinboard dot grids */
+.board-dots-ink {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.14) 1.5px, transparent 1.5px);
+  background-size: 28px 28px;
+}
+.board-dots-bone {
+  background-image: radial-gradient(rgba(13, 13, 13, 0.14) 1.5px, transparent 1.5px);
+  background-size: 28px 28px;
+}
+.board-grid-bone {
+  background-image:
+    linear-gradient(rgba(13, 13, 13, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(13, 13, 13, 0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Hanging cards: idle pendulum sway from the pin point */
+@keyframes hang-sway {
+  0%, 100% { transform: rotate(calc(var(--sway-angle, 1.2deg) * -1)); }
+  50% { transform: rotate(var(--sway-angle, 1.2deg)); }
+}
+.hang-sway {
+  transform-origin: 50% 0%;
+  animation: hang-sway var(--sway-duration, 6s) ease-in-out infinite;
+}
+
+/* Tape marquees */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee var(--marquee-duration, 32s) linear infinite;
+}
+
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+  animation: spin-slow 18s linear infinite;
+}
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.animate-blink {
+  animation: blink 1.1s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .hang-sway,
+  .animate-marquee,
+  .animate-spin-slow,
+  .animate-blink {
+    animation: none !important;
+  }
 }

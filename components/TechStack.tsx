@@ -1,102 +1,93 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Cpu, CheckCircle2, Zap } from "lucide-react";
+import HangingCard from "@/components/ui/HangingCard";
+import SectionHeading from "@/components/ui/SectionHeading";
+import { portfolioData } from "@/lib/data";
 
-interface SpecItem {
-  name: string;
-  category: string;
-  spec: string;
-  status: string;
-  isBlackBg: boolean;
-}
-
-const SPEC_SHEET: SpecItem[] = [
-  { name: "NEXT.JS 14", category: "FRAMEWORK", spec: "App Router / SSR / Edge Middleware", status: "VERIFIED 100%", isBlackBg: false },
-  { name: "REACT 18", category: "LIBRARY", spec: "Concurrent Mode / Server Components", status: "VERIFIED 100%", isBlackBg: true },
-  { name: "TYPESCRIPT", category: "LANGUAGE", spec: "Strict Null Checks / Generics / AST", status: "STRICT MODE", isBlackBg: false },
-  { name: "TAILWIND CSS", category: "STYLING", spec: "Custom Tokens / JIT Engine / Directives", status: "ZERO CONFLICT", isBlackBg: true },
-  { name: "FRAMER MOTION", category: "ANIMATION", spec: "Physics Springs / Layout Animations", status: "60 FPS GUARANTEE", isBlackBg: false },
-  { name: "GSAP 3", category: "ANIMATION", spec: "ScrollTrigger / Timeline Offload", status: "GPU ACCEL", isBlackBg: true },
-  { name: "WEBGL / CANVAS", category: "GRAPHICS", spec: "Custom Shaders / Halftone Matrix", status: "SUB-16MS FRAME", isBlackBg: false },
-  { name: "WEBSOCKETS", category: "NETWORK", spec: "Real-time PCM Audio / Ring Buffers", status: "SUB-85MS LATENCY", isBlackBg: true },
+const CARD_STYLES = [
+  "bg-[#FFFFFF] text-[#0D0D0D]",
+  "bg-[#0D0D0D] text-[#FFFFFF]",
+  "bg-[#2B4EFF] text-[#FFFFFF]",
+  "bg-[#FFFFFF] text-[#0D0D0D]",
 ];
 
 export default function TechStack() {
+  let counter = 0;
+
   return (
-    <section id="toolkit" className="w-full px-4 sm:px-6 md:px-10 py-16 grid-border-bottom bg-[#FFFFFF] text-[#0D0D0D]">
-      {/* Section Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
-        className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-12 pb-4 border-b-4 border-[#0D0D0D]"
-      >
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] text-xs font-mono font-bold uppercase shadow-brutalist-sm mb-3">
-            <Cpu className="w-3.5 h-3.5 text-[#2B4EFF]" />
-            <span>MY TECH STACK <span className="text-[#2B4EFF]">{"//"}</span> TOOLS & SKILLS</span>
-          </div>
-          <h2 className="font-display font-extrabold text-3xl sm:text-5xl uppercase tracking-tight text-[#0D0D0D]">
-            MY TOOLKIT
-          </h2>
-        </div>
+    <section id="toolkit" className="relative w-full px-4 sm:px-6 md:px-10 pt-24 pb-24 bg-[#FFFFFF] text-[#0D0D0D] board-grid-bone">
+      <SectionHeading
+        index="02"
+        kicker="TOOLS & SKILLS"
+        title="THE TOOLKIT"
+        aside={
+          <>
+            CLIPPED TO THE LINE <span className="text-[#2B4EFF]">·</span> HOVER TO SWING
+          </>
+        }
+      />
 
-        <span className="font-mono text-xs font-bold text-[#FFFFFF] uppercase bg-[#0D0D0D] px-3 py-1 border-2 border-[#0D0D0D]">
-          SKILLS INDEX <span className="text-[#2B4EFF]">v2.4</span>
-        </span>
-      </motion.div>
-
-      {/* Punch Card Spec Sheet Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
-        {SPEC_SHEET.map((item, idx) => {
-          const cardClass = item.isBlackBg
-            ? "bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] shadow-brutalist hover:shadow-brutalist-blueprint"
-            : "bg-[#FFFFFF] text-[#0D0D0D] border-3 border-[#0D0D0D] shadow-brutalist hover:shadow-brutalist-blueprint";
-
-          return (
+      <div className="flex flex-col gap-20 sm:gap-24">
+        {portfolioData.toolkit.map((group, groupIdx) => (
+          <div key={group.group} className="relative">
+            {/* Group label nailed to the wall */}
             <motion.div
-              key={item.name}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.05 }}
-              transition={{ duration: 0.35, ease: "easeOut", delay: idx * 0.04 }}
-              whileHover={{ y: -3 }}
-              className={`p-5 flex flex-col justify-between h-full select-none transition-all duration-200 ${cardClass}`}
+              initial={{ opacity: 0, x: -40, rotate: -6 }}
+              whileInView={{ opacity: 1, x: 0, rotate: -2 }}
+              viewport={{ once: true, amount: 0 }}
+              transition={{ type: "spring", stiffness: 200, damping: 15 }}
+              className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] shadow-brutalist-blueprint font-mono text-xs font-extrabold uppercase tracking-widest"
             >
-              {/* Top Punch Hole & Category */}
-              <div className="flex justify-between items-center pb-3 border-b-2 border-current">
-                <span className="font-mono text-[10px] font-extrabold tracking-widest uppercase opacity-80">
-                  {item.category}
-                </span>
-                <div className="w-3 h-3 border-2 border-current bg-[#2B4EFF]" />
-              </div>
-
-              {/* Spec Item Name */}
-              <div className="my-6">
-                <span className="font-mono text-xs text-[#2B4EFF] font-bold block mb-1">
-                  SKILL_0{idx + 1}
-                </span>
-                <h3 className="font-display font-extrabold text-2xl tracking-tight uppercase">
-                  {item.name}
-                </h3>
-                <p className="font-mono text-xs font-bold mt-2 leading-relaxed opacity-90">
-                  {item.spec}
-                </p>
-              </div>
-
-              {/* Status Badge */}
-              <div className="pt-3 border-t-2 border-current flex items-center justify-between font-mono text-[10px] font-extrabold uppercase">
-                <span className="flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 stroke-[3] text-[#2B4EFF]" />
-                  {item.status}
-                </span>
-                <Zap className="w-3.5 h-3.5 stroke-[3] text-[#2B4EFF]" />
-              </div>
+              <span className="text-[#2B4EFF]">{String(groupIdx + 1).padStart(2, "0")}</span> {group.group}
             </motion.div>
-          );
-        })}
+
+            {/* The line: each cell draws its own segment, so rows stay continuous when they wrap */}
+            <ul className="relative grid grid-cols-2 lg:grid-cols-4 gap-y-14">
+              {/* End anchors */}
+              <span aria-hidden="true" className="absolute -left-1 top-[14px] w-4 h-4 bg-[#2B4EFF] border-3 border-[#0D0D0D] z-10" />
+              <span aria-hidden="true" className="absolute -right-1 top-[14px] w-4 h-4 bg-[#2B4EFF] border-3 border-[#0D0D0D] z-10" />
+
+              {group.items.map((item, i) => {
+                counter += 1;
+                const style = CARD_STYLES[(i + groupIdx) % CARD_STYLES.length];
+                const id = `T-${String(counter).padStart(2, "0")}`;
+                return (
+                  <li key={item.name} className="relative px-2 sm:px-4">
+                    <motion.span
+                      aria-hidden="true"
+                      initial={{ scaleX: 0 }}
+                      whileInView={{ scaleX: 1 }}
+                      viewport={{ once: true, amount: 0 }}
+                      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: i * 0.08 }}
+                      className="absolute left-0 right-0 top-5 h-[4px] bg-[#0D0D0D] origin-left"
+                    />
+                    <HangingCard
+                      attachment="clip"
+                      attachmentColor={i % 2 ? "blue" : "ink"}
+                      tilt={i % 2 ? 2 : -2}
+                      swayAngle={2}
+                      swayDuration={3.8 + ((i + groupIdx) % 3) * 0.7}
+                      delay={0.1 + i * 0.09}
+                      className="pt-8"
+                    >
+                      <div className={`relative border-3 border-[#0D0D0D] shadow-brutalist p-4 sm:p-5 min-h-[190px] sm:min-h-[210px] flex flex-col ${style}`}>
+                        <div className="flex items-center justify-between font-mono text-[10px] font-extrabold uppercase tracking-widest pb-2 border-b-2 border-current">
+                          <span>{id}</span>
+                          <span className="w-3 h-3 border-2 border-current" />
+                        </div>
+                        <h3 className="mt-4 font-display font-extrabold text-lg sm:text-2xl xl:text-3xl uppercase leading-[0.95] tracking-tight [overflow-wrap:anywhere]">
+                          {item.name}
+                        </h3>
+                        <p className="mt-auto pt-4 font-mono text-[10px] sm:text-xs font-bold leading-snug opacity-80">{item.note}</p>
+                      </div>
+                    </HangingCard>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        ))}
       </div>
     </section>
   );
