@@ -41,10 +41,10 @@ export default function CustomCursor() {
     };
 
     const handleDown = () => {
-      if (innerRef.current) innerRef.current.style.boxShadow = "0px 0px 0px #0D0D0D";
+      if (innerRef.current) innerRef.current.style.boxShadow = "0px 0px 0px rgb(var(--ink))";
     };
     const handleUp = () => {
-      if (innerRef.current) innerRef.current.style.boxShadow = "3px 3px 0px #0D0D0D";
+      if (innerRef.current) innerRef.current.style.boxShadow = "3px 3px 0px rgb(var(--ink))";
     };
 
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
@@ -83,10 +83,10 @@ export default function CustomCursor() {
     >
       <div
         ref={innerRef}
-        className="relative w-full h-full bg-[#2B4EFF] border-3 border-[#0D0D0D] outline outline-2 outline-[#FFFFFF] flex items-center justify-center transition-transform duration-200 ease-out"
-        style={{ boxShadow: "3px 3px 0px #0D0D0D" }}
+        className="relative w-full h-full bg-accent border-3 border-ink outline outline-2 outline-bone flex items-center justify-center transition-transform duration-200 ease-out"
+        style={{ boxShadow: "3px 3px 0px rgb(var(--ink))" }}
       >
-        <div className="w-1.5 h-1.5 bg-[#FFFFFF] border border-[#0D0D0D]" />
+        <div className="w-1.5 h-1.5 bg-bone border border-ink" />
       </div>
     </div>
   );

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { readThemeHex } from "@/lib/theme";
 
 interface BrutalistSceneProps {
   variant?: "hero" | "knot";
@@ -10,12 +11,8 @@ interface BrutalistSceneProps {
   className?: string;
 }
 
-const INK = 0x0d0d0d;
-const BONE = 0xffffff;
-const BLUE = 0x2b4eff;
-
 /**
- * Flat-shaded, hard-edged three.js scene in the portfolio's ink / bone / blueprint palette.
+ * Flat-shaded, hard-edged three.js scene in the portfolio's theme palette.
  * Drag to spin with inertia, click to punch-zoom, scroll to dolly the camera out.
  */
 export default function BrutalistScene({ variant = "hero", hudRef, className = "" }: BrutalistSceneProps) {
@@ -26,6 +23,9 @@ export default function BrutalistScene({ variant = "hero", hudRef, className = "
     if (!mount) return;
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const INK = readThemeHex("ink");
+    const BONE = readThemeHex("bone");
+    const ACCENT = readThemeHex("accent");
 
     let renderer: THREE.WebGLRenderer;
     try {
@@ -99,7 +99,7 @@ export default function BrutalistScene({ variant = "hero", hudRef, className = "
     let fitRadius: number;
 
     if (variant === "hero") {
-      core = solid(new THREE.IcosahedronGeometry(1.25, 0), BLUE);
+      core = solid(new THREE.IcosahedronGeometry(1.25, 0), ACCENT);
       cage = wire(new THREE.IcosahedronGeometry(2.05, 1), INK, 0.55);
       root.add(core, cage);
 
@@ -143,7 +143,7 @@ export default function BrutalistScene({ variant = "hero", hudRef, className = "
 
       fitRadius = 3.6;
     } else {
-      core = solid(new THREE.TorusKnotGeometry(1.15, 0.36, 72, 8, 2, 3), BLUE, 25);
+      core = solid(new THREE.TorusKnotGeometry(1.15, 0.36, 72, 8, 2, 3), ACCENT, 25);
       cage = wire(new THREE.OctahedronGeometry(2.6, 0), BONE, 0.5);
       root.add(core, cage);
       fitRadius = 2.9;

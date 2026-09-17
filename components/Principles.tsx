@@ -5,18 +5,18 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import ScrollZoomText from "@/components/ui/ScrollZoomText";
 import { portfolioData } from "@/lib/data";
 
-const NOTES: { attachment: AttachmentKind; color: "blue" | "bone" | "ink"; tilt: number; card: string }[] = [
-  { attachment: "pin", color: "blue", tilt: -2.5, card: "bg-[#FFFFFF] text-[#0D0D0D]" },
-  { attachment: "tape", color: "bone", tilt: 2, card: "bg-[#2B4EFF] text-[#FFFFFF]" },
-  { attachment: "pin", color: "bone", tilt: -1, card: "bg-[#FFFFFF] text-[#0D0D0D]" },
-  { attachment: "tape", color: "blue", tilt: 1.8, card: "bg-[#FFFFFF] text-[#0D0D0D]" },
-  { attachment: "pin", color: "blue", tilt: -2, card: "bg-[#FFFFFF] text-[#0D0D0D]" },
-  { attachment: "pin", color: "bone", tilt: 2.4, card: "bg-[#2B4EFF] text-[#FFFFFF]" },
+const NOTES: { attachment: AttachmentKind; color: "accent" | "bone" | "ink"; tilt: number; card: string }[] = [
+  { attachment: "pin", color: "accent", tilt: -2.5, card: "bg-bone text-ink" },
+  { attachment: "tape", color: "bone", tilt: 2, card: "bg-accent text-bone" },
+  { attachment: "pin", color: "bone", tilt: -1, card: "bg-bone text-ink" },
+  { attachment: "tape", color: "accent", tilt: 1.8, card: "bg-bone text-ink" },
+  { attachment: "pin", color: "accent", tilt: -2, card: "bg-bone text-ink" },
+  { attachment: "pin", color: "bone", tilt: 2.4, card: "bg-accent text-bone" },
 ];
 
 export default function Principles() {
   return (
-    <section id="principles" className="relative w-full pt-16 pb-28 bg-[#0D0D0D] text-[#FFFFFF] board-dots-ink overflow-hidden">
+    <section id="principles" className="relative w-full pt-16 pb-28 bg-ink text-bone board-dots-ink overflow-hidden">
       <ScrollZoomText text="HOW I WORK · HOW I WORK" className="text-outline-bone opacity-40" direction="out" sizeClass="text-[clamp(4rem,17vw,16rem)] tracking-wide" />
 
       <div className="px-4 sm:px-6 md:px-10 mt-6">
@@ -43,11 +43,11 @@ export default function Principles() {
                 swayDuration={4.5 + (i % 3)}
                 delay={0.06 * (i % 3)}
               >
-                <div className={`relative h-full min-h-[260px] border-3 border-[#0D0D0D] shadow-[8px_8px_0_#FFFFFF] p-6 flex flex-col ${note.card}`}>
+                <div className={`relative h-full min-h-[260px] border-3 border-ink shadow-[8px_8px_0_rgb(var(--bone))] p-6 flex flex-col ${note.card}`}>
                   <span
                     aria-hidden="true"
                     className={`font-display font-extrabold text-7xl leading-none ${
-                      note.card.includes("2B4EFF") ? "text-outline-bone" : "text-outline-blue"
+                      note.card.includes("bg-accent") ? "text-outline-bone" : "text-outline-accent"
                     }`}
                   >
                     {number}
@@ -57,7 +57,7 @@ export default function Principles() {
                   {/* Folded corner */}
                   <span
                     aria-hidden="true"
-                    className="absolute bottom-0 right-0 w-8 h-8 bg-[#0D0D0D]"
+                    className="absolute bottom-0 right-0 w-8 h-8 bg-ink"
                     style={{ clipPath: "polygon(100% 0, 0 100%, 100% 100%)" }}
                   />
                 </div>

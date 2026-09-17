@@ -71,15 +71,15 @@ export default function Navbar() {
       >
         <nav
           aria-label="Primary"
-          className="relative flex items-center justify-between gap-3 bg-[#FFFFFF] text-[#0D0D0D] border-3 border-[#0D0D0D] shadow-brutalist pl-2 pr-2 py-2"
+          className="relative flex items-center justify-between gap-3 bg-bone text-ink border-3 border-ink shadow-brutalist pl-2 pr-2 py-2"
         >
           <a href="#hero" className="flex items-center gap-2.5 min-w-0" data-cursor="hover">
-            <span className="grid place-items-center w-10 h-10 shrink-0 bg-[#2B4EFF] text-[#FFFFFF] border-3 border-[#0D0D0D] font-display font-extrabold text-sm">
+            <span className="grid place-items-center w-10 h-10 shrink-0 bg-accent text-bone border-3 border-ink font-display font-extrabold text-sm">
               DD
             </span>
             <span className="hidden sm:flex flex-col leading-none min-w-0">
               <span className="font-display font-extrabold text-sm uppercase tracking-tight truncate">Daodu Destiny</span>
-              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[#2B4EFF]">Software Engineer</span>
+              <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-accent">Software Engineer</span>
             </span>
           </a>
 
@@ -92,13 +92,13 @@ export default function Navbar() {
                     href={`#${link.id}`}
                     className={`relative flex items-center gap-1.5 px-3 py-2 font-mono text-xs font-extrabold uppercase tracking-wider border-2 transition-colors duration-150 ${
                       isActive
-                        ? "bg-[#0D0D0D] text-[#FFFFFF] border-[#0D0D0D]"
-                        : "border-transparent hover:border-[#0D0D0D] hover:bg-[#2B4EFF] hover:text-[#FFFFFF]"
+                        ? "bg-ink text-bone border-ink"
+                        : "border-transparent hover:border-ink hover:bg-accent hover:text-bone"
                     }`}
                     aria-current={isActive ? "true" : undefined}
                     data-cursor="hover"
                   >
-                    <span className={isActive ? "text-[#2B4EFF]" : "opacity-50"}>{link.index}</span>
+                    <span className={isActive ? "text-accent-light" : "opacity-50"}>{link.index}</span>
                     {link.label}
                   </a>
                 </li>
@@ -107,23 +107,23 @@ export default function Navbar() {
           </ul>
 
           <div className="flex items-center gap-2">
-            <span className="hidden md:flex items-center gap-2 px-3 py-2 border-2 border-[#0D0D0D] font-mono text-[11px] font-extrabold uppercase">
+            <span className="hidden md:flex items-center gap-2 px-3 py-2 border-2 border-ink font-mono text-[11px] font-extrabold uppercase">
               <span className="relative flex w-2.5 h-2.5">
-                <span className="absolute inset-0 bg-[#2B4EFF] animate-ping" />
-                <span className="relative w-2.5 h-2.5 bg-[#2B4EFF] border border-[#0D0D0D]" />
+                <span className="absolute inset-0 bg-accent animate-ping" />
+                <span className="relative w-2.5 h-2.5 bg-accent border border-ink" />
               </span>
               AVAILABLE
             </span>
             <a
               href="#contact"
-              className="hidden sm:flex items-center gap-1.5 px-4 py-2 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] font-mono text-xs font-extrabold uppercase hover:bg-[#2B4EFF] transition-colors"
+              className="hidden sm:flex items-center gap-1.5 px-4 py-2 bg-ink text-bone border-3 border-ink font-mono text-xs font-extrabold uppercase hover:bg-accent transition-colors"
               data-cursor="hover"
             >
               HIRE ME <ArrowUpRight className="w-4 h-4 stroke-[3]" />
             </a>
             <button
               onClick={() => setIsOpen((v) => !v)}
-              className="lg:hidden grid place-items-center w-11 h-11 border-3 border-[#0D0D0D] bg-[#0D0D0D] text-[#FFFFFF] active:scale-95 transition-transform"
+              className="lg:hidden grid place-items-center w-11 h-11 border-3 border-ink bg-ink text-bone active:scale-95 transition-transform"
               aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
               aria-expanded={isOpen}
               data-cursor="hover"
@@ -136,7 +136,7 @@ export default function Navbar() {
           <motion.span
             aria-hidden="true"
             style={{ scaleX: progress }}
-            className="absolute left-0 right-0 -bottom-[3px] h-[5px] bg-[#2B4EFF] origin-left"
+            className="absolute left-0 right-0 -bottom-[3px] h-[5px] bg-accent origin-left"
           />
         </nav>
       </motion.header>
@@ -149,7 +149,7 @@ export default function Navbar() {
             animate={{ clipPath: "circle(150% at calc(100% - 44px) 44px)" }}
             exit={{ clipPath: "circle(0% at calc(100% - 44px) 44px)" }}
             transition={{ duration: 0.55, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed inset-0 z-[999] bg-[#0D0D0D] text-[#FFFFFF] board-dots-ink flex flex-col justify-end p-5 pb-8 lg:hidden"
+            className="fixed inset-0 z-[999] bg-ink text-bone board-dots-ink flex flex-col justify-end p-5 pb-8 lg:hidden"
           >
             <ul className="flex flex-col gap-3">
               {LINKS.map((link, idx) => (
@@ -163,19 +163,19 @@ export default function Navbar() {
                     href={`#${link.id}`}
                     onClick={() => setIsOpen(false)}
                     className={`flex items-center justify-between px-4 py-3 border-3 font-display font-extrabold text-3xl sm:text-4xl uppercase tracking-tight ${
-                      idx % 2 ? "bg-[#FFFFFF] text-[#0D0D0D] border-[#0D0D0D] shadow-brutalist-blueprint" : "bg-[#0D0D0D] text-[#FFFFFF] border-[#FFFFFF] shadow-brutalist-blueprint"
+                      idx % 2 ? "bg-bone text-ink border-ink shadow-brutalist-accent" : "bg-ink text-bone border-bone shadow-brutalist-accent"
                     }`}
                   >
                     <span>
-                      <span className="font-mono text-sm text-[#2B4EFF] mr-3 align-middle">{link.index}</span>
+                      <span className={`font-mono text-sm mr-3 align-middle ${idx % 2 ? "text-accent" : "text-accent-light"}`}>{link.index}</span>
                       {link.label}
                     </span>
-                    <ArrowUpRight className="w-7 h-7 stroke-[3] text-[#2B4EFF]" />
+                    <ArrowUpRight className={`w-7 h-7 stroke-[3] ${idx % 2 ? "text-accent" : "text-accent-light"}`} />
                   </a>
                 </motion.li>
               ))}
             </ul>
-            <p className="mt-8 pt-4 border-t-3 border-[#FFFFFF] font-mono text-xs font-bold uppercase break-all">
+            <p className="mt-8 pt-4 border-t-3 border-bone font-mono text-xs font-bold uppercase break-all">
               {portfolioData.email}
             </p>
           </motion.div>

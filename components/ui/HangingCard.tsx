@@ -9,7 +9,7 @@ export type AttachmentKind = "pin" | "clip" | "clips" | "tape" | "none";
 interface HangingCardProps {
   children: React.ReactNode;
   attachment?: AttachmentKind;
-  attachmentColor?: "blue" | "ink" | "bone";
+  attachmentColor?: "accent" | "ink" | "bone";
   /** Background the card hangs on — decides attachment contrast. */
   tone?: "ink" | "bone";
   /** Resting tilt in degrees. */
@@ -28,7 +28,7 @@ interface HangingCardProps {
 export default function HangingCard({
   children,
   attachment = "pin",
-  attachmentColor = "blue",
+  attachmentColor = "accent",
   tone = "bone",
   tilt = 0,
   swayAngle = 1.1,

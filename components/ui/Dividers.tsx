@@ -2,8 +2,9 @@
 
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { themeColor } from "@/lib/theme";
 
-const COLORS = { ink: "#0D0D0D", bone: "#FFFFFF", blue: "#2B4EFF" } as const;
+const COLORS = { ink: themeColor("ink"), bone: themeColor("bone"), accent: themeColor("accent") } as const;
 type Swatch = keyof typeof COLORS;
 
 /* -------------------------------------------------------------------------- */
@@ -57,7 +58,7 @@ export function TapeDivider({ items, background = "bone" }: TapeDividerProps) {
       <div className="absolute top-1/2 -left-[10%] w-[120%] -translate-y-1/2 rotate-[4deg]">
         <motion.div
           style={{ x: driftB }}
-          className="bg-[#2B4EFF] text-[#FFFFFF] border-y-4 border-[#0D0D0D] py-3 font-mono font-extrabold text-sm sm:text-base uppercase overflow-hidden"
+          className="bg-accent text-bone border-y-4 border-ink py-3 font-mono font-extrabold text-sm sm:text-base uppercase overflow-hidden"
         >
           <TapeRow items={items} reverse />
         </motion.div>
@@ -65,7 +66,7 @@ export function TapeDivider({ items, background = "bone" }: TapeDividerProps) {
       <div className="absolute top-1/2 -left-[10%] w-[120%] -translate-y-1/2 -rotate-[3deg]">
         <motion.div
           style={{ x: driftA }}
-          className="bg-[#0D0D0D] text-[#FFFFFF] border-y-4 border-[#0D0D0D] py-4 font-display font-extrabold text-2xl sm:text-4xl uppercase tracking-tight overflow-hidden shadow-[0_8px_0_#2B4EFF]"
+          className="bg-ink text-bone border-y-4 border-ink py-4 font-display font-extrabold text-2xl sm:text-4xl uppercase tracking-tight overflow-hidden shadow-[0_8px_0_rgb(var(--accent))]"
         >
           <TapeRow items={items} />
         </motion.div>
@@ -107,7 +108,7 @@ export function EdgeDivider({ from, to, shape = "zigzag", teeth = 28 }: EdgeDivi
         transition={{ type: "spring", stiffness: 200, damping: 12 }}
         style={{ transformOrigin: "50% 100%" }}
       >
-        <polygon points={points} fill={COLORS[to]} />
+        <polygon points={points} style={{ fill: COLORS[to] }} />
       </motion.svg>
     </div>
   );
@@ -141,7 +142,7 @@ export function CircuitDivider({ background = "bone", label = "SYS.BUS" }: { bac
     <div ref={ref} aria-hidden="true" className="relative w-full h-40 sm:h-56 overflow-hidden" style={{ backgroundColor: COLORS[background] }}>
       <svg viewBox="0 0 1200 240" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 w-full h-full">
         {TRACES.map((d, i) => (
-          <motion.path key={i} d={d} fill="none" stroke={stroke} strokeWidth="4" style={{ pathLength: draw }} />
+          <motion.path key={i} d={d} fill="none" strokeWidth="4" style={{ pathLength: draw, stroke }} />
         ))}
         {NODES.map(([cx, cy], i) => (
           <motion.rect
@@ -150,22 +151,20 @@ export function CircuitDivider({ background = "bone", label = "SYS.BUS" }: { bac
             y={cy - 7}
             width="14"
             height="14"
-            fill={COLORS.blue}
-            stroke={stroke}
             strokeWidth="3"
-            style={{ scale: chipScale, transformBox: "fill-box", transformOrigin: "center" }}
+            style={{ fill: COLORS.accent, stroke, scale: chipScale, transformBox: "fill-box", transformOrigin: "center" }}
           />
         ))}
         <motion.g style={{ scale: chipScale, transformBox: "fill-box", transformOrigin: "center" }}>
-          <rect x="548" y="48" width="120" height="152" fill={COLORS.ink} />
-          <rect x="540" y="40" width="120" height="152" fill={COLORS.blue} stroke={COLORS.ink} strokeWidth="5" />
+          <rect x="548" y="48" width="120" height="152" style={{ fill: COLORS.ink }} />
+          <rect x="540" y="40" width="120" height="152" style={{ fill: COLORS.accent, stroke: COLORS.ink }} strokeWidth="5" />
           {[70, 100, 130, 160].map((y) => (
             <g key={y}>
-              <rect x="526" y={y - 4} width="14" height="8" fill={stroke} />
-              <rect x="660" y={y - 4} width="14" height="8" fill={stroke} />
+              <rect x="526" y={y - 4} width="14" height="8" style={{ fill: stroke }} />
+              <rect x="660" y={y - 4} width="14" height="8" style={{ fill: stroke }} />
             </g>
           ))}
-          <text x="600" y="122" textAnchor="middle" fontFamily="JetBrains Mono, monospace" fontWeight="800" fontSize="18" fill={COLORS.bone}>
+          <text x="600" y="122" textAnchor="middle" fontFamily="JetBrains Mono, monospace" fontWeight="800" fontSize="18" style={{ fill: COLORS.bone }}>
             {label}
           </text>
         </motion.g>

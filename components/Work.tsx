@@ -9,19 +9,19 @@ interface WorkProps {
   onSelectProject: (project: Project) => void;
 }
 
-const HANGERS: { attachment: AttachmentKind; color: "blue" | "bone"; tilt: number }[] = [
-  { attachment: "pin", color: "blue", tilt: -1.5 },
+const HANGERS: { attachment: AttachmentKind; color: "accent" | "bone"; tilt: number }[] = [
+  { attachment: "pin", color: "accent", tilt: -1.5 },
   { attachment: "clip", color: "bone", tilt: 1.2 },
-  { attachment: "tape", color: "blue", tilt: 1 },
+  { attachment: "tape", color: "accent", tilt: 1 },
   { attachment: "pin", color: "bone", tilt: -1 },
-  { attachment: "clip", color: "blue", tilt: -1.4 },
+  { attachment: "clip", color: "accent", tilt: -1.4 },
 ];
 
 export default function Work({ onSelectProject }: WorkProps) {
   const total = portfolioData.projects.length + 1;
 
   return (
-    <section id="work" className="relative w-full px-4 sm:px-6 md:px-10 pt-10 pb-28 bg-[#0D0D0D] text-[#FFFFFF] board-dots-ink">
+    <section id="work" className="relative w-full px-4 sm:px-6 md:px-10 pt-10 pb-28 bg-ink text-bone board-dots-ink">
       <SectionHeading
         index="01"
         kicker="SELECTED WORK"
@@ -29,7 +29,7 @@ export default function Work({ onSelectProject }: WorkProps) {
         tone="ink"
         aside={
           <>
-            {String(total).padStart(2, "0")} BUILDS <span className="text-[#2B4EFF]">·</span> CLICK A CARD FOR THE DEEP DIVE
+            {String(total).padStart(2, "0")} BUILDS <span className="text-accent">·</span> CLICK A CARD FOR THE DEEP DIVE
           </>
         }
       />
@@ -37,7 +37,7 @@ export default function Work({ onSelectProject }: WorkProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-20 w-full">
         <HangingCard
           attachment="clips"
-          attachmentColor="blue"
+          attachmentColor="accent"
           tone="ink"
           swayAngle={0.5}
           swayDuration={7}

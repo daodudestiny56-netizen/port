@@ -29,13 +29,13 @@ function RotatingSticker() {
         <defs>
           <path id="sticker-circle" d="M100 100 m-74 0 a74 74 0 1 1 148 0 a74 74 0 1 1 -148 0" />
         </defs>
-        <circle cx="100" cy="100" r="98" fill="#2B4EFF" stroke="#0D0D0D" strokeWidth="4" />
-        <text fontFamily="JetBrains Mono, monospace" fontWeight="800" fontSize="19" fill="#FFFFFF" letterSpacing="2">
+        <circle cx="100" cy="100" r="98" className="fill-accent stroke-ink" strokeWidth="4" />
+        <text fontFamily="JetBrains Mono, monospace" fontWeight="800" fontSize="19" className="fill-bone" letterSpacing="2">
           <textPath href="#sticker-circle">{text + text}</textPath>
         </text>
       </svg>
       <div className="absolute inset-0 grid place-items-center">
-        <span className="grid place-items-center w-12 h-12 bg-[#FFFFFF] border-3 border-[#0D0D0D] font-display font-extrabold text-lg text-[#0D0D0D]">
+        <span className="grid place-items-center w-12 h-12 bg-bone border-3 border-ink font-display font-extrabold text-lg text-ink">
           {portfolioData.stats[0].value}Y
         </span>
       </div>
@@ -59,7 +59,7 @@ export default function Hero() {
     <section
       id="hero"
       ref={sectionRef}
-      className="relative w-full min-h-[100svh] overflow-hidden bg-[#FFFFFF] text-[#0D0D0D] board-grid-bone"
+      className="relative w-full min-h-[100svh] overflow-hidden bg-bone text-ink board-grid-bone"
     >
       <motion.div
         style={{ scale: contentScale, y: contentY }}
@@ -75,11 +75,11 @@ export default function Hero() {
               transition={{ duration: 0.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-wrap items-center gap-2 font-mono text-[11px] sm:text-xs font-extrabold uppercase"
             >
-              <span className="px-2.5 py-1.5 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D]">
+              <span className="px-2.5 py-1.5 bg-ink text-bone border-3 border-ink">
                 SOFTWARE ENGINEER
               </span>
-              <span className="px-2.5 py-1.5 bg-[#FFFFFF] border-3 border-[#0D0D0D] shadow-brutalist-sm">
-                <span className="text-[#2B4EFF]">{portfolioData.stats[0].value}+ YRS</span> SHIPPING PRODUCTION CODE
+              <span className="px-2.5 py-1.5 bg-bone border-3 border-ink shadow-brutalist-sm">
+                <span className="text-accent">{portfolioData.stats[0].value}+ YRS</span> SHIPPING PRODUCTION CODE
               </span>
             </motion.div>
 
@@ -88,7 +88,7 @@ export default function Hero() {
                 <span key={i} className="inline-block overflow-hidden align-bottom mr-[0.2em] pb-[0.06em] pt-[0.04em]">
                   <motion.span
                     className={`inline-block ${
-                      accent ? "bg-[#2B4EFF] text-[#FFFFFF] px-[0.12em] border-[0.05em] border-[#0D0D0D] shadow-[0.07em_0.07em_0_#0D0D0D]" : ""
+                      accent ? "bg-accent text-bone px-[0.12em] border-[0.05em] border-ink shadow-[0.07em_0.07em_0_rgb(var(--ink))]" : ""
                     } ${word === "&" ? "text-outline-ink" : ""}`}
                     initial="hidden"
                     animate={state}
@@ -109,7 +109,7 @@ export default function Hero() {
               animate={state}
               variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
               transition={{ duration: 0.6, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
-              className="max-w-xl font-sans text-base sm:text-lg font-medium leading-relaxed border-l-[6px] border-[#2B4EFF] pl-4"
+              className="max-w-xl font-sans text-base sm:text-lg font-medium leading-relaxed border-l-[6px] border-accent pl-4"
             >
               {`I'm Daodu Destiny — a software engineer with ${portfolioData.stats[0].value} years building production web applications, APIs and real-time interfaces. I design architecture that stays clean, fast and easy to change long after launch.`}
             </motion.p>
@@ -126,11 +126,11 @@ export default function Hero() {
                 whileHover={{ x: -3, y: -3 }}
                 whileTap={{ scale: 0.96, x: 3, y: 3 }}
                 transition={{ type: "spring", stiffness: 450, damping: 25 }}
-                className="min-h-[52px] px-6 bg-[#0D0D0D] text-[#FFFFFF] font-mono text-sm font-extrabold uppercase border-3 border-[#0D0D0D] shadow-brutalist-blueprint-lg flex items-center justify-center gap-3"
+                className="min-h-[52px] px-6 bg-ink text-bone font-mono text-sm font-extrabold uppercase border-3 border-ink shadow-brutalist-accent-lg flex items-center justify-center gap-3"
                 data-cursor="hover"
               >
                 VIEW CASE STUDIES
-                <ArrowDownRight className="w-5 h-5 stroke-[3] text-[#2B4EFF]" />
+                <ArrowDownRight className="w-5 h-5 stroke-[3] text-accent-light" />
               </motion.a>
               <motion.a
                 href={portfolioData.socials.github}
@@ -139,11 +139,11 @@ export default function Hero() {
                 whileHover={{ x: -3, y: -3 }}
                 whileTap={{ scale: 0.96, x: 3, y: 3 }}
                 transition={{ type: "spring", stiffness: 450, damping: 25 }}
-                className="min-h-[52px] px-6 bg-[#FFFFFF] text-[#0D0D0D] font-mono text-sm font-extrabold uppercase border-3 border-[#0D0D0D] shadow-brutalist-lg flex items-center justify-center gap-3"
+                className="min-h-[52px] px-6 bg-bone text-ink font-mono text-sm font-extrabold uppercase border-3 border-ink shadow-brutalist-lg flex items-center justify-center gap-3"
                 data-cursor="hover"
               >
                 GITHUB
-                <ArrowUpRight className="w-5 h-5 stroke-[3] text-[#2B4EFF]" />
+                <ArrowUpRight className="w-5 h-5 stroke-[3] text-accent" />
               </motion.a>
             </motion.div>
           </div>
@@ -160,17 +160,17 @@ export default function Hero() {
               <RotatingSticker />
             </div>
 
-            <div className="relative bg-[#FFFFFF] border-3 border-[#0D0D0D] shadow-brutalist-lg">
-              <div className="flex items-center justify-between gap-2 px-3 py-2 bg-[#0D0D0D] text-[#FFFFFF] font-mono text-[10px] sm:text-[11px] font-extrabold uppercase">
+            <div className="relative bg-bone border-3 border-ink shadow-brutalist-lg">
+              <div className="flex items-center justify-between gap-2 px-3 py-2 bg-ink text-bone font-mono text-[10px] sm:text-[11px] font-extrabold uppercase">
                 <span className="flex items-center gap-2">
                   <span className="flex gap-1">
-                    <span className="w-2.5 h-2.5 bg-[#2B4EFF]" />
-                    <span className="w-2.5 h-2.5 bg-[#FFFFFF]" />
-                    <span className="w-2.5 h-2.5 border border-[#FFFFFF]" />
+                    <span className="w-2.5 h-2.5 bg-accent" />
+                    <span className="w-2.5 h-2.5 bg-bone" />
+                    <span className="w-2.5 h-2.5 border border-bone" />
                   </span>
-                  scene.tsx <span className="text-[#2B4EFF]">— three.js</span>
+                  scene.tsx <span className="text-accent-light">— three.js</span>
                 </span>
-                <span ref={hudRef} className="tabular-nums text-[#FFFFFF]/70">-- FPS</span>
+                <span ref={hudRef} className="tabular-nums text-bone/70">-- FPS</span>
               </div>
               <div className="relative h-[360px] sm:h-[440px] lg:h-[480px] overflow-hidden">
                 <motion.div style={{ scale: sceneScale }} className="absolute inset-0 origin-center">
@@ -178,20 +178,20 @@ export default function Hero() {
                 </motion.div>
                 {/* Corner registration marks */}
                 {["top-2 left-2 border-t-3 border-l-3", "top-2 right-2 border-t-3 border-r-3", "bottom-2 left-2 border-b-3 border-l-3", "bottom-2 right-2 border-b-3 border-r-3"].map((c) => (
-                  <span key={c} aria-hidden="true" className={`pointer-events-none absolute w-4 h-4 border-[#2B4EFF] ${c}`} />
+                  <span key={c} aria-hidden="true" className={`pointer-events-none absolute w-4 h-4 border-accent ${c}`} />
                 ))}
               </div>
-              <div className="flex items-center justify-between px-3 py-2 border-t-3 border-[#0D0D0D] font-mono text-[10px] sm:text-[11px] font-extrabold uppercase">
-                <span className="hidden sm:inline text-[#2B4EFF]">WEBGL</span>
+              <div className="flex items-center justify-between px-3 py-2 border-t-3 border-ink font-mono text-[10px] sm:text-[11px] font-extrabold uppercase">
+                <span className="hidden sm:inline text-accent">WEBGL</span>
                 <span className="flex items-center gap-1.5 ml-auto pr-24 sm:pr-28">
-                  <Move3d className="w-4 h-4 text-[#2B4EFF]" /> DRAG TO SPIN
+                  <Move3d className="w-4 h-4 text-accent" /> DRAG TO SPIN
                 </span>
               </div>
             </div>
 
             {/* Pinned access badge */}
             <div className="relative -mt-24 ml-auto mr-2 w-fit lg:absolute lg:mt-0 lg:-left-12 lg:top-[50%] lg:mr-0 z-10">
-              <HangingCard attachment="clip" attachmentColor="blue" tilt={-4} swayAngle={2.2} swayDuration={4.5} delay={0.2}>
+              <HangingCard attachment="clip" attachmentColor="accent" tilt={-4} swayAngle={2.2} swayDuration={4.5} delay={0.2}>
                 <IdBadge />
               </HangingCard>
             </div>
@@ -204,7 +204,7 @@ export default function Hero() {
           animate={state}
           variants={{ hidden: { opacity: 0, y: 30 }, show: { opacity: 1, y: 0 } }}
           transition={{ duration: 0.6, delay: 1.15, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-14 grid grid-cols-2 md:grid-cols-4 border-3 border-[#0D0D0D] bg-[#FFFFFF] font-mono text-[10px] sm:text-xs font-extrabold uppercase shadow-brutalist"
+          className="mt-14 grid grid-cols-2 md:grid-cols-4 border-3 border-ink bg-bone font-mono text-[10px] sm:text-xs font-extrabold uppercase shadow-brutalist"
         >
           {[
             { k: "EXPERIENCE", v: `${String(portfolioData.stats[0].value).padStart(2, "0")} YEARS` },
@@ -214,12 +214,12 @@ export default function Hero() {
           ].map((item, i) => (
             <div
               key={item.k}
-              className={`px-3 sm:px-4 py-3 ${i % 2 === 0 ? "border-r-3" : "md:border-r-3"} ${i < 2 ? "border-b-3 md:border-b-0" : ""} last:border-r-0 border-[#0D0D0D] ${
-                i === 3 ? "bg-[#0D0D0D] text-[#FFFFFF]" : ""
+              className={`px-3 sm:px-4 py-3 ${i % 2 === 0 ? "border-r-3" : "md:border-r-3"} ${i < 2 ? "border-b-3 md:border-b-0" : ""} last:border-r-0 border-ink ${
+                i === 3 ? "bg-ink text-bone" : ""
               }`}
             >
               <dt className="opacity-60">{item.k}</dt>
-              <dd className={`mt-0.5 ${i === 3 ? "text-[#2B4EFF]" : ""}`}>{item.v}</dd>
+              <dd className={`mt-0.5 ${i === 3 ? "text-accent-light" : ""}`}>{item.v}</dd>
             </div>
           ))}
         </motion.dl>

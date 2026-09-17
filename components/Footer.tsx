@@ -105,30 +105,30 @@ export default function Footer() {
   ];
 
   return (
-    <footer id="contact" className="relative w-full bg-[#0D0D0D] text-[#FFFFFF] board-dots-ink overflow-hidden">
+    <footer id="contact" className="relative w-full bg-ink text-bone board-dots-ink overflow-hidden">
       <div className="pt-16">
-        <ScrollZoomText text="LET'S BUILD" direction="in" className="text-[#FFFFFF]" />
-        <ScrollZoomText text="SOMETHING THAT LASTS" direction="in" className="text-outline-blue" sizeClass="text-[clamp(2.2rem,8vw,7.5rem)] tracking-wider" />
+        <ScrollZoomText text="LET'S BUILD" direction="in" className="text-bone" />
+        <ScrollZoomText text="SOMETHING THAT LASTS" direction="in" className="text-outline-accent-light" sizeClass="text-[clamp(2.2rem,8vw,7.5rem)] tracking-wider" />
       </div>
 
       <div className="px-4 sm:px-6 md:px-10 pt-16 pb-10">
         <div className="flex flex-wrap items-center gap-3 mb-16 font-mono text-xs font-extrabold uppercase tracking-widest">
-          <span className="px-2 py-1 bg-[#2B4EFF] border-2 border-[#FFFFFF]">05</span>
-          <span className="h-[3px] w-10 bg-[#FFFFFF]" />
+          <span className="px-2 py-1 bg-accent border-2 border-bone">05</span>
+          <span className="h-[3px] w-10 bg-bone" />
           <span>CONTACT</span>
-          <span className="ml-auto px-3 py-1.5 bg-[#FFFFFF] text-[#0D0D0D] border-3 border-[#FFFFFF] shadow-brutalist-blueprint">
-            I USUALLY REPLY WITHIN <span className="text-[#2B4EFF]">24 HOURS</span>
+          <span className="ml-auto px-3 py-1.5 bg-bone text-ink border-3 border-bone shadow-brutalist-accent">
+            I USUALLY REPLY WITHIN <span className="text-accent">24 HOURS</span>
           </span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-12">
           {/* Form, clipped to the board */}
           <div className="lg:col-span-7">
-            <HangingCard attachment="clips" attachmentColor="blue" tone="ink" tilt={-0.6} swayAngle={0.5} swayDuration={7}>
-              <div className="bg-[#FFFFFF] text-[#0D0D0D] border-3 border-[#0D0D0D] shadow-[12px_12px_0_#2B4EFF] p-6 sm:p-10">
-                <div className="flex items-center justify-between pb-3 mb-6 border-b-3 border-[#0D0D0D] font-mono text-xs font-extrabold uppercase tracking-widest">
+            <HangingCard attachment="clips" attachmentColor="accent" tone="ink" tilt={-0.6} swayAngle={0.5} swayDuration={7}>
+              <div className="bg-bone text-ink border-3 border-ink shadow-[12px_12px_0_rgb(var(--accent))] p-6 sm:p-10">
+                <div className="flex items-center justify-between pb-3 mb-6 border-b-3 border-ink font-mono text-xs font-extrabold uppercase tracking-widest">
                   <span>NEW MESSAGE</span>
-                  <span className="text-[#2B4EFF]">TO: {portfolioData.email}</span>
+                  <span className="text-accent">TO: {portfolioData.email}</span>
                 </div>
 
                 <h3 className="font-display font-extrabold text-3xl sm:text-5xl uppercase leading-[0.9] tracking-tight mb-8">
@@ -146,7 +146,7 @@ export default function Footer() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="you@company.com"
-                      className="w-full px-4 py-3.5 bg-[#FFFFFF] border-3 border-[#0D0D0D] font-mono text-sm font-bold text-[#0D0D0D] placeholder:text-[#0D0D0D]/40 focus:bg-[#0D0D0D] focus:text-[#FFFFFF] focus:shadow-brutalist-blueprint focus:outline-none transition-all"
+                      className="w-full px-4 py-3.5 bg-bone border-3 border-ink font-mono text-sm font-bold text-ink placeholder:text-ink/40 focus:bg-ink focus:text-bone focus:shadow-brutalist-accent focus:outline-none transition-all"
                     />
                   </div>
 
@@ -160,24 +160,24 @@ export default function Footer() {
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
                       placeholder="Hi Destiny, we're hiring for..."
-                      className="w-full px-4 py-3.5 bg-[#FFFFFF] border-3 border-[#0D0D0D] font-mono text-sm font-bold text-[#0D0D0D] placeholder:text-[#0D0D0D]/40 focus:bg-[#0D0D0D] focus:text-[#FFFFFF] focus:shadow-brutalist-blueprint focus:outline-none transition-all resize-y"
+                      className="w-full px-4 py-3.5 bg-bone border-3 border-ink font-mono text-sm font-bold text-ink placeholder:text-ink/40 focus:bg-ink focus:text-bone focus:shadow-brutalist-accent focus:outline-none transition-all resize-y"
                     />
                   </div>
 
                   {error && (
-                    <p role="alert" className="font-mono text-xs font-bold text-[#FFFFFF] bg-[#D92D20] p-2.5 border-3 border-[#0D0D0D]">
+                    <p role="alert" className="font-mono text-xs font-bold text-bone bg-danger p-2.5 border-3 border-ink">
                       {error}
                     </p>
                   )}
 
                   {status === "sent" ? (
-                    <p role="status" className="p-4 bg-[#2B4EFF] text-[#FFFFFF] border-3 border-[#0D0D0D] font-mono text-xs font-extrabold uppercase flex items-center gap-2">
+                    <p role="status" className="p-4 bg-accent text-bone border-3 border-ink font-mono text-xs font-extrabold uppercase flex items-center gap-2">
                       <Check className="w-5 h-5 stroke-[3]" /> Message delivered. I&apos;ll be in touch soon.
                     </p>
                   ) : status === "fallback" ? (
-                    <p role="status" className="p-4 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] font-mono text-xs font-bold uppercase leading-relaxed">
+                    <p role="status" className="p-4 bg-ink text-bone border-3 border-ink font-mono text-xs font-bold uppercase leading-relaxed">
                       Couldn&apos;t send from here — your email app should open with the message ready.{" "}
-                      <a href={mailtoHref} className="text-[#2B4EFF] underline">
+                      <a href={mailtoHref} className="text-accent-light underline">
                         Open it manually
                       </a>
                     </p>
@@ -188,11 +188,11 @@ export default function Footer() {
                       whileHover={{ x: -3, y: -3 }}
                       whileTap={{ scale: 0.97, x: 3, y: 3 }}
                       transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                      className="min-h-[56px] px-6 bg-[#0D0D0D] text-[#FFFFFF] border-3 border-[#0D0D0D] shadow-brutalist-blueprint-lg font-mono text-sm font-extrabold uppercase flex items-center justify-center gap-3 disabled:opacity-70"
+                      className="min-h-[56px] px-6 bg-ink text-bone border-3 border-ink shadow-brutalist-accent-lg font-mono text-sm font-extrabold uppercase flex items-center justify-center gap-3 disabled:opacity-70"
                       data-cursor="hover"
                     >
                       {status === "sending" ? "SENDING…" : "SEND MESSAGE"}
-                      <Send className="w-5 h-5 stroke-[3] text-[#2B4EFF]" />
+                      <Send className="w-5 h-5 stroke-[3] text-accent-light" />
                     </motion.button>
                   )}
                 </form>
@@ -202,10 +202,10 @@ export default function Footer() {
 
           {/* Channels + 3D knot */}
           <div className="lg:col-span-5 flex flex-col gap-8">
-            <div className="relative border-3 border-[#FFFFFF] bg-[#0D0D0D]">
-              <div className="flex items-center justify-between px-3 py-2 bg-[#FFFFFF] text-[#0D0D0D] font-mono text-[10px] font-extrabold uppercase">
+            <div className="relative border-3 border-bone bg-ink">
+              <div className="flex items-center justify-between px-3 py-2 bg-bone text-ink font-mono text-[10px] font-extrabold uppercase">
                 <span>
-                  knot.tsx <span className="text-[#2B4EFF]">— drag me</span>
+                  knot.tsx <span className="text-accent">— drag me</span>
                 </span>
                 <span ref={hudRef} className="tabular-nums opacity-60">-- FPS</span>
               </div>
@@ -216,7 +216,7 @@ export default function Footer() {
 
             <button
               onClick={copyEmail}
-              className="group flex items-center justify-between gap-3 px-4 py-4 bg-[#2B4EFF] text-[#FFFFFF] border-3 border-[#FFFFFF] shadow-[6px_6px_0_#FFFFFF] hover:shadow-[10px_10px_0_#FFFFFF] hover:-translate-x-1 hover:-translate-y-1 transition-all text-left"
+              className="group flex items-center justify-between gap-3 px-4 py-4 bg-accent text-bone border-3 border-bone shadow-[6px_6px_0_rgb(var(--bone))] hover:shadow-[10px_10px_0_rgb(var(--bone))] hover:-translate-x-1 hover:-translate-y-1 transition-all text-left"
               data-cursor="hover"
             >
               <span className="min-w-0">
@@ -226,11 +226,11 @@ export default function Footer() {
               {copied ? <Check className="w-6 h-6 stroke-[3] shrink-0" /> : <Copy className="w-6 h-6 stroke-[3] shrink-0" />}
             </button>
 
-            <ul className="border-3 border-[#FFFFFF]">
+            <ul className="border-3 border-bone">
               {channels.map((c) => {
                 const Icon = c.icon;
                 return (
-                  <li key={c.name} className="border-b-3 last:border-b-0 border-[#FFFFFF]">
+                  <li key={c.name} className="border-b-3 last:border-b-0 border-bone">
                     <a
                       href={c.href}
                       target={c.href.startsWith("mailto:") ? undefined : "_blank"}
@@ -238,15 +238,15 @@ export default function Footer() {
                       className="group relative flex items-center gap-4 px-4 py-4 overflow-hidden"
                       data-cursor="hover"
                     >
-                      <span className="absolute inset-0 bg-[#FFFFFF] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
-                      <span className="relative flex items-center gap-4 min-w-0 flex-1 group-hover:text-[#0D0D0D] transition-colors">
+                      <span className="absolute inset-0 bg-bone origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out" />
+                      <span className="relative flex items-center gap-4 min-w-0 flex-1 group-hover:text-ink transition-colors">
                         <Icon />
                         <span className="min-w-0">
                           <span className="block font-display font-extrabold text-lg uppercase leading-none">{c.name}</span>
                           <span className="block font-mono text-[11px] font-bold opacity-70 truncate">{c.handle}</span>
                         </span>
                       </span>
-                      <ArrowUpRight className="relative w-6 h-6 stroke-[3] text-[#2B4EFF] group-hover:rotate-45 transition-transform" />
+                      <ArrowUpRight className="relative w-6 h-6 stroke-[3] text-accent-light group-hover:text-accent group-hover:rotate-45 transition-transform" />
                     </a>
                   </li>
                 );
@@ -255,12 +255,12 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-24 pt-6 border-t-4 border-[#FFFFFF] flex flex-col md:flex-row justify-between items-start md:items-center gap-4 font-mono text-[11px] sm:text-xs font-bold uppercase">
+        <div className="mt-24 pt-6 border-t-4 border-bone flex flex-col md:flex-row justify-between items-start md:items-center gap-4 font-mono text-[11px] sm:text-xs font-bold uppercase">
           <span>© {new Date().getFullYear()} Daodu Destiny Oluwatobiloba</span>
           <span className="opacity-70">Built with Next.js, Three.js &amp; Framer Motion</span>
           <a
             href="#hero"
-            className="flex items-center gap-2 px-3 py-2 bg-[#FFFFFF] text-[#0D0D0D] border-3 border-[#FFFFFF] hover:bg-[#2B4EFF] hover:text-[#FFFFFF] transition-colors"
+            className="flex items-center gap-2 px-3 py-2 bg-bone text-ink border-3 border-bone hover:bg-accent hover:text-bone transition-colors"
             data-cursor="hover"
           >
             BACK TO TOP <ArrowUp className="w-4 h-4 stroke-[3]" />

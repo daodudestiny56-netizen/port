@@ -13,7 +13,7 @@ interface SectionHeadingProps {
 
 export default function SectionHeading({ index, kicker, title, aside, tone = "bone" }: SectionHeadingProps) {
   const isInk = tone === "ink";
-  const line = isInk ? "border-[#FFFFFF]" : "border-[#0D0D0D]";
+  const line = isInk ? "border-bone" : "border-ink";
   const words = title.split(" ");
 
   return (
@@ -26,14 +26,14 @@ export default function SectionHeading({ index, kicker, title, aside, tone = "bo
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           className="flex items-center gap-3 mb-5 font-mono text-[11px] sm:text-xs font-extrabold uppercase tracking-widest"
         >
-          <span className="px-2 py-1 bg-[#2B4EFF] text-[#FFFFFF] border-2 border-[#0D0D0D]">{index}</span>
-          <span className={`h-[3px] w-10 ${isInk ? "bg-[#FFFFFF]" : "bg-[#0D0D0D]"}`} />
-          <span className={isInk ? "text-[#FFFFFF]" : "text-[#0D0D0D]"}>{kicker}</span>
+          <span className="px-2 py-1 bg-accent text-bone border-2 border-ink">{index}</span>
+          <span className={`h-[3px] w-10 ${isInk ? "bg-bone" : "bg-ink"}`} />
+          <span className={isInk ? "text-bone" : "text-ink"}>{kicker}</span>
         </motion.div>
 
         <h2
           className={`font-display font-extrabold uppercase tracking-tight leading-[0.9] text-[clamp(2.6rem,8vw,6.5rem)] ${
-            isInk ? "text-[#FFFFFF]" : "text-[#0D0D0D]"
+            isInk ? "text-bone" : "text-ink"
           }`}
         >
           {words.map((word, i) => (
@@ -60,8 +60,8 @@ export default function SectionHeading({ index, kicker, title, aside, tone = "bo
           transition={{ type: "spring", stiffness: 260, damping: 14, delay: 0.25 }}
           className={`shrink-0 font-mono text-[11px] sm:text-xs font-bold uppercase px-3 py-2 border-3 ${
             isInk
-              ? "bg-[#FFFFFF] text-[#0D0D0D] border-[#FFFFFF] shadow-brutalist-blueprint"
-              : "bg-[#0D0D0D] text-[#FFFFFF] border-[#0D0D0D] shadow-brutalist-blueprint"
+              ? "bg-bone text-ink border-bone shadow-brutalist-accent"
+              : "bg-ink text-bone border-ink shadow-brutalist-accent"
           }`}
         >
           {aside}

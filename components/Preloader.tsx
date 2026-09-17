@@ -49,13 +49,13 @@ export default function Preloader() {
       {!isLoaded && (
         <motion.div
           key="preloader"
-          className="preloader fixed inset-0 z-[100000] bg-[#0D0D0D] text-[#FFFFFF] flex flex-col justify-between p-5 sm:p-10 overflow-hidden"
+          className="preloader fixed inset-0 z-[100000] bg-ink text-bone flex flex-col justify-between p-5 sm:p-10 overflow-hidden"
           exit={{ clipPath: "inset(0% 0% 100% 0%)" }}
           initial={{ clipPath: "inset(0% 0% 0% 0%)" }}
           transition={{ duration: 0.75, ease: [0.76, 0, 0.24, 1], delay: 0.15 }}
         >
           <div className="flex justify-between items-start font-mono text-[11px] sm:text-xs font-extrabold uppercase tracking-widest">
-            <span>DAODU DESTINY <span className="text-[#2B4EFF]">{"//"}</span> SOFTWARE ENGINEER</span>
+            <span>DAODU DESTINY <span className="text-accent-light">{"//"}</span> SOFTWARE ENGINEER</span>
             <span className="hidden sm:inline">PORTFOLIO BUILD</span>
           </div>
 
@@ -67,7 +67,7 @@ export default function Preloader() {
             <span className="font-display font-extrabold leading-none tracking-tighter text-[clamp(7rem,28vw,22rem)] tabular-nums">
               {String(count).padStart(3, "0")}
             </span>
-            <span className="font-display font-extrabold text-[#2B4EFF] text-[clamp(2rem,6vw,5rem)] leading-none mb-[0.2em]">%</span>
+            <span className="font-display font-extrabold text-accent-light text-[clamp(2rem,6vw,5rem)] leading-none mb-[0.2em]">%</span>
           </motion.div>
 
           <div className="flex flex-col gap-3">
@@ -76,13 +76,13 @@ export default function Preloader() {
                 &gt; {line}
                 <span className="animate-blink">_</span>
               </span>
-              <span className="text-[#2B4EFF]">3 YRS / 6 PROJECTS</span>
+              <span className="text-accent-light">3 YRS / 6 PROJECTS</span>
             </div>
             <div className="grid gap-1 h-4" style={{ gridTemplateColumns: "repeat(20, minmax(0, 1fr))" }}>
               {Array.from({ length: 20 }).map((_, i) => (
                 <span
                   key={i}
-                  className={`border-2 border-[#FFFFFF] ${i < Math.round(count / 5) ? "bg-[#2B4EFF]" : "bg-transparent"}`}
+                  className={`border-2 border-bone ${i < Math.round(count / 5) ? "bg-accent" : "bg-transparent"}`}
                 />
               ))}
             </div>
