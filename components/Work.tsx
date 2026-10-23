@@ -1,7 +1,7 @@
 "use client";
 
 import ProjectCard from "./ProjectCard";
-import HangingCard, { AttachmentKind } from "@/components/ui/HangingCard";
+import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { portfolioData, Project } from "@/lib/data";
 
@@ -9,61 +9,24 @@ interface WorkProps {
   onSelectProject: (project: Project) => void;
 }
 
-const HANGERS: { attachment: AttachmentKind; color: "accent" | "bone"; tilt: number }[] = [
-  { attachment: "pin", color: "accent", tilt: -1.5 },
-  { attachment: "clip", color: "bone", tilt: 1.2 },
-  { attachment: "tape", color: "accent", tilt: 1 },
-  { attachment: "pin", color: "bone", tilt: -1 },
-  { attachment: "clip", color: "accent", tilt: -1.4 },
-];
-
 export default function Work({ onSelectProject }: WorkProps) {
-  const total = portfolioData.projects.length + 1;
+  const projects = [portfolioData.featuredProject, ...portfolioData.projects];
 
   return (
-    <section id="work" className="relative w-full px-4 sm:px-6 md:px-10 pt-10 pb-28 bg-ink text-bone board-dots-ink">
+    <section id="work" className="mx-auto w-full max-w-6xl px-5 py-24 sm:px-8 sm:py-32 lg:px-12">
       <SectionHeading
         index="01"
-        kicker="SELECTED WORK"
-        title="CASE STUDIES"
-        tone="ink"
-        aside={
-          <>
-            {String(total).padStart(2, "0")} BUILDS <span className="text-accent">·</span> CLICK A CARD FOR THE DEEP DIVE
-          </>
-        }
+        kicker="Selected work"
+        title="Case studies"
+        description="Six builds, each with the problem it solved and the code behind it. Select one to read the detail."
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-20 w-full">
-        <HangingCard
-          attachment="clips"
-          attachmentColor="accent"
-          tone="ink"
-          swayAngle={0.5}
-          swayDuration={7}
-          className="md:col-span-2"
-        >
-          <ProjectCard project={portfolioData.featuredProject} index={0} featured onSelectProject={onSelectProject} />
-        </HangingCard>
-
-        {portfolioData.projects.map((project, idx) => {
-          const hanger = HANGERS[idx % HANGERS.length];
-          return (
-            <HangingCard
-              key={project.name}
-              attachment={hanger.attachment}
-              attachmentColor={hanger.color}
-              tone="ink"
-              tilt={hanger.tilt}
-              swayAngle={0.9}
-              swayDuration={5 + (idx % 3)}
-              delay={0.08 * (idx % 2)}
-              className={idx === portfolioData.projects.length - 1 && idx % 2 === 0 ? "md:col-span-2 md:w-1/2 md:mx-auto" : ""}
-            >
-              <ProjectCard project={project} index={idx + 1} onSelectProject={onSelectProject} />
-            </HangingCard>
-          );
-        })}
+      <div className="mt-14 grid gap-6 sm:mt-16 sm:grid-cols-2">
+        {projects.map((project, idx) => (
+          <Reveal key={project.name} delay={Math.min(idx, 3) * 0.05} className="h-full">
+            <ProjectCard project={project} index={idx} onSelectProject={onSelectProject} />
+          </Reveal>
+        ))}
       </div>
     </section>
   );
