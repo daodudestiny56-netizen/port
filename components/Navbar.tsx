@@ -1,18 +1,22 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
+/** Section anchors live on the home page; hackathons is its own route. */
 const LINKS = [
-  { id: "work", label: "work" },
-  { id: "stack", label: "stack" },
-  { id: "approach", label: "approach" },
-  { id: "about", label: "about" },
-  { id: "contact", label: "contact" },
+  { id: "work", label: "work", href: "/#work" },
+  { id: "hackathons", label: "hackathons", href: "/hackathons" },
+  { id: "stack", label: "stack", href: "/#stack" },
+  { id: "about", label: "about", href: "/#about" },
+  { id: "contact", label: "contact", href: "/#contact" },
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
+  const onHackathons = pathname === "/hackathons";
   const [active, setActive] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
 
@@ -25,7 +29,7 @@ export default function Navbar() {
       },
       { rootMargin: "-45% 0px -50% 0px" }
     );
-    LINKS.forEach(({ id }) => {
+    [...LINKS.map((l) => l.id), "approach"].forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
@@ -41,17 +45,17 @@ export default function Navbar() {
   return (
     <header className="fixed inset-x-0 top-4 z-50 px-4 sm:px-6">
       <nav aria-label="Primary" className="panel panel-glass mx-auto flex max-w-3xl items-center justify-between gap-4 rounded-full px-3 py-2">
-        <a href="#hero" className="rounded-full px-2 py-1 text-[13px] text-dim transition-colors hover:text-fg">
+        <a href="/" className="rounded-full px-2 py-1 text-[13px] text-dim transition-colors hover:text-fg">
           daodu<span className="text-muted">.dev</span>
         </a>
 
         <ul className="hidden items-center gap-0.5 sm:flex">
           {LINKS.map((link) => {
-            const isActive = active === link.id;
+            const isActive = onHackathons ? link.id === "hackathons" : active === link.id;
             return (
               <li key={link.id}>
                 <a
-                  href={`#${link.id}`}
+                  href={link.href}
                   aria-current={isActive ? "true" : undefined}
                   className={cn(
                     "group flex items-center gap-1 rounded-full px-3 py-1.5 text-[13px] transition-colors",
@@ -100,7 +104,7 @@ export default function Navbar() {
               {LINKS.map((link) => (
                 <li key={link.id}>
                   <a
-                    href={`#${link.id}`}
+                    href={link.href}
                     onClick={() => setOpen(false)}
                     className="block rounded-lg px-3 py-2.5 text-sm text-dim transition-colors hover:bg-line/5 hover:text-fg"
                   >
