@@ -5,16 +5,14 @@
 @layer base {
   /* Palette — RGB channels so Tailwind's opacity modifiers work on every token. */
   :root {
-    --page: 13 17 16;        /* #0D1110 page */
-    --surface: 18 24 22;     /* #121816 recessed */
-    --elevated: 23 31 27;    /* #171F1B raised */
-    --glass: 22 32 27;       /* #16201B translucent panels */
-    --fg: 229 234 229;       /* #E5EAE5 primary text */
-    --dim: 146 157 149;      /* #929D95 secondary text */
-    --muted: 100 113 104;    /* #647168 metadata */
+    --page: 5 6 6;           /* #050606 near-black */
+    --surface: 12 14 13;     /* #0C0E0D recessed */
+    --fg: 234 238 234;       /* #EAEEEA primary text */
+    --dim: 150 160 152;      /* #96A098 secondary text */
+    --muted: 99 110 101;     /* #636E65 metadata */
     --accent: 163 230 178;   /* #A3E6B2 phosphor */
-    --line: 190 220 199;     /* #BEDCC7 borders, always used at low alpha */
-    --danger: 232 138 124;   /* #E88A7C form errors */
+    --line: 200 225 207;     /* #C8E1CF hairlines, always at low alpha */
+    --danger: 232 138 124;   /* #E88A7C errors */
   }
 
   html {
@@ -26,12 +24,37 @@
   }
 
   body {
+    position: relative;
     background-color: rgb(var(--page));
     color: rgb(var(--fg));
-    line-height: 1.6;
+    line-height: 1.65;
     overflow-x: clip;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Polished black: a soft overhead sheen plus a faint floor glow. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background:
+      radial-gradient(120% 65% at 50% -10%, rgb(163 230 178 / 0.07), transparent 60%),
+      radial-gradient(80% 45% at 50% 108%, rgb(163 230 178 / 0.045), transparent 70%),
+      radial-gradient(100% 70% at 50% 50%, rgb(18 24 21 / 0.9), rgb(var(--page)) 75%);
+  }
+
+  /* Very fine grain so large black areas don't band. */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
   ::selection {
@@ -47,13 +70,23 @@
 }
 
 @layer components {
-  /* Translucent panel: dark glass, hairline edge, one faint inner highlight. */
-  .glass {
-    background-color: rgb(var(--glass) / 0.58);
-    backdrop-filter: blur(16px) saturate(130%);
-    -webkit-backdrop-filter: blur(16px) saturate(130%);
-    border: 1px solid rgb(var(--line) / 0.12);
-    box-shadow: inset 0 1px 0 rgb(var(--line) / 0.06), 0 24px 48px -36px rgb(0 0 0 / 0.9);
+  /* Glossy panel: dark glass, hairline edge, light catching the top edge. */
+  .panel {
+    position: relative;
+    border: 1px solid rgb(var(--line) / 0.1);
+    border-radius: 14px;
+    background-image:
+      linear-gradient(180deg, rgb(var(--line) / 0.045), rgb(var(--line) / 0) 42%),
+      linear-gradient(180deg, rgb(var(--surface) / 0.9), rgb(var(--page) / 0.75));
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.05),
+      0 1px 0 rgb(0 0 0 / 0.6),
+      0 30px 60px -40px rgb(0 0 0 / 0.95);
+  }
+
+  .panel-glass {
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
   }
 }
 
@@ -64,26 +97,26 @@
   background: rgb(var(--page));
 }
 ::-webkit-scrollbar-thumb {
-  background: rgb(var(--line) / 0.16);
+  background: rgb(var(--line) / 0.14);
   border: 3px solid rgb(var(--page));
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(var(--line) / 0.28);
+  background: rgb(var(--line) / 0.26);
 }
 
-/* Terminal caret */
 @keyframes caret-blink {
   0%, 45% { opacity: 1; }
   55%, 100% { opacity: 0; }
 }
 .caret {
   display: inline-block;
-  width: 0.55em;
-  height: 1.05em;
-  vertical-align: text-bottom;
+  width: 0.5em;
+  height: 1em;
+  margin-left: 0.15em;
+  vertical-align: -0.12em;
   background-color: rgb(var(--accent));
-  animation: caret-blink 1.1s steps(1, end) infinite;
+  animation: caret-blink 1.05s steps(1, end) infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -11,7 +11,6 @@ const config: Config = {
       colors: {
         page: "rgb(var(--page) / <alpha-value>)",
         surface: "rgb(var(--surface) / <alpha-value>)",
-        elevated: "rgb(var(--elevated) / <alpha-value>)",
         fg: "rgb(var(--fg) / <alpha-value>)",
         dim: "rgb(var(--dim) / <alpha-value>)",
         muted: "rgb(var(--muted) / <alpha-value>)",
@@ -30,8 +29,9 @@ const config: Config = {
         full: "9999px",
       },
       fontFamily: {
+        // One typeface across the whole site.
         sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
-        mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
+        mono: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       transitionTimingFunction: {
         out: "cubic-bezier(0.16, 1, 0.3, 1)",

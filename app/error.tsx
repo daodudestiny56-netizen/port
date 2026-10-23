@@ -14,8 +14,8 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center justify-center bg-page p-6 font-mono">
-      <div className="glass w-full max-w-md rounded-xl p-6">
+    <div className="flex min-h-screen w-full flex-col items-center justify-center bg-page p-6">
+      <div className="panel w-full max-w-md rounded-xl p-6">
         <p className="text-xs text-muted">~/error.log</p>
         <h2 className="mt-3 text-lg text-fg">Something failed to render.</h2>
         <p className="mt-3 text-xs leading-relaxed text-dim">

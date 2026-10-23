@@ -40,8 +40,8 @@ export default function Navbar() {
 
   return (
     <header className="fixed inset-x-0 top-4 z-50 px-4 sm:px-6">
-      <nav aria-label="Primary" className="glass mx-auto flex max-w-3xl items-center justify-between gap-4 rounded-full px-3 py-2">
-        <a href="#hero" className="rounded-full px-2 py-1 font-mono text-[13px] text-dim transition-colors hover:text-fg">
+      <nav aria-label="Primary" className="panel panel-glass mx-auto flex max-w-3xl items-center justify-between gap-4 rounded-full px-3 py-2">
+        <a href="#hero" className="rounded-full px-2 py-1 text-[13px] text-dim transition-colors hover:text-fg">
           daodu<span className="text-muted">.dev</span>
         </a>
 
@@ -54,7 +54,7 @@ export default function Navbar() {
                   href={`#${link.id}`}
                   aria-current={isActive ? "true" : undefined}
                   className={cn(
-                    "group flex items-center gap-1 rounded-full px-3 py-1.5 font-mono text-[13px] transition-colors",
+                    "group flex items-center gap-1 rounded-full px-3 py-1.5 text-[13px] transition-colors",
                     isActive ? "text-accent" : "text-dim hover:text-fg"
                   )}
                 >
@@ -81,7 +81,7 @@ export default function Navbar() {
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-label={open ? "Close menu" : "Open menu"}
-          className="rounded-full border border-line/15 px-3 py-1.5 font-mono text-[13px] text-dim transition-colors hover:text-fg sm:hidden"
+          className="rounded-full border border-line/15 px-3 py-1.5 text-[13px] text-dim transition-colors hover:text-fg sm:hidden"
         >
           {open ? "close" : "menu"}
         </button>
@@ -94,7 +94,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.18, ease: "easeOut" }}
-            className="glass mx-auto mt-2 max-w-3xl overflow-hidden rounded-xl p-1.5 sm:hidden"
+            className="panel panel-glass mx-auto mt-2 max-w-3xl overflow-hidden rounded-xl p-1.5 sm:hidden"
           >
             <ul>
               {LINKS.map((link) => (
@@ -102,7 +102,7 @@ export default function Navbar() {
                   <a
                     href={`#${link.id}`}
                     onClick={() => setOpen(false)}
-                    className="block rounded-lg px-3 py-2.5 font-mono text-sm text-dim transition-colors hover:bg-line/5 hover:text-fg"
+                    className="block rounded-lg px-3 py-2.5 text-sm text-dim transition-colors hover:bg-line/5 hover:text-fg"
                   >
                     {link.label}
                   </a>
