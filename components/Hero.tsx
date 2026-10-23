@@ -2,111 +2,88 @@
 
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { portfolioData } from "@/lib/data";
+import EncryptedText from "@/components/ui/encrypted-text";
+import { Caret, Prompt, TerminalPanel } from "@/components/ui/Terminal";
 
 const LightBulbScene = dynamic(() => import("@/components/three/LightBulbScene"), { ssr: false });
 
-const FACTS = [
-  { label: "Experience", value: `${portfolioData.stats[0].value} years` },
-  { label: "Focus", value: "Full-stack web" },
-  { label: "Core stack", value: "TypeScript · React · Node" },
-  { label: "Availability", value: "Open to roles · Remote" },
-];
+const years = portfolioData.stats[0].value;
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 10 },
-  show: { opacity: 1, y: 0 },
-};
+/** The page's one orchestrated entrance: the transcript prints itself, line by line. */
+const line = (i: number) => ({
+  initial: { opacity: 0, y: 6 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] as const, delay: 0.12 + i * 0.14 },
+});
 
 export default function Hero() {
   return (
-    <section id="hero" className="mx-auto w-full max-w-6xl px-5 pb-20 pt-32 sm:px-8 sm:pb-28 sm:pt-40 lg:px-12">
-      <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-12">
-        <div className="lg:col-span-7">
-          <motion.p
-            initial="hidden"
-            animate="show"
-            variants={fadeUp}
-            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink/45"
-          >
-            Software engineer · {portfolioData.stats[0].value} years
-          </motion.p>
+    <section id="hero" className="mx-auto w-full max-w-5xl px-5 pb-24 pt-32 sm:px-8 sm:pb-32 sm:pt-36">
+      <motion.div {...line(0)} className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-xs">
+        <span className="text-muted">guest@portfolio:~</span>
+        <span className="inline-flex items-center gap-2 rounded-full border border-line/15 px-2.5 py-1 text-dim">
+          <span className="relative flex h-1.5 w-1.5">
+            <span className="absolute inline-flex h-full w-full rounded-full bg-accent/60" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent" />
+          </span>
+          available for work
+        </span>
+      </motion.div>
 
-          <motion.h1
-            initial="hidden"
-            animate="show"
-            variants={fadeUp}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.06 }}
-            className="mt-5 font-display text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl"
-          >
-            Engineering software that scales, ships and lasts.
-          </motion.h1>
+      <div className="mt-12 grid gap-12 lg:grid-cols-[minmax(0,1fr)_340px] lg:gap-14">
+        <div>
+          <motion.div {...line(1)}>
+            <Prompt>whoami</Prompt>
+            <h1 className="mt-4 text-[2.25rem] font-medium leading-[1.05] tracking-[-0.03em] sm:text-[3.25rem]">
+              <EncryptedText text="Daodu Destiny" revealDelayMs={45} startDelayMs={260} />
+            </h1>
+            <p className="mt-4 max-w-lg text-[15px] leading-relaxed text-dim sm:text-base">
+              Software engineer, {years} years in. I build production web applications, APIs and real-time interfaces — and
+              keep them fast and easy to change long after launch.
+            </p>
+          </motion.div>
 
-          <motion.p
-            initial="hidden"
-            animate="show"
-            variants={fadeUp}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.12 }}
-            className="mt-6 max-w-xl text-base leading-relaxed text-ink/60 sm:text-lg"
-          >
-            {`I'm Daodu Destiny — I build production web applications, APIs and real-time interfaces, with architecture that stays clean and easy to change long after launch.`}
-          </motion.p>
+          <motion.div {...line(2)} className="mt-10">
+            <Prompt>cat focus.txt</Prompt>
+            <ul className="mt-4 max-w-lg space-y-2 text-[15px] text-dim sm:text-base">
+              <li>Real-time interfaces that stay smooth under load.</li>
+              <li>Offline-first apps for unreliable networks.</li>
+              <li>Typed, tested code that outlives its first release.</li>
+            </ul>
+          </motion.div>
 
-          <motion.div
-            initial="hidden"
-            animate="show"
-            variants={fadeUp}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.18 }}
-            className="mt-9 flex flex-col gap-3 sm:flex-row"
-          >
-            <a
-              href="#work"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-3.5 text-sm font-medium text-bone transition-colors hover:bg-accent"
-            >
-              View selected work
-              <ArrowDown className="h-4 w-4" />
-            </a>
-            <a
-              href={portfolioData.socials.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-ink/15 px-6 py-3.5 text-sm font-medium text-ink transition-colors hover:border-ink/40"
-            >
-              GitHub
-              <ArrowUpRight className="h-4 w-4" />
-            </a>
+          <motion.div {...line(3)} className="mt-10">
+            <Prompt>ls ./actions</Prompt>
+            <div className="mt-4 flex flex-wrap items-center gap-3 font-mono text-sm">
+              <a
+                href="#work"
+                className="rounded-full border border-accent/40 bg-accent/10 px-4 py-2 text-accent transition-colors hover:bg-accent/20"
+              >
+                view work
+              </a>
+              <a
+                href="#contact"
+                className="rounded-full border border-line/15 px-4 py-2 text-dim transition-colors hover:border-line/30 hover:text-fg"
+              >
+                get in touch
+              </a>
+              <Caret className="hidden sm:inline-block" />
+            </div>
           </motion.div>
         </div>
 
-        {/* Interactive light bulb */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-          className="lg:col-span-5"
+          transition={{ duration: 0.5, delay: 0.5 }}
+          className="lg:pt-1"
         >
-          <div className="relative h-[340px] overflow-hidden rounded-3xl border border-ink/10 bg-card shadow-soft sm:h-[420px]">
+          <TerminalPanel label="~/filament.tsx" status="idle" className="h-[320px] lg:h-[400px]" bodyClassName="relative h-[calc(100%-41px)]">
             <LightBulbScene />
-          </div>
+          </TerminalPanel>
         </motion.div>
       </div>
-
-      <motion.dl
-        initial="hidden"
-        animate="show"
-        variants={fadeUp}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.26 }}
-        className="mt-16 grid grid-cols-2 gap-x-8 gap-y-8 border-t border-ink/10 pt-8 sm:mt-20 lg:grid-cols-4"
-      >
-        {FACTS.map((fact) => (
-          <div key={fact.label}>
-            <dt className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink/40">{fact.label}</dt>
-            <dd className="mt-2 text-sm font-medium sm:text-base">{fact.value}</dd>
-          </div>
-        ))}
-      </motion.dl>
     </section>
   );
 }

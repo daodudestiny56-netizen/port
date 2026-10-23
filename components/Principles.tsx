@@ -1,29 +1,28 @@
 "use client";
 
-import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { portfolioData } from "@/lib/data";
 
 export default function Principles() {
   return (
-    <section id="principles" className="border-y border-ink/10 bg-card">
-      <div className="mx-auto w-full max-w-6xl px-5 py-24 sm:px-8 sm:py-32 lg:px-12">
+    <section id="approach" className="border-y border-line/10 bg-surface">
+      <div className="mx-auto w-full max-w-5xl px-5 py-24 sm:px-8 sm:py-32">
         <SectionHeading
-          index="03"
-          kicker="How I work"
-          title="Engineering principles"
-          description="The rules I apply to every codebase I touch."
+          command="cat principles.md"
+          title="How I work"
+          description="The rules I bring to every codebase, whether it's mine or inherited."
         />
 
-        <div className="mt-14 grid gap-x-12 gap-y-10 sm:mt-16 sm:grid-cols-2 lg:grid-cols-3">
-          {portfolioData.principles.map((principle, i) => (
-            <Reveal key={principle.title} delay={Math.min(i, 3) * 0.05}>
-              <p className="font-mono text-[11px] tracking-[0.16em] text-accent">{String(i + 1).padStart(2, "0")}</p>
-              <h3 className="mt-3 font-display text-lg font-semibold tracking-tight">{principle.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-ink/60">{principle.body}</p>
-            </Reveal>
+        <dl className="mt-14 grid gap-x-12 gap-y-10 sm:grid-cols-2">
+          {portfolioData.principles.map((principle) => (
+            <div key={principle.title} className="border-t border-line/10 pt-5">
+              <dt className="text-[15px] font-medium tracking-[-0.01em]">
+                {principle.title.charAt(0) + principle.title.slice(1).toLowerCase()}
+              </dt>
+              <dd className="mt-2 text-sm leading-relaxed text-dim">{principle.body}</dd>
+            </div>
           ))}
-        </div>
+        </dl>
       </div>
     </section>
   );

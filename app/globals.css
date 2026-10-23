@@ -1,53 +1,59 @@
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400..600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  /* Palette — RGB channels so Tailwind opacity modifiers work (see lib/theme.ts) */
+  /* Palette — RGB channels so Tailwind's opacity modifiers work on every token. */
   :root {
-    --ink: 26 29 33;             /* #1A1D21 text & dark sections */
-    --bone: 250 249 246;         /* #FAF9F6 page background */
-    --card: 255 255 255;         /* #FFFFFF card surfaces */
-    --accent: 70 98 127;         /* #46627F slate blue */
-    --accent-light: 163 181 200; /* #A3B5C8 accent on dark */
-    --surface: 42 46 53;         /* #2A2E35 image placeholders */
-    --danger: 180 35 24;         /* #B42318 form errors */
+    --page: 13 17 16;        /* #0D1110 page */
+    --surface: 18 24 22;     /* #121816 recessed */
+    --elevated: 23 31 27;    /* #171F1B raised */
+    --glass: 22 32 27;       /* #16201B translucent panels */
+    --fg: 229 234 229;       /* #E5EAE5 primary text */
+    --dim: 146 157 149;      /* #929D95 secondary text */
+    --muted: 100 113 104;    /* #647168 metadata */
+    --accent: 163 230 178;   /* #A3E6B2 phosphor */
+    --line: 190 220 199;     /* #BEDCC7 borders, always used at low alpha */
+    --danger: 232 138 124;   /* #E88A7C form errors */
   }
 
   html {
     scroll-behavior: smooth;
-    background-color: rgb(var(--bone));
-    color: rgb(var(--ink));
+    scroll-padding-top: 7rem;
+    background-color: rgb(var(--page));
+    color: rgb(var(--fg));
     overflow-x: clip;
-    scroll-padding-top: 6rem;
   }
 
   body {
-    background-color: rgb(var(--bone));
-    color: rgb(var(--ink));
-    font-family: 'Space Grotesk', 'Inter', sans-serif;
-    line-height: 1.65;
+    background-color: rgb(var(--page));
+    color: rgb(var(--fg));
+    line-height: 1.6;
     overflow-x: clip;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  a:focus-visible,
-  button:focus-visible,
-  input:focus-visible,
-  select:focus-visible,
-  textarea:focus-visible,
-  [role="button"]:focus-visible {
-    outline: 2px solid rgb(var(--accent));
-    outline-offset: 3px;
-    border-radius: 6px;
+  ::selection {
+    background-color: rgb(var(--accent) / 0.25);
+    color: rgb(var(--fg));
   }
 
-  ::selection {
-    background-color: rgb(var(--accent));
-    color: rgb(var(--bone));
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent) / 0.8);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  /* Translucent panel: dark glass, hairline edge, one faint inner highlight. */
+  .glass {
+    background-color: rgb(var(--glass) / 0.58);
+    backdrop-filter: blur(16px) saturate(130%);
+    -webkit-backdrop-filter: blur(16px) saturate(130%);
+    border: 1px solid rgb(var(--line) / 0.12);
+    box-shadow: inset 0 1px 0 rgb(var(--line) / 0.06), 0 24px 48px -36px rgb(0 0 0 / 0.9);
   }
 }
 
@@ -55,20 +61,37 @@
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: rgb(var(--bone));
+  background: rgb(var(--page));
 }
 ::-webkit-scrollbar-thumb {
-  background: rgb(var(--ink) / 0.2);
+  background: rgb(var(--line) / 0.16);
+  border: 3px solid rgb(var(--page));
   border-radius: 9999px;
-  border: 3px solid rgb(var(--bone));
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(var(--ink) / 0.35);
+  background: rgb(var(--line) / 0.28);
+}
+
+/* Terminal caret */
+@keyframes caret-blink {
+  0%, 45% { opacity: 1; }
+  55%, 100% { opacity: 0; }
+}
+.caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.05em;
+  vertical-align: text-bottom;
+  background-color: rgb(var(--accent));
+  animation: caret-blink 1.1s steps(1, end) infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  .caret {
+    animation: none;
   }
   *,
   *::before,

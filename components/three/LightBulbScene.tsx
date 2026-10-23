@@ -30,7 +30,7 @@ export default function LightBulbScene({ className = "" }: { className?: string 
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x000000, 0);
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.05;
+    renderer.toneMappingExposure = 0.92;
     renderer.domElement.style.display = "block";
     mount.appendChild(renderer.domElement);
 
@@ -50,9 +50,9 @@ export default function LightBulbScene({ className = "" }: { className?: string 
     scene.environment = envTexture;
     disposables.push(envTexture, pmrem);
 
-    const key = new THREE.DirectionalLight(0xffffff, 1.4);
+    const key = new THREE.DirectionalLight(0xdfe8e2, 0.9);
     key.position.set(3, 5, 6);
-    scene.add(key, new THREE.AmbientLight(0xffffff, 0.35));
+    scene.add(key, new THREE.AmbientLight(0xaebcb2, 0.3));
 
     const bulb = new THREE.Group();
     bulb.position.y = -0.2;
@@ -73,7 +73,7 @@ export default function LightBulbScene({ className = "" }: { className?: string 
         ior: 1.45,
         transparent: true,
         side: THREE.DoubleSide,
-        emissive: new THREE.Color(0xffc978),
+        emissive: new THREE.Color(0xcdf0cf),
         emissiveIntensity: 0,
       })
     );
@@ -89,7 +89,7 @@ export default function LightBulbScene({ className = "" }: { className?: string 
     const filamentMaterial = track(
       new THREE.MeshStandardMaterial({
         color: 0x6b6355,
-        emissive: new THREE.Color(0xffb347),
+        emissive: new THREE.Color(0xd6f5c8),
         emissiveIntensity: 0,
         roughness: 0.5,
         metalness: 0.4,
@@ -123,7 +123,7 @@ export default function LightBulbScene({ className = "" }: { className?: string 
     bulb.add(base);
 
     // --- Emitted light + halo --------------------------------------------
-    const bulbLight = new THREE.PointLight(0xffc06a, 0, 26, 2);
+    const bulbLight = new THREE.PointLight(0xbdeecb, 0, 26, 2);
     bulbLight.position.set(0, 0.55, 0);
     bulb.add(bulbLight);
 
@@ -132,9 +132,9 @@ export default function LightBulbScene({ className = "" }: { className?: string 
     const ctx = haloCanvas.getContext("2d");
     if (ctx) {
       const gradient = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
-      gradient.addColorStop(0, "rgba(255,206,140,0.95)");
-      gradient.addColorStop(0.4, "rgba(255,186,110,0.35)");
-      gradient.addColorStop(1, "rgba(255,180,100,0)");
+      gradient.addColorStop(0, "rgba(206,240,208,0.95)");
+      gradient.addColorStop(0.4, "rgba(163,230,178,0.35)");
+      gradient.addColorStop(1, "rgba(163,230,178,0)");
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, 128, 128);
     }
@@ -242,12 +242,12 @@ export default function LightBulbScene({ className = "" }: { className?: string 
         className="absolute inset-0 transition-opacity duration-700"
         style={{
           opacity: lit ? 1 : 0,
-          background: "radial-gradient(circle at 50% 42%, rgb(255 198 120 / 0.28), transparent 62%)",
+          background: "radial-gradient(circle at 50% 42%, rgb(163 230 178 / 0.2), transparent 62%)",
         }}
       />
       <div ref={mountRef} className="absolute inset-0" />
-      <span className="absolute bottom-4 left-1/2 -translate-x-1/2 font-mono text-[11px] uppercase tracking-widest text-ink/40 transition-opacity duration-300 group-hover:opacity-0">
-        Hover to light up
+      <span className="absolute bottom-4 left-1/2 -translate-x-1/2 font-mono text-[11px] text-muted transition-opacity duration-300 group-hover:opacity-0">
+        hover to power on
       </span>
     </button>
   );

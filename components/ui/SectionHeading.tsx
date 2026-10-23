@@ -1,33 +1,23 @@
 "use client";
 
-import Reveal from "./Reveal";
+import EncryptedText from "./encrypted-text";
+import { Prompt } from "./Terminal";
 
 interface SectionHeadingProps {
-  index: string;
-  kicker: string;
+  /** The terminal command that stands in for a section label. */
+  command: string;
   title: string;
   description?: string;
-  tone?: "ink" | "bone";
 }
 
-export default function SectionHeading({ index, kicker, title, description, tone = "bone" }: SectionHeadingProps) {
-  const isInk = tone === "ink";
-
+export default function SectionHeading({ command, title, description }: SectionHeadingProps) {
   return (
-    <Reveal className="max-w-2xl">
-      <p className={`font-mono text-[11px] uppercase tracking-[0.2em] ${isInk ? "text-bone/45" : "text-ink/45"}`}>
-        {index} — {kicker}
-      </p>
-      <h2
-        className={`mt-4 font-display font-semibold tracking-tight text-3xl sm:text-4xl lg:text-5xl leading-[1.08] ${
-          isInk ? "text-bone" : "text-ink"
-        }`}
-      >
-        {title}
+    <div className="max-w-xl">
+      <Prompt>{command}</Prompt>
+      <h2 className="mt-5 text-[1.75rem] font-medium leading-tight tracking-[-0.02em] sm:text-4xl">
+        <EncryptedText text={title} revealDelayMs={38} />
       </h2>
-      {description && (
-        <p className={`mt-4 text-base sm:text-lg leading-relaxed ${isInk ? "text-bone/65" : "text-ink/60"}`}>{description}</p>
-      )}
-    </Reveal>
+      {description && <p className="mt-4 text-[15px] leading-relaxed text-dim sm:text-base">{description}</p>}
+    </div>
   );
 }

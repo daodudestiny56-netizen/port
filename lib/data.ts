@@ -325,9 +325,7 @@ export function useBatchTickScheduler(onBatchRender: (ticks: MarketTick[]) => vo
     },
   ],
   stats: [
-    { value: 3, label: "YEARS EXPERIENCE" },
-    { value: 6, label: "FEATURED PROJECTS" },
-    { value: 100, label: "STRICT TYPESCRIPT", suffix: "%" },
-    { value: 60, label: "TARGET FPS RENDER", suffix: " FPS" },
+    { value: 3, label: "years experience" },
+    { value: 6, label: "projects shipped" },
   ],
 };

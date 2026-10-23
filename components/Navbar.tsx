@@ -2,18 +2,19 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const LINKS = [
-  { id: "work", label: "Work" },
-  { id: "toolkit", label: "Toolkit" },
-  { id: "principles", label: "Principles" },
-  { id: "about", label: "About" },
+  { id: "work", label: "work" },
+  { id: "stack", label: "stack" },
+  { id: "approach", label: "approach" },
+  { id: "about", label: "about" },
+  { id: "contact", label: "contact" },
 ];
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -24,7 +25,7 @@ export default function Navbar() {
       },
       { rootMargin: "-45% 0px -50% 0px" }
     );
-    [...LINKS.map((l) => l.id), "contact"].forEach((id) => {
+    LINKS.forEach(({ id }) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
@@ -32,25 +33,19 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsOpen(false);
-    };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
   }, []);
 
   return (
-    <header className="fixed top-4 inset-x-0 z-50 px-4 sm:px-6">
-      <nav
-        aria-label="Primary"
-        className="mx-auto flex max-w-5xl items-center justify-between gap-4 rounded-full border border-ink/10 bg-card/85 px-3 py-2 shadow-soft backdrop-blur-md"
-      >
-        <a href="#hero" className="flex items-center gap-2.5 rounded-full py-1 pl-1 pr-3">
-          <span className="grid h-8 w-8 place-items-center rounded-full bg-ink text-[11px] font-semibold text-bone">DD</span>
-          <span className="text-sm font-medium tracking-tight">Daodu Destiny</span>
+    <header className="fixed inset-x-0 top-4 z-50 px-4 sm:px-6">
+      <nav aria-label="Primary" className="glass mx-auto flex max-w-3xl items-center justify-between gap-4 rounded-full px-3 py-2">
+        <a href="#hero" className="rounded-full px-2 py-1 font-mono text-[13px] text-dim transition-colors hover:text-fg">
+          daodu<span className="text-muted">.dev</span>
         </a>
 
-        <ul className="hidden items-center gap-1 md:flex">
+        <ul className="hidden items-center gap-0.5 sm:flex">
           {LINKS.map((link) => {
             const isActive = active === link.id;
             return (
@@ -58,51 +53,56 @@ export default function Navbar() {
                 <a
                   href={`#${link.id}`}
                   aria-current={isActive ? "true" : undefined}
-                  className={`rounded-full px-3.5 py-2 text-sm transition-colors ${
-                    isActive ? "bg-ink/5 text-ink" : "text-ink/55 hover:text-ink"
-                  }`}
+                  className={cn(
+                    "group flex items-center gap-1 rounded-full px-3 py-1.5 font-mono text-[13px] transition-colors",
+                    isActive ? "text-accent" : "text-dim hover:text-fg"
+                  )}
                 >
+                  <span
+                    aria-hidden="true"
+                    className={cn("transition-opacity", isActive ? "opacity-100" : "opacity-0 group-hover:opacity-40")}
+                  >
+                    [
+                  </span>
                   {link.label}
+                  <span
+                    aria-hidden="true"
+                    className={cn("transition-opacity", isActive ? "opacity-100" : "opacity-0 group-hover:opacity-40")}
+                  >
+                    ]
+                  </span>
                 </a>
               </li>
             );
           })}
         </ul>
 
-        <div className="flex items-center gap-2">
-          <a
-            href="#contact"
-            className="hidden rounded-full bg-ink px-4 py-2 text-sm font-medium text-bone transition-colors hover:bg-accent sm:block"
-          >
-            Get in touch
-          </a>
-          <button
-            onClick={() => setIsOpen((v) => !v)}
-            aria-label={isOpen ? "Close menu" : "Open menu"}
-            aria-expanded={isOpen}
-            className="grid h-10 w-10 place-items-center rounded-full border border-ink/10 text-ink md:hidden"
-          >
-            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
-        </div>
+        <button
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          aria-label={open ? "Close menu" : "Open menu"}
+          className="rounded-full border border-line/15 px-3 py-1.5 font-mono text-[13px] text-dim transition-colors hover:text-fg sm:hidden"
+        >
+          {open ? "close" : "menu"}
+        </button>
       </nav>
 
       <AnimatePresence>
-        {isOpen && (
+        {open && (
           <motion.div
-            initial={{ opacity: 0, y: -8 }}
+            initial={{ opacity: 0, y: -6 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            className="mx-auto mt-2 max-w-5xl overflow-hidden rounded-2xl border border-ink/10 bg-card p-2 shadow-soft md:hidden"
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
+            className="glass mx-auto mt-2 max-w-3xl overflow-hidden rounded-xl p-1.5 sm:hidden"
           >
-            <ul className="flex flex-col">
-              {[...LINKS, { id: "contact", label: "Contact" }].map((link) => (
+            <ul>
+              {LINKS.map((link) => (
                 <li key={link.id}>
                   <a
                     href={`#${link.id}`}
-                    onClick={() => setIsOpen(false)}
-                    className="block rounded-xl px-4 py-3 text-base text-ink/80 transition-colors hover:bg-ink/5 hover:text-ink"
+                    onClick={() => setOpen(false)}
+                    className="block rounded-lg px-3 py-2.5 font-mono text-sm text-dim transition-colors hover:bg-line/5 hover:text-fg"
                   >
                     {link.label}
                   </a>

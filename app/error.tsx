@@ -14,19 +14,18 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="w-full min-h-screen bg-ink text-bone font-mono flex flex-col items-center justify-center p-6 select-none">
-      <div className="max-w-md w-full border-4 border-bone bg-ink p-6 shadow-[8px_8px_0px_rgb(var(--accent))]">
-        <h2 className="text-xl font-bold uppercase mb-4 text-accent-light">
-          SYSTEM NOTICE // RENDER ERROR
-        </h2>
-        <p className="text-xs text-bone/80 mb-6 leading-relaxed">
+    <div className="flex min-h-screen w-full flex-col items-center justify-center bg-page p-6 font-mono">
+      <div className="glass w-full max-w-md rounded-xl p-6">
+        <p className="text-xs text-muted">~/error.log</p>
+        <h2 className="mt-3 text-lg text-fg">Something failed to render.</h2>
+        <p className="mt-3 text-xs leading-relaxed text-dim">
           {error?.message || "An unexpected error occurred."}
         </p>
         <button
           onClick={() => reset()}
-          className="w-full py-3 bg-bone text-ink font-bold text-xs uppercase border-2 border-bone hover:bg-accent hover:text-bone transition-colors"
+          className="mt-6 rounded-full border border-accent/40 bg-accent/10 px-5 py-2.5 text-sm text-accent transition-colors hover:bg-accent/20"
         >
-          RETRY RENDERING
+          try again
         </button>
       </div>
     </div>
