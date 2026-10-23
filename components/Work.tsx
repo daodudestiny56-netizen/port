@@ -1,88 +1,93 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
-import SectionHeading from "@/components/ui/SectionHeading";
 import { portfolioData, Project } from "@/lib/data";
+import { Block, Command, Divider, Line } from "@/components/ui/Transcript";
 
-interface WorkProps {
-  onSelectProject: (project: Project) => void;
-}
-
-/** Shortens "NEXT.JS / VOICE-AUTH" to the lowercase stack line used in the list. */
 const stackLabel = (category: string) => category.toLowerCase().replace(/\s*\/\s*/g, ", ");
 
-export default function Work({ onSelectProject }: WorkProps) {
-  const projects = [portfolioData.featuredProject, ...portfolioData.projects];
-  const [preview, setPreview] = useState<Project>(projects[0]);
+function Entry({ project, index }: { project: Project; index: number }) {
+  const cs = project.caseStudy;
 
   return (
-    <section id="work" className="mx-auto w-full max-w-5xl px-5 py-24 sm:px-8 sm:py-32">
-      <SectionHeading
-        command="ls ./work"
-        title="Case studies"
-        description="Six builds. Each one opens with the problem it solved, the approach, and the code that did the work."
-      />
+    <Block className="space-y-5">
+      <Line as="div" className="flex items-baseline justify-between gap-4 border-b border-line/10 pb-3">
+        <span className="text-xl font-semibold tracking-[-0.02em] sm:text-2xl">{project.name.toLowerCase()}</span>
+        <span className="shrink-0 text-sm text-muted">{String(index + 1).padStart(2, "0")}</span>
+      </Line>
 
-      <div className="mt-14 grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-12">
-        <ul className="border-t border-line/10">
-          {projects.map((project) => (
-            <li key={project.name}>
-              <button
-                type="button"
-                onClick={() => onSelectProject(project)}
-                onMouseEnter={() => setPreview(project)}
-                onFocus={() => setPreview(project)}
-                className="group grid w-full gap-y-3 border-b border-line/10 py-5 text-left sm:grid-cols-[minmax(0,1fr)_auto] sm:items-baseline sm:gap-x-6"
-              >
-                <span className="text-lg font-medium tracking-[-0.01em] transition-colors group-hover:text-accent">
-                  {project.name.toLowerCase()}
-                </span>
-
-                <span className="flex items-baseline justify-between gap-4 font-mono text-xs text-muted sm:justify-end">
-                  <span>{stackLabel(project.category)}</span>
-                  <span className="w-9 text-right text-accent opacity-0 transition-opacity group-hover:opacity-100">open</span>
-                </span>
-
-                {/* Mobile and tablet preview — the hover panel is desktop-only. */}
-                <span className="relative block aspect-[16/9] w-full overflow-hidden rounded-lg border border-line/10 bg-surface sm:col-span-3 lg:hidden">
-                  <Image src={project.image} alt="" fill sizes="(max-width: 1024px) 100vw, 0px" className="object-cover opacity-70" />
-                </span>
-              </button>
-            </li>
-          ))}
-        </ul>
-
-        <div className="hidden lg:block">
-          <div className="sticky top-28">
-            <div className="glass relative aspect-[4/3] overflow-hidden rounded-xl">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={preview.name}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.22 }}
-                  className="absolute inset-0"
-                >
-                  <Image
-                    src={preview.image}
-                    alt={`${preview.name} interface`}
-                    fill
-                    sizes="320px"
-                    className="object-cover"
-                  />
-                  <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-page via-page/80 to-transparent px-4 pb-4 pt-10 font-mono text-xs text-dim">
-                    {stackLabel(preview.category)}
-                  </span>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-            <p className="mt-4 text-sm leading-relaxed text-dim">{preview.description.split(" — ")[0]}.</p>
-            <p className="mt-3 font-mono text-xs text-muted">Select a row to read the case study.</p>
-          </div>
+      <Line as="div" className="panel overflow-hidden">
+        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[13px] bg-surface">
+          <Image
+            src={project.image}
+            alt={`${project.name} interface`}
+            fill
+            sizes="(max-width: 768px) 100vw, 704px"
+            className="object-cover"
+          />
         </div>
+      </Line>
+
+      <Line className="text-sm text-muted">{stackLabel(project.category)}</Line>
+
+      <Line className="max-w-2xl text-[17px] leading-relaxed text-dim">{project.description}</Line>
+
+      {cs && (
+        <>
+          <Line as="div" className="grid gap-x-8 gap-y-5 sm:grid-cols-2">
+            <div>
+              <p className="text-sm text-accent">problem</p>
+              <p className="mt-2 text-[15px] leading-relaxed text-dim">{cs.problem}</p>
+            </div>
+            <div>
+              <p className="text-sm text-accent">approach</p>
+              <p className="mt-2 text-[15px] leading-relaxed text-dim">{cs.approach}</p>
+            </div>
+          </Line>
+
+          <Line as="div" className="flex flex-wrap gap-x-8 gap-y-2 text-[15px]">
+            {cs.metrics.map((m) => (
+              <span key={m.label} className="text-muted">
+                {m.label.toLowerCase()} <span className="text-fg">{m.value.toLowerCase()}</span>
+              </span>
+            ))}
+          </Line>
+        </>
+      )}
+
+      <Line as="div">
+        <a
+          href={project.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[15px] text-accent underline decoration-accent/30 underline-offset-4 transition-colors hover:decoration-accent"
+        >
+          open repository
+        </a>
+      </Line>
+    </Block>
+  );
+}
+
+export default function Work() {
+  const projects = [portfolioData.featuredProject, ...portfolioData.projects];
+
+  return (
+    <section id="work" className="mx-auto w-full max-w-3xl px-5 py-20 sm:px-8 sm:py-24">
+      <Block className="space-y-4">
+        <Command text="ls ./work" />
+        <Line className="text-[15px] text-muted">
+          {projects.length} case studies — the problem, the approach, and the code that did the work.
+        </Line>
+      </Block>
+
+      <div className="mt-14 space-y-16">
+        {projects.map((project, idx) => (
+          <div key={project.name} className="space-y-16">
+            <Entry project={project} index={idx} />
+            {idx < projects.length - 1 && <Divider />}
+          </div>
+        ))}
       </div>
     </section>
   );

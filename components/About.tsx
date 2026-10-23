@@ -1,60 +1,56 @@
 "use client";
 
 import Image from "next/image";
-import EncryptedText from "@/components/ui/encrypted-text";
-import SectionHeading from "@/components/ui/SectionHeading";
 import { portfolioData } from "@/lib/data";
+import { Block, Command, Line } from "@/components/ui/Transcript";
 
 const years = portfolioData.stats[0].value;
 
+const BIO = [
+  `${years} years of shipping web applications end to end — API design, data flow, and the interfaces people actually touch.`,
+  "My work spans real-time voice streaming, offline-first apps, encrypted client storage and live market data. The common thread is systems that stay fast and predictable as they grow.",
+  "I write strict, typed code, measure before optimising, and treat accessibility and performance as requirements rather than polish.",
+];
+
 export default function About() {
   return (
-    <section id="about" className="mx-auto w-full max-w-5xl px-5 py-24 sm:px-8 sm:py-32">
-      <SectionHeading command="cat about.md" title="A little background" />
+    <section id="about" className="mx-auto w-full max-w-3xl px-5 py-20 sm:px-8 sm:py-24">
+      <Block className="space-y-4">
+        <Command text="cat about.md" />
 
-      <div className="mt-14 grid gap-10 lg:grid-cols-[260px_minmax(0,1fr)] lg:gap-16">
-        <div className="relative aspect-[4/5] w-full max-w-[260px] overflow-hidden rounded-xl border border-line/10 bg-surface">
-          <Image
-            src="/images/portrait.png"
-            alt={`${portfolioData.name}, software engineer`}
-            fill
-            sizes="(max-width: 1024px) 60vw, 260px"
-            className="object-cover"
-          />
-        </div>
-
-        <div className="max-w-xl">
-          <p className="text-lg leading-relaxed tracking-[-0.01em]">
-            <EncryptedText text="I build things that hold up." className="text-fg" revealDelayMs={38} />{" "}
-            <span className="text-dim">
-              {`That's ${years} years of shipping web applications end to end — API design, data flow, and the interfaces people actually touch.`}
-            </span>
-          </p>
-
-          <div className="mt-6 space-y-4 text-[15px] leading-relaxed text-dim">
-            <p>
-              My work spans real-time voice streaming, offline-first apps, encrypted client storage and live market data.
-              The common thread is systems that stay fast and predictable as they grow.
-            </p>
-            <p>
-              I write strict, typed code, measure before optimising, and treat accessibility and performance as
-              requirements rather than polish. Currently open to software engineering roles, remote-friendly.
-            </p>
+        <Line as="div" className="panel overflow-hidden pt-0">
+          <div className="relative aspect-[3/2] w-full overflow-hidden rounded-[13px] bg-surface">
+            <Image
+              src="/images/portrait.png"
+              alt={portfolioData.name}
+              fill
+              sizes="(max-width: 768px) 100vw, 704px"
+              className="object-cover object-[center_25%]"
+            />
           </div>
+        </Line>
 
-          <dl className="mt-10 flex flex-wrap gap-x-12 gap-y-5 border-t border-line/10 pt-6">
-            {portfolioData.stats.map((stat) => (
-              <div key={stat.label}>
-                <dt className="text-[15px] text-fg">
-                  {stat.value}
-                  {stat.suffix ?? ""}
-                </dt>
-                <dd className="mt-1 font-mono text-xs text-muted">{stat.label}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-      </div>
+        {BIO.map((paragraph, i) => (
+          <Line key={i} className="max-w-2xl pt-2 text-[17px] leading-relaxed text-dim">
+            {paragraph}
+          </Line>
+        ))}
+
+        <Line as="div" className="flex flex-wrap gap-x-10 gap-y-3 pt-5 text-[15px]">
+          {portfolioData.stats.map((stat) => (
+            <span key={stat.label} className="text-muted">
+              <span className="text-fg">
+                {stat.value}
+                {stat.suffix ?? ""}
+              </span>{" "}
+              {stat.label}
+            </span>
+          ))}
+          <span className="text-muted">
+            <span className="text-fg">open</span> to roles, remote-friendly
+          </span>
+        </Line>
+      </Block>
     </section>
   );
 }
